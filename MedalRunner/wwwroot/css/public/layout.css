@@ -1,0 +1,130 @@
+﻿@import url("/css/colors.css");
+
+* {
+    color: var(--color-text-primary)
+}
+
+a:link {
+    text-decoration: none;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg-elevated);
+    place-items: center;
+}
+
+header {
+    width: 100%;
+    min-height: fit-content;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    place-items: center;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* NAV */
+
+.nav-logo {
+    width: 12rem;
+    height: fit-content;
+}
+
+nav {
+    width: 75%;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.center-nav-container {
+    display: flex;
+    place-self: center;
+    gap: 2rem;
+}
+
+.nav-item-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.right-nav-container {
+    display: flex;
+    place-self: center;
+    gap: 1rem;
+}
+
+.nav-btn-container {
+    display: flex;
+    align-self: center;
+    gap: 1rem;
+}
+
+.login-btn, .register-btn {
+    text-decoration: none;
+}
+
+.login-btn {
+    border-left: 1px solid white;
+    padding-left: 1rem;
+}
+
+/* FOOTER */
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100vw;
+    place-self: end;
+    border-top: 1px solid var(--color-border);
+    padding: 1rem 0 1rem 0;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-img {
+    width: 12rem;
+    height: fit-content;
+}
+
+.footer-left > p {
+    margin: 0;
+    text-align: start;
+}
+
+.footer-mid {
+    display: flex;
+    place-items: center;
+}
+
+.footer-mid-ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+}
+
+.footer-copyright {
+    display: flex;
+    justify-content: center;
+}

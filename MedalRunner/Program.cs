@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-var app = builder.Build();
+
 
 //DI - REPO
 builder.Services.AddScoped<IBossRepository, BossRepository>();
@@ -23,7 +23,7 @@ builder.Services.AddScoped<IScoreboardRepository, ScoreboardRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //DI - SERVICE
-builder.Services.AddScoped<IBossService, IBossService>();
+builder.Services.AddScoped<IBossService, BossService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IConsumableService, ConsumableService>();
@@ -33,6 +33,8 @@ builder.Services.AddScoped<IGlyphService, GlyphService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IScoreboardService, ScoreboardService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

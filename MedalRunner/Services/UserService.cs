@@ -1,14 +1,15 @@
-﻿using MedalRunner.Services.Interfaces;
+﻿using MedalRunner.Repositories.Interfaces;
+using MedalRunner.Services.Interfaces;
 
 namespace MedalRunner.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserService userService)
+        public UserService(IUserRepository userRepository)
         {
-            _userService = userService;
+            _userRepository = userRepository;
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿/* medalrunner — core palette */
+:root {
+    /* backgrounds */
+    --color-bg-base: #111111;
+    --color-bg-surface: #191919;
+    --color-bg-elevated: #242424;
+    --color-border: #333333;
+    /* horde */
+    --color-horde: #C41F3B;
+    --color-horde-subtle: #2A0A12;
+    /* alliance */
+    --color-alliance: #0070DD;
+    --color-alliance-subtle: #071E3D;
+    /* text */
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #888888;
+}
