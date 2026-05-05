@@ -2,11 +2,11 @@
 
 namespace MedalRunner.Repositories
 {
-    public class ItemRepository : IItemRepository
+    public class DungeonRepository : IDungeonRepository
     {
         private string _connectionString;
 
-        public ItemRepository(IConfiguration configuration)
+        public DungeonRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
