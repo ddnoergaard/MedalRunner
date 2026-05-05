@@ -1,12 +1,12 @@
 ﻿namespace MedalRunner.Models
 {
-    public class Class
+    public class CharacterClass
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string ResourceType { get; set; }
 
-        public Class()
+        public CharacterClass()
         {
             
         }
