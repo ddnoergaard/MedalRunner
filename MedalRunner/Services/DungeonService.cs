@@ -1,4 +1,7 @@
 ﻿using MedalRunner.Repositories.Interfaces;
+using MedalRunner.Models;
+using MedalRunner.Repositories;
+using MedalRunner.Pages.Public_pages.Dungeons;
 
 namespace MedalRunner.Services.Interfaces;
 
@@ -10,4 +13,10 @@ public class DungeonService : IDungeonService
     {
         _dungeonRepository = dungeonRepository;
     }
+
+    public async Task<List<Dungeon>> GetAllDungeons()
+    {
+        return await _dungeonRepository.GetAllDungeons(); 
+    }
+
 }

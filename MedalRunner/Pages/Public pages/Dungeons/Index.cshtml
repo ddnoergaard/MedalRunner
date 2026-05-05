@@ -2,3 +2,23 @@
 @model MedalRunner.Pages.Public_pages.Dungeons.IndexModel
 @{
 }
+@using MedalRunner.Models;
+@using MedalRunner.Services;
+
+
+@foreach(Dungeon dungeon in Model._dungeons)
+{
+    <div class="card">
+        <!--
+            Create Image here
+        -->
+        <div class="container">
+            <h2>@dungeon.Name</h2>
+            <h5>Where: @dungeon.Zone</h5>
+            <p>Description: @dungeon.Description</p>
+
+        </div>
+    </div>
+}
+
+

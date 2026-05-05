@@ -1,12 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MedalRunner.Services;
+using MedalRunner.Services.Interfaces;
+using MedalRunner.Models;
+using System.Threading.Tasks;
 
 namespace MedalRunner.Pages.Public_pages.Dungeons
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        private IDungeonService _dungeonService;
+        public List<Dungeon> _dungeons;
+        public List<Dungeon> _displayDungeons;
+
+        public IndexModel(IDungeonService dungeonService)
         {
+            _dungeonService = dungeonService;
+        }
+        public async Task OnGet()
+        {
+            _dungeons = await _dungeonService.GetAllDungeons();
         }
     }
 }
