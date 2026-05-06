@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MedalRunner.Pages.Public_pages
+namespace MedalRunner.Pages
 {
-    public class IndexModel : PageModel
+    public class LoginModel : PageModel
     {
         public void OnGet()
         {

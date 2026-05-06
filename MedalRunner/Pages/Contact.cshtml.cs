@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MedalRunner.Pages.Public_pages
+namespace MedalRunner.Pages
 {
     public class ContactModel : PageModel
     {

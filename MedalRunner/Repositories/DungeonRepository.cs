@@ -42,7 +42,7 @@ namespace MedalRunner.Repositories
                         dungeon.Gold = reader.GetBoolean(reader.GetOrdinal("gold"));
                         dungeon.Silver = reader.GetBoolean(reader.GetOrdinal("silver"));
                         dungeon.Bronze = reader.GetBoolean(reader.GetOrdinal("bronze"));
-                        dungeon.Mop_amount = reader.GetInt32(reader.GetOrdinal("mop_amount"));
+                        dungeon.MopAmount = reader.GetInt32(reader.GetOrdinal("mop_amount"));
 
                         data.Add(dungeon);
                     }

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MedalRunner.Pages.Admin_pages
+namespace MedalRunner.Pages
 {
-    public class AddItemModel : PageModel
+    public class AboutModel : PageModel
     {
         public void OnGet()
         {

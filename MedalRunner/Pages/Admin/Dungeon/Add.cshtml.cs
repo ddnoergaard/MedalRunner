@@ -4,6 +4,7 @@ using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+
 namespace MedalRunner.Pages.Admin_pages
 {
     public class AddDungeonModel : PageModel
@@ -11,7 +12,7 @@ namespace MedalRunner.Pages.Admin_pages
         private readonly IDungeonService _dungeonService;
 
         [BindProperty]
-        public Dungeon Dungeon { get; set; }
+        public Models.Dungeon Dungeon { get; set; }
 
         public AddDungeonModel(IDungeonService dungeonService)
         {

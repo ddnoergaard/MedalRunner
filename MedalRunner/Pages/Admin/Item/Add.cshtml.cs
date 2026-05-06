@@ -11,7 +11,7 @@ namespace MedalRunner.Pages.Admin_pages
         private readonly IItemService _itemService;
 
         [BindProperty]
-        public Item Item { get; set; }
+        public Models.Item Item { get; set; }
 
         public AddItemModel(IItemService itemService)
         {
@@ -23,7 +23,7 @@ namespace MedalRunner.Pages.Admin_pages
 
         }
 
-        public void OnPost(Item item)
+        public void OnPost(Models.Item item)
         {
             if (!ModelState.IsValid)
             {
