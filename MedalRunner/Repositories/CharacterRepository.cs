@@ -14,7 +14,7 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task AddAsynch(Character character)
+        public async Task<int> AddAsynch(Character character)
         {
             const string sql = @"
 INSERT INTO Characters (Name, Race, CharacterClass, Specialization, CreatedAt)
@@ -30,11 +30,15 @@ VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             cmd.Parameters.Add(new SqlParameter("@CreatedAt", SqlDbType.Date) { Value = character.CreatedAt });
 
             await conn.OpenAsync();
-            var result = await cmd.ExecuteScalarAsync();
-            if (result != null && int.TryParse(result.ToString(), out var newId))
+            try
             {
-                character.Id = newId;
+                return Convert.ToInt32(await cmd.ExecuteScalarAsync());
             }
+            catch(SqlException ex)
+            {
+                throw;
+            }
+ 
 
         }
 

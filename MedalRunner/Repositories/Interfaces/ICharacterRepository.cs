@@ -7,7 +7,7 @@ namespace MedalRunner.Repositories.Interfaces
     {
         Task<IEnumerable<Character>> GetAllAsynch();
         Task<Character> GetByIdAsynch(int id);
-        Task AddAsynch(Character character);
+        Task<int> AddAsynch(Character character);
         Task UpdateAsynch(Character character);
         Task DeleteAsynch(int id);
 
