@@ -7,6 +7,6 @@ namespace MedalRunner.Repositories.Interfaces
         Task AddDungeon(Dungeon dungeon);
         Task UpdateDungeon(Dungeon dungeon);
         Task DeleteDungeon(int id);
-        Task<List<Dungeon>> GetAllDungeons();
+        Task<List<Dungeon>> GetAllDungeonsAsync();
     }
 }

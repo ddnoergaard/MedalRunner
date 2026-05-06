@@ -13,6 +13,70 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public async Task<List<Item>> GetAllItemsAsync()
+        {
+            //Create a list to store all the dungeons that we retrieve from the database
+            List<Item> data = new List<Item>();
+            //Create Instance of dungeon for later use
+            Item item = new Item();
+
+            string sqlQuery = "Select * FROM Dungeons";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand cmd = new SqlCommand(sqlQuery, connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                try
+                {
+                    await cmd.ExecuteScalarAsync();
+                }
+                catch (SqlException ex)
+                {
+                    throw;
+                }
+
+                while (await reader.ReadAsync())
+                {
+                    item.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                    item.Name = reader.GetString(reader.GetOrdinal("name"));
+                    item.Slot = reader.GetInt32(reader.GetOrdinal("gear_slot"));
+                    item.ImageUrl = reader.GetString(reader.GetOrdinal("image_url"));
+                    item.ItemLevel = reader.GetInt32(reader.GetOrdinal("item_level"));
+                    item.Rarity = reader.GetString(reader.GetOrdinal("rarity"));
+                    item.Difficulty = reader.GetString(reader.GetOrdinal("difficulty"));
+                    item.Material = reader.GetString(reader.GetOrdinal("material"));
+                    item.Armor = reader.GetInt32(reader.GetOrdinal("armor"));
+                    item.MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage"));
+                    item.MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage"));
+                    item.Intellect = reader.GetInt32(reader.GetOrdinal("intellect"));
+                    item.Strenght = reader.GetInt32(reader.GetOrdinal("strenght"));
+                    item.Agility = reader.GetInt32(reader.GetOrdinal("agility"));
+                    item.Spirit = reader.GetInt32(reader.GetOrdinal("spirit"));
+                    item.Stamina = reader.GetInt32(reader.GetOrdinal("stamina"));
+                    item.Haste = reader.GetInt32(reader.GetOrdinal("haste"));
+                    item.Crit = reader.GetInt32(reader.GetOrdinal("crit"));
+                    item.Mastery = reader.GetInt32(reader.GetOrdinal("mastery"));
+                    item.Dodge = reader.GetInt32(reader.GetOrdinal("dodge"));
+                    item.Parry = reader.GetInt32(reader.GetOrdinal("parry"));
+                    item.Hit = reader.GetInt32(reader.GetOrdinal("hit"));
+                    item.Expertise = reader.GetInt32(reader.GetOrdinal("expertise"));
+                    item.Speed = reader.GetDouble(reader.GetOrdinal("speed"));
+                    item.SocketAmount = reader.GetInt32(reader.GetOrdinal("socket_amount"));
+                    item.SocketBonusStat = reader.GetString(reader.GetOrdinal("socket_bonus_stat"));
+                    item.SocketBonusAmount = reader.GetInt32(reader.GetOrdinal("socket_bonus_amount"));
+                    item.Enchants = reader.GetInt32(reader.GetOrdinal("enchant"));
+
+                    data.Add(item);
+                }
+                    return data;
+            }
+               
+
+        }
+        
+
         public async Task AddItem(Item item)
         {
             string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, strength, agility, spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant)" +
