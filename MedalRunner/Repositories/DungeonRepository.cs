@@ -29,7 +29,7 @@ namespace MedalRunner.Repositories
                 await connection.OpenAsync();
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
-
+                //Check if query is usable if not throw exception
                 try
                 {
                     await cmd.ExecuteScalarAsync();
@@ -38,6 +38,7 @@ namespace MedalRunner.Repositories
                 {
                     throw;
                 }
+                // while still more to read, add to data list and then return said list
                 while (await reader.ReadAsync())
                     {
                         dungeon.Id = reader.GetInt32(reader.GetOrdinal("id"));

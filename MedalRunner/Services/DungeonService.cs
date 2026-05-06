@@ -32,7 +32,7 @@ public class DungeonService : IDungeonService
 
     public async Task<List<Dungeon>> GetAllDungeons()
     {
-        return await _dungeonRepository.GetAllDungeons(); 
+        return await _dungeonRepository.GetAllDungeonsAsync(); 
     }
 
 }

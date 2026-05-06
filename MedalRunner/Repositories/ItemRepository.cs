@@ -15,9 +15,9 @@ namespace MedalRunner.Repositories
 
         public async Task<List<Item>> GetAllItemsAsync()
         {
-            //Create a list to store all the dungeons that we retrieve from the database
+            //Create a list to store all the items that we retrieve from the database
             List<Item> data = new List<Item>();
-            //Create Instance of dungeon for later use
+            //Create Instance of item for later use
             Item item = new Item();
 
             string sqlQuery = "Select * FROM Dungeons";
@@ -27,7 +27,7 @@ namespace MedalRunner.Repositories
                 await connection.OpenAsync();
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
-
+                //Check if query is usable if not throw exception
                 try
                 {
                     await cmd.ExecuteScalarAsync();
@@ -37,6 +37,7 @@ namespace MedalRunner.Repositories
                     throw;
                 }
 
+                // while still more to read, add to data list and then return said list
                 while (await reader.ReadAsync())
                 {
                     item.Id = reader.GetInt32(reader.GetOrdinal("id"));
