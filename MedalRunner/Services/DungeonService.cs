@@ -35,4 +35,8 @@ public class DungeonService : IDungeonService
         return await _dungeonRepository.GetAllDungeons(); 
     }
 
+    public async Task<IEnumerable<Boss>> GetBossesAsync(int dungeonId)
+    {
+        return await _dungeonRepository.GetBossesByDungeonId(dungeonId);
+    }
 }
