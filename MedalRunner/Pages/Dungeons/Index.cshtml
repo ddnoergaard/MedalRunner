@@ -4,21 +4,41 @@
 }
 @using MedalRunner.Models;
 @using MedalRunner.Services;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="~/css/public/ShowDungeons.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Dungeons</h1>
 
 
-@foreach(Dungeon dungeon in Model._dungeons)
-{
-    <div class="card">
-        <!--
-            Create Image here
-        -->
+    @foreach(Dungeon dungeon in Model._dungeons)
+    {
         <div class="container">
-            <h2>@dungeon.Name</h2>
-            <h5>Where: @dungeon.Zone</h5>
-            <p>Description: @dungeon.Description</p>
+            <div>
+                <img src="ImageUrl">
+            </div>
 
-        </div>
-    </div>
-}
+            <div class="text-column border-column">
+                <p>@dungeon.Name</p>
+                <p>@dungeon.Description</p>
+                <p>@dungeon.Zone</p>
+            </div>
+            <div class="double-container">
+                <div class="text-column">
+                    <h3>Boss list</h3>
+                    <ul>
+                        <li>Insert boss</li>
+                    </ul>
+                </div>
+                <div class="align-btn">
+                    <btn>See more</btn>
+                </div>
+            </div>
+        </div>  
+    }
 
+</body>
 

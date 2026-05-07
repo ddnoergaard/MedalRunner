@@ -15,7 +15,7 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<List<Dungeon>> GetAllDungeons()
+        public async Task<List<Dungeon>> GetAllDungeonsAsync()
         {
             //Create a list to store all the dungeons that we retrieve from the database
             List<Dungeon> data = new List<Dungeon>();
@@ -29,10 +29,10 @@ namespace MedalRunner.Repositories
                 await connection.OpenAsync();
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
-
-                try
-                {
-                    while (await reader.ReadAsync())
+                //Check if query is usable if not throw exception
+               
+                // while still more to read, add to data list and then return said list
+                while (await reader.ReadAsync())
                     {
                         dungeon.Id = reader.GetInt32(reader.GetOrdinal("id"));
                         dungeon.Name = reader.GetString(reader.GetOrdinal("name"));
@@ -46,13 +46,10 @@ namespace MedalRunner.Repositories
 
                         data.Add(dungeon);
                     }
-                    return data;
-                }
-                catch (SqlException ex)
-                {
-                    throw;
-                }
+                if (data.Count == 0) throw new IndexOutOfRangeException();
+                return data;
 
+               
             }
         }
 
