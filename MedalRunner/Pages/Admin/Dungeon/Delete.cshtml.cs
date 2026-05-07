@@ -24,9 +24,9 @@ namespace MedalRunner.Pages.Admin_pages
             var deletedItem = _dungeonService.DeleteDungeon(Dungeon.Id);
             if (deletedItem == null)
             {
-                return RedirectToPage("/NotFound");
+                return RedirectToPage("/Pages/Error");
             }
-            return RedirectToPage("AllDungeons");
+            return RedirectToPage("/Admin/Dungeon/Index");
         }
     }
 }

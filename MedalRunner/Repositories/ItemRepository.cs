@@ -15,35 +15,12 @@ namespace MedalRunner.Repositories
 
         public async Task AddItem(Item item)
         {
-            string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, strength, agility, spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant)" +
-                "VALUES (" +
-                "name = @name" +
-                "gear_slot = @gear_slot" +
-                "image_url = @image_url" +
-                "item_level = @item_level" +
-                "rarity = @rarity" +
-                "difficulty = @difficulty" +
-                "material = @material" +
-                "armor = @armor" +
-                "min_damage = @min_damage" +
-                "max_damage = @max_damage" +
-                "intellect = @intellect" +
-                "strength = @strength" +
-                "agility = @agility" +
-                "spirit = @spirit" +
-                "stamina = @stamina" +
-                "haste = @haste" +
-                "crit = @crit" +
-                "mastery = @mastery" +
-                "dodge = @dodge" +
-                "parry = @parry" +
-                "hit = @hit" +
-                "expertise = @expertise" +
-                "speed = @speed" +
-                "socket_amount = @socket_amount" +
-                "socket_bonus_stat = @socket_bonus_stat" +
-                "socket_bonus_amount = @socket_bonus_amount" +
-                "enchant = @enchant)";
+            string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, strength, agility, " +
+                "spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant)" +
+                "VALUES (name = @name, gear_slot = @gear_slot, image_url = @image_url, item_level = @item_level, rarity = @rarity, difficulty = @difficulty, material = @material, " +
+                "armor = @armor, min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
+                "stamina = @stamina, haste = @haste, crit = @crit, mastery = @mastery, dodge = @dodge, parry = @parry, hit = @hit, expertise = @expertise, speed = @speed, " +
+                "socket_amount = @socket_amount, socket_bonus_stat = @socket_bonus_stat, socket_bonus_amount = @socket_bonus_amount, enchant = @enchant)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -78,13 +55,13 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@socket_bonus_stat", item.SocketBonusStat ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@socket_bonus_amount", item.SocketBonusAmount ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@enchant", item.Enchants ?? (object)DBNull.Value);
+                    
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();
                     }
                     catch (SqlException ex)
                     {
-                        // Handle exception (e.g., log the error)
                         Console.WriteLine($"SQL Error: {ex.Message}");
                     }
 
@@ -97,36 +74,11 @@ namespace MedalRunner.Repositories
         public async Task UpdateItem(Item item)
         {
             string sqlQuery = "UPDATE items" +
-                "SET" +
-
-                "name = @name" +
-                "gear_slot = @gear_slot" +
-                "image_url = @image_url" +
-                "item_level = @item_level" +
-                "rarity = @rarity" +
-                "difficulty = @difficulty" +
-                "material = @material" +
-                "armor = @armor" +
-                "min_damage = @min_damage" +
-                "max_damage = @max_damage" +
-                "intellect = @intellect" +
-                "strength = @strength" +
-                "agility = @agility" +
-                "spirit = @spirit" +
-                "stamina = @stamina" +
-                "haste = @haste" +
-                "crit = @crit" +
-                "mastery = @mastery" +
-                "dodge = @dodge" +
-                "parry = @parry" +
-                "hit = @hit" +
-                "expertise = @expertise" +
-                "speed = @speed" +
-                "socket_amount = @socket_amount" +
-                "socket_bonus_stat = @socket_bonus_stat" +
-                "socket_bonus_amount = @socket_bonus_amount" +
-                "enchant = @enchant" +
-
+                "SET name = @name, gear_slot = @gear_slot, image_url = @image_url, item_level = @item_level, rarity = @rarity, difficulty = @difficulty, material = @material, armor = @armor," +
+                 "min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
+                "stamina = @stamina, haste = @haste, crit = @crit, mastery = @mastery, dodge = @dodge, parry = @parry, hit = @hit, expertise = @expertise, speed = @speed, " +
+                "socket_amount = @socket_amount, socket_bonus_stat = @socket_bonus_stat, socket_bonus_amount = @socket_bonus_amount, enchant = @enchant, " +
+                
                 "WHERE id = @id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
