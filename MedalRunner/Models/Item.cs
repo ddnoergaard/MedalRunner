@@ -12,12 +12,13 @@ namespace MedalRunner.Models
         public string Rarity { get; set; } = string.Empty;
         public string Difficulty { get; set; } = string.Empty;
         public string Material { get; set; } = string.Empty;
+        public string Source { get; set; } = string.Empty; // Source to see where it's from.
         public int Armor { get; set; }
         public int? MinDamage { get; set; }
         public int? MaxDamage { get; set; }
         public int? Intellect { get; set; }
         public int? Strenght { get; set; }
-            public int? Agility { get; set; }
+        public int? Agility { get; set; }
         public int? Spirit { get; set; }
         public int? Stamina { get; set; }
         public int? Haste { get; set; }
