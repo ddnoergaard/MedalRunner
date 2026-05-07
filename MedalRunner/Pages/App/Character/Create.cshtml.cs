@@ -18,7 +18,6 @@ namespace MedalRunner.Pages.App.Character
 
         public void OnGet()
         {
-            character.CreatedAt = DateTime.UtcNow;
         }
         
         public async Task<IActionResult> OnPostAsynch()
