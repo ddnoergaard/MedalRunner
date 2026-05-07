@@ -1,6 +1,6 @@
 ﻿namespace MedalRunner.Models
 {
-    public class Warrior
+    public class Warrior : CharacterClass
     {
         public int Rage { get; set; }
         public string Stance { get; set; }
