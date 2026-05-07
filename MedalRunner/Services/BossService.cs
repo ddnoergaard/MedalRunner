@@ -51,7 +51,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                await _bossRepository.UpdateImageUrl(bossId, imageUrl);
+                await _bossRepository.UpdateImageUrlAsync(bossId, imageUrl);
             } catch(SqlException)
             {
                 throw;

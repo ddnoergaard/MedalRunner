@@ -17,7 +17,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                return await _characterRepository.GetAllAsynch();
+                return await _characterRepository.GetAllAsync();
             }
             catch(Exception ex)
             {
@@ -29,7 +29,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                return await _characterRepository.GetByIdAsynch(id);
+                return await _characterRepository.GetByIdAsync(id);
             }
             catch(Exception ex)
             {
@@ -41,7 +41,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                await _characterRepository.AddAsynch(character);
+                await _characterRepository.AddAsync(character);
             }
             catch(Exception ex)
             {
@@ -53,7 +53,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                await _characterRepository.UpdateAsynch(character);
+                await _characterRepository.UpdateAsync(character);
             }
             catch(Exception ex)
             {
@@ -65,7 +65,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                await _characterRepository.DeleteAsynch(id);
+                await _characterRepository.DeleteAsync(id);
             }
             catch(Exception ex)
             {

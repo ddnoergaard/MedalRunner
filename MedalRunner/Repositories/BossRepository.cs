@@ -104,7 +104,7 @@ namespace MedalRunner.Repositories
             }
         }
 
-        public async Task UpdateImageUrl(int bossId, string imageUrl)
+        public async Task UpdateImageUrlAsync(int bossId, string imageUrl)
         {
             string sqlQuery = "UPDATE bosses SET image_url = @imageUrl WHERE id = @id";
 

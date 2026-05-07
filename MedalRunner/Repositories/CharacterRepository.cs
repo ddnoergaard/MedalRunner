@@ -14,12 +14,12 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<int> AddAsynch(Character character)
+        public async Task<int> AddAsync(Character character)
         {
             string sql = @"
-INSERT INTO Characters (Name, Race, CharacterClass, Specialization, CreatedAt)
-OUTPUT INSERTED.id
-VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
+                INSERT INTO Characters (Name, Race, CharacterClass, Specialization, CreatedAt)
+                OUTPUT INSERTED.id
+                VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
 
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
@@ -34,15 +34,15 @@ VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             {
                 return Convert.ToInt32(await cmd.ExecuteScalarAsync());
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw;
             }
- 
+
 
         }
 
-        public async Task DeleteAsynch(int id)
+        public async Task DeleteAsync(int id)
         {
             string sql = "DELETE FROM Characters WHERE Id = @Id";
 
@@ -55,13 +55,13 @@ VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             {
                 await cmd.ExecuteNonQueryAsync();
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw;
             }
         }
 
-        public async Task<IEnumerable<Character>> GetAllAsynch()
+        public async Task<IEnumerable<Character>> GetAllAsync()
         {
             var List = new List<Character>();
             string sql = @"SELECT Id, Name, Race, CharacterClass, Specialization, CreatedAt FROM Characters ORDER BY Name";
@@ -69,7 +69,7 @@ VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
             await using var cmd = new SqlCommand(sql, conn);
-           
+
 
             try
             {
@@ -81,13 +81,13 @@ VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
 
                 return List;
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw;
             }
         }
 
-        public async Task<Character> GetByIdAsynch(int id)
+        public async Task<Character> GetByIdAsync(int id)
         {
             string sql = @"SELECT Id, Name, Race, Class, Specialization, CreatedAt FROM Characters WHERE Id = @Id";
 
@@ -103,15 +103,15 @@ VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             return null;
         }
 
-        public async Task UpdateAsynch(Character character)
+        public async Task UpdateAsync(Character character)
         {
             string sql = @"
-UPDATE Characters
-SET Name = @Name,
-    Race = @Race,
-    CharacterClass = @CharacterClass,
-    Specialization = @Specialization
-WHERE Id = @Id";
+                UPDATE Characters
+                SET Name = @Name,
+                    Race = @Race,
+                    CharacterClass = @CharacterClass,
+                    Specialization = @Specialization
+                WHERE Id = @Id";
 
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
@@ -126,7 +126,7 @@ WHERE Id = @Id";
             {
                 await cmd.ExecuteNonQueryAsync();
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw;
             }
@@ -138,6 +138,7 @@ WHERE Id = @Id";
             {
                 Id = rdr.GetInt32(rdr.GetOrdinal("Id")),
                 Name = rdr.GetString(rdr.GetOrdinal("Name")),
+                //Find better way to do this
                 Race = rdr.IsDBNull(rdr.GetOrdinal("Race")) ? null : rdr.GetString(rdr.GetOrdinal("Race")),
                 Specialization = rdr.GetInt32(rdr.GetOrdinal("Specialization")),
                 CreatedAt = rdr.GetDateTime(rdr.GetOrdinal("CreatedAt"))
