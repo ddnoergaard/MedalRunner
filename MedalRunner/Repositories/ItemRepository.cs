@@ -26,16 +26,8 @@ namespace MedalRunner.Repositories
             {
                 await connection.OpenAsync();
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 //Check if query is usable if not throw exception
-                try
-                {
-                    await cmd.ExecuteScalarAsync();
-                }
-                catch (SqlException ex)
-                {
-                    throw;
-                }
 
                 // while still more to read, add to data list and then return said list
                 while (await reader.ReadAsync())
@@ -71,6 +63,7 @@ namespace MedalRunner.Repositories
 
                     data.Add(item);
                 }
+                if (data.Count == 0) throw new IndexOutOfRangeException();
                     return data;
             }
                

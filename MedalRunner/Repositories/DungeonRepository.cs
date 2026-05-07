@@ -30,14 +30,7 @@ namespace MedalRunner.Repositories
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
                 //Check if query is usable if not throw exception
-                try
-                {
-                    await cmd.ExecuteScalarAsync();
-                }
-                catch (SqlException ex)
-                {
-                    throw;
-                }
+               
                 // while still more to read, add to data list and then return said list
                 while (await reader.ReadAsync())
                     {
@@ -53,9 +46,10 @@ namespace MedalRunner.Repositories
 
                         data.Add(dungeon);
                     }
-                    return data;
-               
+                if (data.Count == 0) throw new IndexOutOfRangeException();
+                return data;
 
+               
             }
         }
 
