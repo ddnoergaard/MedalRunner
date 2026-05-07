@@ -1,4 +1,6 @@
-﻿namespace MedalRunner.Services.Interfaces
+﻿using MedalRunner.Models;
+
+namespace MedalRunner.Services.Interfaces
 {
     public interface IBossService
     {

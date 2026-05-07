@@ -16,9 +16,9 @@ namespace MedalRunner.Pages.Admin.Item
         {
             _itemService = itemService;
         }
-        public void OnGet()
+        public async Task OnGet()
         {
-            Items = _itemService.GetAllItems();
+            //get all method Items = _itemService.();
         }
     }
 }

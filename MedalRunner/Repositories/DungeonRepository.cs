@@ -42,7 +42,7 @@ namespace MedalRunner.Repositories
                         dungeon.Gold = reader.GetString(reader.GetOrdinal("gold"));
                         dungeon.Silver = reader.GetString(reader.GetOrdinal("silver"));
                         dungeon.Bronze = reader.GetString(reader.GetOrdinal("bronze"));
-                        dungeon.MopAmount = reader.GetInt32(reader.GetOrdinal("mop_amount"));
+                        dungeon.MobAmount = reader.GetInt32(reader.GetOrdinal("mop_amount"));
 
                         data.Add(dungeon);
                     }
@@ -71,7 +71,7 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@gold", dungeon.Gold);
                     cmd.Parameters.AddWithValue("@silver", dungeon.Silver);
                     cmd.Parameters.AddWithValue("@bronze", dungeon.Bronze);
-                    cmd.Parameters.AddWithValue("@mopAmount", dungeon.MopAmount);
+                    cmd.Parameters.AddWithValue("@mopAmount", dungeon.MobAmount);
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();
@@ -110,7 +110,7 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@gold", dungeon.Gold);
                     cmd.Parameters.AddWithValue("@silver", dungeon.Silver);
                     cmd.Parameters.AddWithValue("@bronze", dungeon.Bronze);
-                    cmd.Parameters.AddWithValue("@mopAmount", dungeon.MopAmount);
+                    cmd.Parameters.AddWithValue("@mopAmount", dungeon.MobAmount);
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();

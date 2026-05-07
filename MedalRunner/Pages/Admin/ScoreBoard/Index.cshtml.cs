@@ -15,9 +15,9 @@ namespace MedalRunner.Pages.Admin.ScoreBoard
         {
             _scoreBoard = scoreBoard;
         }
-        public void OnGet()
+        public async Task OnGet()
         {
-            Scoreboard = _scoreBoard.GetAllScores();
+            Scoreboard = await _scoreBoard.GetAllScores();
         }
 
         public IActionResult SortByNameOnPost()

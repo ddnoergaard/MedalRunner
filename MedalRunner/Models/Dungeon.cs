@@ -12,7 +12,7 @@
         public string Gold { get; set; }
         public string Silver { get; set; }
         public string Bronze { get; set; }
-        public int MopAmount { get; set; }
+        public int MobAmount { get; set; }
         public List<Boss> Bosses { get; set; }
 
         public Dungeon()
