@@ -1,4 +1,4 @@
-﻿using MedalRunner.Models;
+using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
 
@@ -13,14 +13,64 @@ namespace MedalRunner.Services
             _characterRepository = characterRepository;
         }
 
-        public Task<IEnumerable<Character>> GetAll() => _characterRepository.GetAllAsynch();
+        public async Task<IEnumerable<Character>> GetAll()
+        {
+            try
+            {
+                return await _characterRepository.GetAllAsynch();
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
 
-        public Task<Character> GetById(int id) => _characterRepository.GetByIdAsynch(id);
+        public async Task<Character> GetById(int id)
+        {
+            try
+            {
+                return await _characterRepository.GetByIdAsynch(id);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
 
-        public Task Create(Character character) => _characterRepository.AddAsynch(character);
+        public async Task Create(Character character)
+        {
+            try
+            {
+                await _characterRepository.AddAsynch(character);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
 
-        public Task Update(Character character) => _characterRepository.UpdateAsynch(character);
+        public async Task Update(Character character)
+        {
+            try
+            {
+                await _characterRepository.UpdateAsynch(character);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
 
-        public Task Delete(int id) => _characterRepository.DeleteAsynch(id);
+        public async Task Delete(int id)
+        {
+            try
+            {
+                await _characterRepository.DeleteAsynch(id);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
