@@ -53,7 +53,7 @@ namespace MedalRunner.Repositories
             }
         }
 
-        public async Task AddDungeon(Dungeon dungeon)
+        public async Task AddDungeonAsync(Dungeon dungeon)
         {
             string sqlQuery = "INSERT INTO dungeons(name, zone, description, platinum, gold, silver, bronze, mop_amount)" +
                 "VALUES (name = @name, zone = @zone, description = @description, platinum = @platinum, gold = @gold, silver = @silver, bronze = @bronze, mop_amount = @mopAmount)";
@@ -84,7 +84,7 @@ namespace MedalRunner.Repositories
             }
         }
 
-        public async Task UpdateDungeon(Dungeon dungeon)
+        public async Task UpdateDungeonAsync(Dungeon dungeon)
         {
             string sqlQuery = "UPDATE dungeons" +
                 "SET name = @name" +
@@ -123,7 +123,7 @@ namespace MedalRunner.Repositories
             }
         }
 
-        public async Task DeleteDungeon(int id)
+        public async Task DeleteDungeonAsync(int id)
         {
             string sqlQuery = "DELETE FROM dungeons WHERE id = @id";
 
@@ -145,7 +145,7 @@ namespace MedalRunner.Repositories
             }
         }
 
-        public async Task<IEnumerable<Boss>> GetBossesByDungeonId(int dungeonId)
+        public async Task<IEnumerable<Boss>> GetBossesByDungeonIdAsync(int dungeonId)
         {
             List<int> bossIds = new List<int>();
             List<Boss> bosses = new List<Boss>();

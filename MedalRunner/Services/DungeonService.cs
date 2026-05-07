@@ -17,17 +17,17 @@ public class DungeonService : IDungeonService
 
     public async Task AddDungeon(Dungeon dungeon)
     {
-        await _dungeonRepository.AddDungeon(dungeon);
+        await _dungeonRepository.AddDungeonAsync(dungeon);
     }
 
     public async Task UpdateDungeon(Dungeon dungeon)
     {
-        await _dungeonRepository.UpdateDungeon(dungeon);
+        await _dungeonRepository.UpdateDungeonAsync(dungeon);
     }
 
     public async Task DeleteDungeon(int id)
     {
-        await _dungeonRepository.DeleteDungeon(id);
+        await _dungeonRepository.DeleteDungeonAsync(id);
     }
 
     public async Task<List<Dungeon>> GetAllDungeons()
@@ -37,6 +37,6 @@ public class DungeonService : IDungeonService
 
     public async Task<IEnumerable<Boss>> GetBossesAsync(int dungeonId)
     {
-        return await _dungeonRepository.GetBossesByDungeonId(dungeonId);
+        return await _dungeonRepository.GetBossesByDungeonIdAsync(dungeonId);
     }
 }
