@@ -1,6 +1,6 @@
 ﻿namespace MedalRunner.Repositories.Interfaces
 {
-    public class IConsumableRepository
+    public interface IConsumableRepository
     {
     }
 }

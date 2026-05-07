@@ -1,6 +1,6 @@
 ﻿namespace MedalRunner.Models
 {
-    public class Paladin
+    public class Paladin : CharacterClass
     {
         public int HolyPower { get; set; }
         public string Aura { get; set; }

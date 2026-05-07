@@ -1,0 +1,47 @@
+﻿@page
+@model MedalRunner.Pages.Admin.Item.IndexModel
+@{
+}
+
+<h1>Items</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Item Level</th>
+            <th>Rarity</th>
+            <th>Difficulty</th>
+            <th>Slot</th>
+            <th>Type</th>
+            <th>Source</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Items != null)
+        {
+            foreach(var i in Model.Items)
+            {
+                <tr>
+                    <td>@i.Name</td>
+                    <td>@i.ItemLevel</td>
+                    <td>@i.Rarity</td>
+                    <td>@i.Difficulty</td>
+                    <td>@i.Slot</td>
+                    <td>@i.Material</td>
+                    <td>@i.Source</td>
+                    <td>
+                        <div>
+                            <a asp-page="/Admin/Item/Update" asp-route-id="@i.Id">Edit</a>
+                        </div>
+                        <div>
+                            <a asp-page="/Admin/Item/Delete" asp-route-id="@i.Id">Delete</a>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<button asp-page="/Admin/Item/Create">Create New Item</button>

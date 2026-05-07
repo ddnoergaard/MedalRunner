@@ -1,9 +1,10 @@
 ﻿using MedalRunner.Models;
+using MedalRunner.Repositories.Interfaces;
 using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private string _connectionString;
         public UserRepository(IConfiguration configuration)

@@ -1,0 +1,53 @@
+﻿.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-style: solid;
+    height: 15rem;
+    width: 100%;
+    border-radius: 1.5rem;
+}
+
+.double-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.border-column {
+    border-left: solid;
+    border-right: solid;
+}
+
+.text-column {
+    display: flex;
+    flex-direction: column;
+}
+
+    .text-column > p {
+        text-align: start;
+    }
+
+    .text-column > h3 {
+        text-align: center;
+    }
+
+li {
+    list-style-type: none;
+    list-style-position: outside;
+}
+
+img {
+    place-self: center;
+}
+
+.align-btn {
+    text-align: right;
+    align-content: flex-end;
+}
+
+btn {
+    padding-right: 0.7rem;
+}
+
+h1 {
+    text-align: center;
+}

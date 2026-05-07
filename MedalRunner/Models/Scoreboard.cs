@@ -6,6 +6,9 @@
         public string Name { get; set; }
         public Dungeon Dungeon { get; set; }
         public string Score { get; set; }
+        public DateTime RunDate { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; }
 
         public Scoreboard()
         {
