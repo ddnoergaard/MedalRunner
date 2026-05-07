@@ -12,6 +12,7 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
         private IDungeonService _dungeonService;
         public List<Dungeon> _dungeons;
         public List<Dungeon> _displayDungeons;
+        public List<Boss> _bosses;
 
         public IndexModel(IDungeonService dungeonService)
         {
