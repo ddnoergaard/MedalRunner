@@ -1,4 +1,6 @@
-﻿namespace MedalRunner.Repositories.Interfaces
+﻿using MedalRunner.Models;
+
+namespace MedalRunner.Repositories.Interfaces
 {
     public interface IBossRepository
     {
