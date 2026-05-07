@@ -1,4 +1,70 @@
-﻿@page
+@page "{id:int}/{slug?}"
 @model MedalRunner.Pages.Public_pages.Dungeons.DetailsModel
 @{
 }
+
+<div class="main-container">
+    <div class="section-one">
+    </div>
+    <div class="section-two">
+        <div>
+            <h1>@Model.Dungeon.Name</h1>
+        </div>
+        <div>
+            <p>@Model.Dungeon.Zone</p>
+        </div>
+    </div>
+    <div class="section-three">
+        <div class="dungeon-map">
+            <img src="@Model.Dungeon.ImageUrl" alt="">
+        </div>
+        <div class="section-three-card">
+            <h2>Summary</h2>
+            <p><strong>Zone: </strong> @Model.Dungeon.Zone</p>
+            <p><strong>Description: </strong> @Model.Dungeon.Description</p>
+            <p><strong>Bronze Time:: </strong> @Model.Dungeon.Bronze</p>
+            <p><strong>Silver Time: </strong> @Model.Dungeon.Silver</p>
+            <p><strong>Gold Time: </strong> @Model.Dungeon.Gold</p>
+            <p><strong>Platinum Time: </strong> @Model.Dungeon.Platinum</p>
+            <p><strong>Mob amount: </strong> @Model.Dungeon.MobAmount</p>
+        </div>
+    </div>
+    <div class="section-four">
+        <div class="section-four-left">
+            <h2>Scoreboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{ScoreboardRecords.Name}</td>
+                        <td>{ScoreboardRecords.Score}</td>
+                        <td>{ScoreboardRecords.Date}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="section-four-right">
+            <h2>Bosses</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-image"><img src="" alt=""></td>
+                        <td class="col-name">{Bosses.Name}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
