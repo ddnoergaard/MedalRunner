@@ -2,3 +2,37 @@
 @model MedalRunner.Pages.App.Character.CreateModel
 @{
 }
+<form method="post">
+	<div class="form-group">
+		<label asp-for="@Model.character.Name" class="control-label"></label>
+		<input asp-for="@Model.character.Name" class="form-control" />
+		<span asp-validation-for="@Model.character.Name" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.character.Race" class="control-label"></label>
+		<input asp-for="@Model.character.Race" class="form-control" />
+		<span asp-validation-for="@Model.character.Race" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<select name="Character Class" id="@Model.character.CharacterClass">
+			<option value="null">Please select a Class</option>
+			<option value="Warrior">Warrior</option>
+			<option value="Paladin">Paladin</option>
+			<option value="Hunter">Hunter</option>
+			<option value="Priest">Priest</option>
+			<option value="Druid">Druid</option>
+			<option value="Warlock">Warlock</option>
+			<option value="Monk">Monk</option>
+			<option value="Deathknight">Death Knight</option>
+			<option value="Mage">Mage</option>
+			<option value="Rouge">Rouge</option>
+			<option value="Shaman">Shaman</option>
+		</select>
+	</div>
+
+	<p>
+		<div class="form-group">
+			<input type="submit" value="Create" class="btn btn-primary" />
+		</div>
+	</p>
+</form>
