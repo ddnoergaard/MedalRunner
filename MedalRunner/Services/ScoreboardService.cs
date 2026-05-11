@@ -18,6 +18,17 @@ namespace MedalRunner.Services
             return await _scoreboardRepository.GetAllScores();
         }
 
+        public async Task<IEnumerable<Scoreboard>> GetScoreboardsOnDungeonIdAsync(int dungeonId)
+        {
+            try
+            {
+                return await _scoreboardRepository.GetScoreboardsOnDungeonIdAsync(dungeonId);
+            } catch (InvalidOperationException ex)
+            {
+                throw;
+            }
+        }
+
         public async Task Update(Scoreboard score)
         {
             _scoreboardRepository.UpdateScore(score);

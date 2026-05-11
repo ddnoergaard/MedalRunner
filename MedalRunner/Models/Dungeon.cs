@@ -8,6 +8,7 @@
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public string DungeonMapUrl { get; set; }
+        public string BannerImageUrl { get; set; }
         public string Platinum { get; set; }
         public string Gold { get; set; }
         public string Silver { get; set; }

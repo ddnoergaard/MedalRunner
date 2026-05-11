@@ -1,10 +1,21 @@
 @page "{id:int}/{slug?}"
+@using MedalRunner.Models;
 @model MedalRunner.Pages.Public_pages.Dungeons.DetailsModel
 @{
 }
+@section Style {
+    <link rel="stylesheet" href="~/css/public/specficDungeon.css" />
+}
 
 <div class="main-container">
-    <div class="section-one">
+    <div class="section-one" style="
+    height: 10rem;
+    width: 100%;
+    background-image: url(@Model.Dungeon.BannerImageUrl);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+">
     </div>
     <div class="section-two">
         <div>
@@ -41,11 +52,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{ScoreboardRecords.Name}</td>
-                        <td>{ScoreboardRecords.Score}</td>
-                        <td>{ScoreboardRecords.Date}</td>
-                    </tr>
+                    @foreach(Scoreboard scoreboard in Model.ScoreboardEntries)
+                    {
+                        <tr>
+                            <td>@scoreboard.Name</td>
+                            <td>@scoreboard.Score</td>
+                            <td>@scoreboard.RunDate</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -59,10 +73,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="col-image"><img src="" alt=""></td>
-                        <td class="col-name">{Bosses.Name}</td>
-                    </tr>
+                    @foreach (Boss boss in Model.Dungeon.Bosses)
+                    {
+                        <tr>
+                            <td class="col-image"><img src="@boss.ImageUrl" alt=""></td>
+                            <td class="col-name">@boss.Name</td>
+                        </tr>
+                    }
+                    
                 </tbody>
             </table>
         </div>

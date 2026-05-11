@@ -6,7 +6,7 @@
     <title>@ViewData["Frontpage"] - MedalRunner</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/public/layout.css" asp-append-version="true" />
-    
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>

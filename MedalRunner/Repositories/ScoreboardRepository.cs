@@ -48,6 +48,44 @@ namespace MedalRunner.Repositories
             }
         }
 
+        public async Task<IEnumerable<Scoreboard>> GetScoreboardsOnDungeonIdAsync(int dungeonId)
+        {
+            string sqlQuery = "SELECT * FROM scoreboards WHERE dungeon_id = @dungeonId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@dungeonId", dungeonId);
+                    List<Scoreboard> returnList = new List<Scoreboard>();
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            returnList.Add(new Scoreboard
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                DungeonId = Convert.ToInt32(reader["dungeon_id"]),
+                                Name = Convert.ToString(reader["name"]),
+                                Score = Convert.ToString(reader["score"]),
+                                CreatedAt = Convert.ToDateTime(reader["created_at"]),
+                                IsActive = Convert.ToBoolean(reader["is_active"]),
+                                RunDate = Convert.ToDateTime(reader["run_date"])
+                            });
+                        }
+                        if (returnList.Count == 0)
+                        {
+                            throw new InvalidOperationException("No runs found");
+                        }
+                        return returnList;
+                    }
+                }
+
+            }
+        }
+
         public async Task UpdateScore(Scoreboard score)
         {
             string sqlQuery = "UPDATE Scoreboard " +

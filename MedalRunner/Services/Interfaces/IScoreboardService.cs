@@ -5,6 +5,7 @@ namespace MedalRunner.Services.Interfaces
     public interface IScoreboardService
     {
         Task<List<Scoreboard>> GetAllScores();
+        Task<IEnumerable<Scoreboard>> GetScoreboardsOnDungeonIdAsync(int dungeonId);
         Task Update(Scoreboard score);
         Task SetInactive(int id);
         Task SetActive(int id);

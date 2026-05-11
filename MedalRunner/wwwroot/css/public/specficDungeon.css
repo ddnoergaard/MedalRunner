@@ -1,0 +1,123 @@
+﻿main {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.section-one-image {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+
+.section-two {
+    display: flex;
+    margin: 0 15rem 0 15rem;
+    justify-content: space-between;
+    place-items: center;
+}
+
+.section-three {
+    display: flex;
+    place-items: center;
+    height: fit-content;
+    width: 100vw;
+    height: fit-content;
+    justify-content: space-evenly;
+}
+
+.dungeon-map-container {
+    height: 20rem;
+    width: 10rem;
+}
+
+.dungeon-map > img {
+    border-radius: 1rem;
+}
+
+.section-three-card {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    min-height: 20rem;
+    background-image: url(/content/parchment_paper.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    place-self: center;
+}
+
+    .section-three-card > ul {
+        display: flex;
+        flex-direction: column;
+        place-self: center;
+    }
+
+    .section-three-card > h2, .section-three-card > p, .section-three-card > p > strong {
+        text-align: center;
+        color: black;
+    }
+
+    .section-three-card > p {
+        margin: 0.5rem;
+    }
+
+.section-four {
+    display: flex;
+    place-items: start;
+    height: fit-content;
+    width: 100vw;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+.section-four-right {
+    min-width: 300px;
+}
+
+.section-four h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.section-four table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.section-four th,
+.section-four td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #555;
+    font-size: 14px;
+}
+
+.section-four th {
+    font-weight: 500;
+    color: #aaa;
+    font-size: 13px;
+}
+
+.section-four tbody tr:hover {
+    background: #2a2a2a;
+}
+
+.col-image {
+    width: 60px;
+}
+
+    .col-image img {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 4px;
+        display: block;
+    }

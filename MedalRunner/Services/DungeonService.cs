@@ -3,6 +3,7 @@ using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Models;
 using MedalRunner.Repositories;
 using MedalRunner.Pages.Public_pages.Dungeons;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Services.Interfaces;
 
@@ -39,4 +40,16 @@ public class DungeonService : IDungeonService
     {
         return await _dungeonRepository.GetBossesByDungeonIdAsync(dungeonId);
     }
+
+    public async Task<Dungeon> GetDungeonByIdAsync(int id)
+    {
+        try
+        {
+            return await _dungeonRepository.GetDungeonByIdAsync(id);
+        } catch (SqlException)
+        {
+            throw;
+        }
+    }
+
 }

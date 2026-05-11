@@ -196,5 +196,46 @@ namespace MedalRunner.Repositories
 
         }
 
+        public async Task<Dungeon> GetDungeonByIdAsync(int id)
+        {
+            string sqlQuery = "SELECT * FROM dungeons WHERE id = dungeonId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@dungeonId", id);
+                    try
+                    {
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            return new Dungeon
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                Name = Convert.ToString(reader["name"]),
+                                Zone = Convert.ToString(reader["zone"]),
+                                Description = Convert.ToString(reader["description"]),
+                                Platinum = Convert.ToString(reader["platinum"]),
+                                Gold = Convert.ToString(reader["gold"]),
+                                Silver = Convert.ToString(reader["silver"]),
+                                Bronze = Convert.ToString(reader["bronze"]),
+                                MobAmount = Convert.ToInt32(reader["mob_amount"]),
+                                ImageUrl = Convert.ToString(reader["image_url"]),
+                                DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
+                                BannerImageUrl = Convert.ToString(reader["banner_image"])
+
+                            };
+                        }
+                    } catch (SqlException)
+                    {
+                        throw;
+                    } 
+                    
+                }
+            }
+        }
+
     }
 }
