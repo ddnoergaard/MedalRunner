@@ -18,6 +18,11 @@ namespace MedalRunner.Services
             return await _scoreboardRepository.GetAllScores();
         }
 
+        public async Task<Scoreboard> GetScoreById(int id)
+        {
+            return await _scoreboardRepository.GetScoreById(id);
+        }
+
         public async Task Update(Scoreboard score)
         {
             _scoreboardRepository.UpdateScore(score);
@@ -37,6 +42,11 @@ namespace MedalRunner.Services
         {
             List<Scoreboard> scores = await _scoreboardRepository.GetAllScores();
             return scores.Where(s => s.Name.Contains(str, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task<List<Dungeon>> GetAllDungeons()
+        {
+            return await _scoreboardRepository.GetAllDungeons();
         }
     }
 }

@@ -1,4 +1,135 @@
-﻿@page
+﻿@page "{id:int}"
 @model MedalRunner.Pages.Admin.Item.UpdateModel
 @{
 }
+
+<form method="post">
+    <input type="hidden" asp-for="Item.Id" />
+
+    <div class="form-group">
+        <label asp-for="Item.Name" class="control-label"></label>
+        <input asp-for="Item.Name" class="form-control" />
+        <span asp-validation-for="Item.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Slot" class="control-label"></label>
+        <input asp-for="Item.Slot" class="form-control" />
+        <span asp-validation-for="Item.Slot" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.ImageUrl" class="control-label"></label>
+        <input asp-for="Item.ImageUrl" class="form-control" />
+        <span asp-validation-for="Item.ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.ItemLevel" class="control-label"></label>
+        <input asp-for="Item.ItemLevel" class="form-control" />
+        <span asp-validation-for="Item.ItemLevel" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Rarity" class="control-label"></label>
+        <input asp-for="Item.Rarity" class="form-control" />
+        <span asp-validation-for="Item.Rarity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Difficulty" class="control-label"></label>
+        <input asp-for="Item.Difficulty" class="form-control" />
+        <span asp-validation-for="Item.Difficulty" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Material" class="control-label"></label>
+        <input asp-for="Item.Material" class="form-control" />
+        <span asp-validation-for="Item.Material" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Source" class="control-label"></label>
+        <input asp-for="Item.Source" class="form-control" />
+        <span asp-validation-for="Item.Source" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Armor" class="control-label"></label>
+        <input asp-for="Item.Armor" class="form-control" />
+        <span asp-validation-for="Item.Armor" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.MinDamage" class="control-label"></label>
+        <input asp-for="Item.MinDamage" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.MaxDamage" class="control-label"></label>
+        <input asp-for="Item.MaxDamage" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Intellect" class="control-label"></label>
+        <input asp-for="Item.Intellect" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Strenght" class="control-label"></label>
+        <input asp-for="Item.Strenght" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Agility" class="control-label"></label>
+        <input asp-for="Item.Agility" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Spirit" class="control-label"></label>
+        <input asp-for="Item.Spirit" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Stamina" class="control-label"></label>
+        <input asp-for="Item.Stamina" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Haste" class="control-label"></label>
+        <input asp-for="Item.Haste" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Crit" class="control-label"></label>
+        <input asp-for="Item.Crit" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Mastery" class="control-label"></label>
+        <input asp-for="Item.Mastery" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Dodge" class="control-label"></label>
+        <input asp-for="Item.Dodge" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Parry" class="control-label"></label>
+        <input asp-for="Item.Parry" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Hit" class="control-label"></label>
+        <input asp-for="Item.Hit" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Expertise" class="control-label"></label>
+        <input asp-for="Item.Expertise" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Speed" class="control-label"></label>
+        <input asp-for="Item.Speed" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.SocketAmount" class="control-label"></label>
+        <input asp-for="Item.SocketAmount" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.SocketBonusStat" class="control-label"></label>
+        <input asp-for="Item.SocketBonusStat" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.SocketBonusAmount" class="control-label"></label>
+        <input asp-for="Item.SocketBonusAmount" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Item.Enchants" class="control-label"></label>
+        <input asp-for="Item.Enchants" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-page="/Admin/Item/Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

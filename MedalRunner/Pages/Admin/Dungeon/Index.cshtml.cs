@@ -5,18 +5,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MedalRunner.Pages.Admin_pages.Dungeon
 {
-    public class AllDungeonsModel : PageModel
+    public class IndexModel : PageModel
     {
-        public readonly IDungeonService _dungeonService;
+        private readonly IDungeonService _dungeonService;
 
-        public AllDungeonsModel(IDungeonService dungeonService)
+        [BindProperty]
+        public List<Models.Dungeon> Dungeons { get; set; }
+
+        public IndexModel(IDungeonService dungeonService)
         {
             _dungeonService = dungeonService;
         }
-
-        public void OnGet()
+        public async Task OnGet()
         {
-
+            Dungeons = await _dungeonService.GetAllDungeons();
         }
     }
 }

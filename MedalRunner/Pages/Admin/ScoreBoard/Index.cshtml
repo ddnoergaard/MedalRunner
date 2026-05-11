@@ -2,3 +2,37 @@
 @model MedalRunner.Pages.Admin.ScoreBoard.IndexModel
 @{
 }
+
+<h1>All Scores</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Dungeon</th>
+            <th>Score</th>
+            <th>Run Date</th>
+            <th>Created At</th>
+            <th>Is Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var score in Model.Score)
+        {
+            <tr>
+                <td>@score.Id</td>
+                <td>@score.Name</td>
+                <td>@score.Dungeon.Name</td>
+                <td>@score.Score</td>
+                <td>@score.RunDate</td>
+                <td>@score.CreatedAt</td>
+                <td>@score.IsActive</td>
+
+                <td>
+                    <a class="btn btn-primary" asp-page="/Admin/ScoreBoard/Edit" asp-route-id="@score.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -17,20 +17,23 @@ namespace MedalRunner.Pages.Admin.Item
             _itemService = itemService;
         }
 
-        public void OnGet()
+        public IActionResult OnGet(int id)
         {
+            Item = _itemService.GetAllItems().Result.FirstOrDefault(i => i.Id == id);
+            if (Item == null)
+                return RedirectToPage("/NotFound");
 
+            return Page();
         }
 
-        public IActionResult DeleteOnPost()
+        public IActionResult OnPost()
         {
-            var deleteItem = _itemService.DeleteItem(Item.Id);
-            if(deleteItem == null)
+            if (!ModelState.IsValid)
             {
-                return RedirectToPage("/Pages/Error");
+                return Page();
             }
-
-            return RedirectToPage("/Admin/Item/Index");
+            _itemService.UpdateItem(Item);
+            return RedirectToPage("GetAllItems");
         }
     }
 }

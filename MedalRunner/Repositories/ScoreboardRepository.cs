@@ -48,6 +48,40 @@ namespace MedalRunner.Repositories
             }
         }
 
+        public async Task<Scoreboard> GetScoreById(int id)
+        {
+            Scoreboard score = new Scoreboard();
+            string sqlQuery = "SELECT * FROM Scoreboard WHERE id = @id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                    try
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            score.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                            score.Name = reader.GetString(reader.GetOrdinal("player_name"));
+                            score.Score = reader.GetInt32(reader.GetOrdinal("score")).ToString();
+                            score.RunDate = reader.GetDateTime(reader.GetOrdinal("run_date"));
+                            score.CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                            score.IsActive = reader.GetBoolean(reader.GetOrdinal("is_active"));
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine($"SQL Error: {ex.Message}");
+                    }
+                }
+                return score;
+            }
+        }
+
         public async Task UpdateScore(Scoreboard score)
         {
             string sqlQuery = "UPDATE Scoreboard " +

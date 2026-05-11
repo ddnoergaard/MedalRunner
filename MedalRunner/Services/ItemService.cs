@@ -27,5 +27,10 @@ namespace MedalRunner.Services
         {
             await _itemRepository.DeleteItem(id);
         }
+
+        public async Task<List<Item>> GetAllItems()
+        {
+            return await _itemRepository.GetAllItemsAsync();
+        }
     }
 }
