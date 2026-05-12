@@ -12,7 +12,7 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
         private IDungeonService _dungeonService;
         public List<Dungeon> _dungeons;
         public List<Dungeon> _displayDungeons;
-        public List<Boss> _bosses;
+        
 
         public IndexModel(IDungeonService dungeonService)
         {
@@ -21,6 +21,10 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
         public async Task OnGet()
         {
             _dungeons = await _dungeonService.GetAllDungeons();
+            foreach (Dungeon dungeon in _dungeons)
+            {
+                dungeon.Bosses = (await _dungeonService.GetBossesAsync(dungeon.Id)).ToList();
+            }
         }
     }
 }

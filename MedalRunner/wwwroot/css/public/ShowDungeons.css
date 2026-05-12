@@ -18,7 +18,7 @@
 
 .card-double-container {
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr auto;
 }
 
 .card-border-column {
@@ -31,17 +31,20 @@
     display: flex;
     flex-direction: column;
 }
-.text-column > p {
+.card-text-column > p {
     text-align: start;
 }
 
-.text-column > h3 {
+.card-text-column > h3 {
     text-align: center;
 }
 
-.align-a > a {
+.align-a{
+    align-self: flex-end;
     text-align: right;
-    align-content: flex-end;
+}
+.align-a > a{
+    margin-right: 1.2rem;
 }
 
 li {

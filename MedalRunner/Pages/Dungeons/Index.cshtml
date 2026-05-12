@@ -18,15 +18,18 @@
         </div>
 
         <div class="card-text-column card-border-column">
-            <p>@dungeon.Name</p>
-            <p>@dungeon.Description</p>
-            <p>@dungeon.Zone</p>
+            <p>Dugneon Name: <br />@dungeon.Name</p>
+            <p>Dungeon Descreption: <br />@dungeon.Description</p>
+            <p>Dungeon Zone: <br />@dungeon.Zone</p>
         </div>
         <div class="card-double-container">
             <div class="card-text-column">
                 <h3>Boss list</h3>
                 <ul>
-                    <li>Insert boss</li>
+                    @foreach (Boss boss in dungeon.Bosses)
+                    {
+                        <li>@boss.Name</li>
+                    }
                 </ul>
             </div>
             <div class="align-a">
