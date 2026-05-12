@@ -4,6 +4,7 @@ using MedalRunner.Models;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using MedalRunner.Services.Interfaces;
 using Microsoft.Data.SqlClient;
+using System.Diagnostics;
 
 namespace MedalRunner.Pages.Public_pages.Dungeons
 {
@@ -27,11 +28,24 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
                 Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
             } catch (SqlException ex)
             {
-
+                ViewData["dungeon-error-msg"] = $"{ex.Message}";
             }
             
-            Dungeon.Bosses = (await _dungeonService.GetBossesAsync(id)).ToList();
-            ScoreboardEntries = (await _scoreboardService.GetScoreboardsOnDungeonIdAsync(id)).ToList();
+            try
+            {
+                Dungeon.Bosses = (await _dungeonService.GetBossesAsync(id)).ToList();
+            } catch (SqlException ex)
+            {
+                ViewData["bosses-error-msg"] = $"{ex.Message}";
+            }
+            
+            try
+            {
+                ScoreboardEntries = (await _scoreboardService.GetScoreboardsOnDungeonIdAsync(id)).ToList();
+            } catch (Exception ex)
+            {
+                ViewData["scoreboard-error-msg"] = $"{ex.Message}";
+            }
             return Page();
         }
     }
