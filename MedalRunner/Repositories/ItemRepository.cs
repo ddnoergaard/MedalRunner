@@ -32,36 +32,67 @@ namespace MedalRunner.Repositories
                 // while still more to read, add to data list and then return said list
                 while (await reader.ReadAsync())
                 {
-                    item.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                    item.Name = reader.GetString(reader.GetOrdinal("name"));
-                    item.Slot = reader.GetInt32(reader.GetOrdinal("gear_slot"));
-                    item.ImageUrl = reader.GetString(reader.GetOrdinal("image_url"));
-                    item.ItemLevel = reader.GetInt32(reader.GetOrdinal("item_level"));
-                    item.Rarity = reader.GetString(reader.GetOrdinal("rarity"));
-                    item.Difficulty = reader.GetString(reader.GetOrdinal("difficulty"));
-                    item.Material = reader.GetString(reader.GetOrdinal("material"));
-                    item.Armor = reader.GetInt32(reader.GetOrdinal("armor"));
-                    item.MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage"));
-                    item.MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage"));
-                    item.Intellect = reader.GetInt32(reader.GetOrdinal("intellect"));
-                    item.Strenght = reader.GetInt32(reader.GetOrdinal("strenght"));
-                    item.Agility = reader.GetInt32(reader.GetOrdinal("agility"));
-                    item.Spirit = reader.GetInt32(reader.GetOrdinal("spirit"));
-                    item.Stamina = reader.GetInt32(reader.GetOrdinal("stamina"));
-                    item.Haste = reader.GetInt32(reader.GetOrdinal("haste"));
-                    item.Crit = reader.GetInt32(reader.GetOrdinal("crit"));
-                    item.Mastery = reader.GetInt32(reader.GetOrdinal("mastery"));
-                    item.Dodge = reader.GetInt32(reader.GetOrdinal("dodge"));
-                    item.Parry = reader.GetInt32(reader.GetOrdinal("parry"));
-                    item.Hit = reader.GetInt32(reader.GetOrdinal("hit"));
-                    item.Expertise = reader.GetInt32(reader.GetOrdinal("expertise"));
-                    item.Speed = reader.GetDouble(reader.GetOrdinal("speed"));
-                    item.SocketAmount = reader.GetInt32(reader.GetOrdinal("socket_amount"));
-                    item.SocketBonusStat = reader.GetString(reader.GetOrdinal("socket_bonus_stat"));
-                    item.SocketBonusAmount = reader.GetInt32(reader.GetOrdinal("socket_bonus_amount"));
-                    item.Enchants = reader.GetInt32(reader.GetOrdinal("enchant"));
+                    //item.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                    //item.Name = reader.GetString(reader.GetOrdinal("name"));
+                    //item.Slot = reader.GetInt32(reader.GetOrdinal("gear_slot"));
+                    //item.ImageUrl = reader.GetString(reader.GetOrdinal("image_url"));
+                    //item.ItemLevel = reader.GetInt32(reader.GetOrdinal("item_level"));
+                    //item.Rarity = reader.GetString(reader.GetOrdinal("rarity"));
+                    //item.Difficulty = reader.GetString(reader.GetOrdinal("difficulty"));
+                    //item.Material = reader.GetString(reader.GetOrdinal("material"));
+                    //item.Armor = reader.GetInt32(reader.GetOrdinal("armor"));
+                    //item.MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage"));
+                    //item.MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage"));
+                    //item.Intellect = reader.GetInt32(reader.GetOrdinal("intellect"));
+                    //item.Strenght = reader.GetInt32(reader.GetOrdinal("strenght"));
+                    //item.Agility = reader.GetInt32(reader.GetOrdinal("agility"));
+                    //item.Spirit = reader.GetInt32(reader.GetOrdinal("spirit"));
+                    //item.Stamina = reader.GetInt32(reader.GetOrdinal("stamina"));
+                    //item.Haste = reader.GetInt32(reader.GetOrdinal("haste"));
+                    //item.Crit = reader.GetInt32(reader.GetOrdinal("crit"));
+                    //item.Mastery = reader.GetInt32(reader.GetOrdinal("mastery"));
+                    //item.Dodge = reader.GetInt32(reader.GetOrdinal("dodge"));
+                    //item.Parry = reader.GetInt32(reader.GetOrdinal("parry"));
+                    //item.Hit = reader.GetInt32(reader.GetOrdinal("hit"));
+                    //item.Expertise = reader.GetInt32(reader.GetOrdinal("expertise"));
+                    //item.Speed = reader.GetDouble(reader.GetOrdinal("speed"));
+                    //item.SocketAmount = reader.GetInt32(reader.GetOrdinal("socket_amount"));
+                    //item.SocketBonusStat = reader.GetString(reader.GetOrdinal("socket_bonus_stat"));
+                    //item.SocketBonusAmount = reader.GetInt32(reader.GetOrdinal("socket_bonus_amount"));
+                    //item.Enchants = reader.GetInt32(reader.GetOrdinal("enchant"));
 
-                    data.Add(item);
+
+                    data.Add(new Item
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("id")),
+                        Name = reader.GetString(reader.GetOrdinal("name")),
+                        Slot = reader.GetInt32(reader.GetOrdinal("gear_slot")),
+                        ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
+                        ItemLevel = reader.GetInt32(reader.GetOrdinal("item_level")),
+                        Rarity = reader.GetString(reader.GetOrdinal("rarity")),
+                        Difficulty = reader.GetString(reader.GetOrdinal("difficulty")),
+                        Material = reader.GetString(reader.GetOrdinal("material")),
+                        Armor = reader.GetInt32(reader.GetOrdinal("armor")),
+                        MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage")),
+                        MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage")),
+                        Intellect = reader.GetInt32(reader.GetOrdinal("intellect")),
+                        Strenght = reader.GetInt32(reader.GetOrdinal("strenght")),
+                        Agility = reader.GetInt32(reader.GetOrdinal("agility")),
+                        Spirit = reader.GetInt32(reader.GetOrdinal("spirit")),
+                        Stamina = reader.GetInt32(reader.GetOrdinal("stamina")),
+                        Haste = reader.GetInt32(reader.GetOrdinal("haste")),
+                        Crit = reader.GetInt32(reader.GetOrdinal("crit")),
+                        Mastery = reader.GetInt32(reader.GetOrdinal("mastery")),
+                        Dodge = reader.GetInt32(reader.GetOrdinal("dodge")),
+                        Parry = reader.GetInt32(reader.GetOrdinal("parry")),
+                        Hit = reader.GetInt32(reader.GetOrdinal("hit")),
+                        Expertise = reader.GetInt32(reader.GetOrdinal("expertise")),
+                        Speed = reader.GetDouble(reader.GetOrdinal("speed")),
+                        SocketAmount = reader.GetInt32(reader.GetOrdinal("socket_amount")),
+                        SocketBonusStat = reader.GetString(reader.GetOrdinal("socket_bonus_stat")),
+                        SocketBonusAmount = reader.GetInt32(reader.GetOrdinal("socket_bonus_amount")),
+                        Enchants = reader.GetInt32(reader.GetOrdinal("enchant")),
+                    });
                 }
                 if (data.Count == 0) throw new IndexOutOfRangeException();
                     return data;
