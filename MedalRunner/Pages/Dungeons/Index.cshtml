@@ -2,6 +2,9 @@
 @model MedalRunner.Pages.Public_pages.Dungeons.IndexModel
 @{
 }
+@section Styles{
+    <link href="~/css/public/showdungeons.css" rel="stylesheet" />
+}
 @using MedalRunner.Models;
 @using MedalRunner.Services;
 <h1>Dungeons</h1>
@@ -9,27 +12,28 @@
 
 @foreach (Dungeon dungeon in Model._dungeons)
 {
-    <div class="container">
+    <div class="card-container">
         <div>
             <img src="@dungeon.ImageUrl">
         </div>
 
-        <div class="text-column border-column">
+        <div class="card-text-column card-border-column">
             <p>@dungeon.Name</p>
             <p>@dungeon.Description</p>
             <p>@dungeon.Zone</p>
         </div>
-        <div class="double-container">
-            <div class="text-column">
+        <div class="card-double-container">
+            <div class="card-text-column">
                 <h3>Boss list</h3>
                 <ul>
                     <li>Insert boss</li>
                 </ul>
             </div>
-            <div class="align-btn">
+            <div class="align-a">
                 <a asp-page="/Dungeons/Details" asp-route-id="@dungeon.Id" asp-route-slug="@dungeon.Name.Replace(' ', '-').ToLower()">See more</a>
             </div>
         </div>
     </div>
+    <gap></gap>
 }
 
