@@ -44,9 +44,6 @@ namespace MedalRunner.Services
             return scores.Where(s => s.Name.Contains(str, StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<List<Dungeon>> GetAllDungeons()
-        {
-            return await _scoreboardRepository.GetAllDungeons();
-        }
+
     }
 }

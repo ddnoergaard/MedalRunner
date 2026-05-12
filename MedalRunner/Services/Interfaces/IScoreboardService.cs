@@ -10,6 +10,6 @@ namespace MedalRunner.Services.Interfaces
         Task SetInactive(int id);
         Task SetActive(int id);
         Task<IEnumerable<Scoreboard>> NameSearch(string str);
-        Task<List<Dungeon>> GetAllDungeons();
+
     }
 }

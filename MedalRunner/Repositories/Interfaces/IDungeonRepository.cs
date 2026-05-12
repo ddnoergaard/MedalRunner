@@ -9,5 +9,6 @@ namespace MedalRunner.Repositories.Interfaces
         Task UpdateDungeonAsync(Dungeon dungeon);
         Task DeleteDungeonAsync(int id);
         Task<IEnumerable<Boss>> GetBossesByDungeonIdAsync(int dungeonId);
+
     }
 }
