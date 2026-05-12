@@ -213,7 +213,7 @@ namespace MedalRunner.Repositories
 
         public async Task<Dungeon> GetDungeonByIdAsync(int id)
         {
-            string sqlQuery = "SELECT * FROM dungeons WHERE id = dungeonId";
+            string sqlQuery = "SELECT * FROM dungeons WHERE id = @dungeonId";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {

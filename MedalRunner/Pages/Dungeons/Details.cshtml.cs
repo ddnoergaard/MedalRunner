@@ -13,7 +13,7 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
         private readonly IDungeonService _dungeonService;
         private readonly IScoreboardService _scoreboardService;
         public Dungeon Dungeon { get; set; } = new Dungeon();
-        public List<Scoreboard> ScoreboardEntries { get; set; }
+        public List<Scoreboard> ScoreboardEntries { get; set; } = new List<Scoreboard>();
 
         public DetailsModel(IDungeonService dungeonService, IScoreboardService scoreboardService)
         {
