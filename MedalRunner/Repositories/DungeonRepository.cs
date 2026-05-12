@@ -226,22 +226,26 @@ namespace MedalRunner.Repositories
                     {
                         using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
-                            return new Dungeon
+                            if (await reader.ReadAsync())
                             {
-                                Id = Convert.ToInt32(reader["id"]),
-                                Name = Convert.ToString(reader["name"]),
-                                Zone = Convert.ToString(reader["zone"]),
-                                Description = Convert.ToString(reader["description"]),
-                                Platinum = Convert.ToString(reader["platinum"]),
-                                Gold = Convert.ToString(reader["gold"]),
-                                Silver = Convert.ToString(reader["silver"]),
-                                Bronze = Convert.ToString(reader["bronze"]),
-                                MobAmount = Convert.ToInt32(reader["mob_amount"]),
-                                ImageUrl = Convert.ToString(reader["image_url"]),
-                                DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
-                                BannerImageUrl = Convert.ToString(reader["banner_image"])
+                                return new Dungeon
+                                {
+                                    Id = Convert.ToInt32(reader["id"]),
+                                    Name = Convert.ToString(reader["name"]),
+                                    Zone = Convert.ToString(reader["zone"]),
+                                    Description = Convert.ToString(reader["description"]),
+                                    Platinum = Convert.ToString(reader["platinum"]),
+                                    Gold = Convert.ToString(reader["gold"]),
+                                    Silver = Convert.ToString(reader["silver"]),
+                                    Bronze = Convert.ToString(reader["bronze"]),
+                                    MobAmount = Convert.ToInt32(reader["mob_amount"]),
+                                    ImageUrl = Convert.ToString(reader["image_url"]),
+                                    DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
+                                    BannerImageUrl = Convert.ToString(reader["banner_image"])
 
-                            };
+                                };
+                            }
+                            throw new ArgumentException("No dungeon by that id found");
                         }
                     } catch (SqlException)
                     {
