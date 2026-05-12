@@ -21,7 +21,9 @@ namespace MedalRunner.Pages.Admin.Item
         {
             Item = _itemService.GetAllItems().Result.FirstOrDefault(i => i.Id == id);
             if (Item == null)
+            {
                 return RedirectToPage("/NotFound");
+            }                
 
             return Page();
         }

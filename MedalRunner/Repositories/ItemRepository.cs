@@ -75,6 +75,7 @@ namespace MedalRunner.Repositories
         {
             string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, strength, agility, " +
                 "spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant)" +
+                
                 "VALUES (name = @name, gear_slot = @gear_slot, image_url = @image_url, item_level = @item_level, rarity = @rarity, difficulty = @difficulty, material = @material, " +
                 "armor = @armor, min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
                 "stamina = @stamina, haste = @haste, crit = @crit, mastery = @mastery, dodge = @dodge, parry = @parry, hit = @hit, expertise = @expertise, speed = @speed, " +
@@ -188,12 +189,15 @@ namespace MedalRunner.Repositories
         public async Task DeleteItem(int id)
         {
             string sqlQuery = "DELETE FROM items WHERE id = @id";
+            
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 await con.OpenAsync();
+
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
+                    
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();

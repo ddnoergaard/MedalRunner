@@ -16,6 +16,7 @@ namespace MedalRunner.Repositories
         public async Task<List<Scoreboard>> GetAllScores()
         {
             List<Scoreboard> data = new List<Scoreboard>();
+
             string sqlQuery = "SELECT * FROM Scoreboard";
 
             using (SqlConnection con = new SqlConnection(_connectionString))

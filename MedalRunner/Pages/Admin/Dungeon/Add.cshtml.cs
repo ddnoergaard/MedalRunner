@@ -37,11 +37,17 @@ namespace MedalRunner.Pages.Admin_pages
                 return Page();
             }
 
-            var dBbosses = await _bossService.GetBossesAsync();
+            var Bosses = await _bossService.GetBossesAsync();
 
-            var foundbosses = dBbosses.Where(b => BossNames.Contains(b.Name)).ToList();
+            var foundBosses = Bosses.Where(b => BossNames.Contains(b.Name)).ToList();
 
-            Dungeon.Bosses = foundbosses;
+            if (BossNames.Any() && foundBosses.Count != BossNames.Count())
+            {
+                ModelState.AddModelError("BossNames", "One or more boss names are invalid.");
+                return Page();
+            }
+
+            Dungeon.Bosses = foundBosses;
             
             await _dungeonService.AddDungeon(Dungeon);
             return RedirectToPage("AllDungeons");
