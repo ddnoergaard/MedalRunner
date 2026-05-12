@@ -2,3 +2,19 @@
 @model MedalRunner.Pages.Public_pages.Item.IndexModel
 @{
 }
+
+<h1>Items</h1>
+
+<div class="item-grid">
+    @foreach (Models.Item item in Model._items)
+    {
+        <div class="item-card">
+            <img src="@item.ImageUrl" alt="@item.Name" />
+            <h2>@item.Name</h2>
+            <p>Item Level: @item.ItemLevel</p>
+            <p>Rarity: @item.Rarity</p>
+            <p>Difficulty: @item.Difficulty</p>
+            <a asp-page="Details" asp-route-id="@item.Id">View Details</a>
+        </div>
+    }
+</div>

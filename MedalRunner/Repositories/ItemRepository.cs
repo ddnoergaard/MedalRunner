@@ -64,12 +64,12 @@ namespace MedalRunner.Repositories
                     data.Add(item);
                 }
                 if (data.Count == 0) throw new IndexOutOfRangeException();
-                    return data;
+                return data;
             }
-               
+
 
         }
-        
+
 
         public async Task AddItem(Item item)
         {
@@ -113,7 +113,7 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@socket_bonus_stat", item.SocketBonusStat ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@socket_bonus_amount", item.SocketBonusAmount ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@enchant", item.Enchants ?? (object)DBNull.Value);
-                    
+
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();
@@ -136,7 +136,7 @@ namespace MedalRunner.Repositories
                  "min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
                 "stamina = @stamina, haste = @haste, crit = @crit, mastery = @mastery, dodge = @dodge, parry = @parry, hit = @hit, expertise = @expertise, speed = @speed, " +
                 "socket_amount = @socket_amount, socket_bonus_stat = @socket_bonus_stat, socket_bonus_amount = @socket_bonus_amount, enchant = @enchant, " +
-                
+
                 "WHERE id = @id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -204,6 +204,64 @@ namespace MedalRunner.Repositories
                     }
                 }
             }
+        }
+
+        public async Task<Item> GetByItemId(int id)
+        {
+            Item item = null;
+            string sqlQuery = "SELECT * FROM items WHERE id = @id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
+                    {
+                        item = new Item
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            Name = reader.GetString(reader.GetOrdinal("name")),
+                            Slot = reader.GetInt32(reader.GetOrdinal("gear_slot")),
+                            ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
+                            ItemLevel = reader.GetInt32(reader.GetOrdinal("item_level")),
+                            Rarity = reader.GetString(reader.GetOrdinal("rarity")),
+                            Difficulty = reader.GetString(reader.GetOrdinal("difficulty")),
+                            Material = reader.GetString(reader.GetOrdinal("material")),
+                            Armor = reader.GetInt32(reader.GetOrdinal("armor")),
+                            MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage")),
+                            MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage")),
+                            Intellect = reader.GetInt32(reader.GetOrdinal("intellect")),
+                            Strength = reader.GetInt32(reader.GetOrdinal("strength")),
+                            Agility = reader.GetInt32(reader.GetOrdinal("agility")),
+                            Spirit = reader.GetInt32(reader.GetOrdinal("spirit")),
+                            Stamina = reader.GetInt32(reader.GetOrdinal("stamina")),
+                            Haste = reader.GetInt32(reader.GetOrdinal("haste")),
+                            Crit = reader.GetInt32(reader.GetOrdinal("crit")),
+                            Mastery = reader.GetInt32(reader.GetOrdinal("mastery")),
+                            Dodge = reader.GetInt32(reader.GetOrdinal("dodge")),
+                            Parry = reader.GetInt32(reader.GetOrdinal("parry")),
+                            Hit = reader.GetInt32(reader.GetOrdinal("hit")),
+                            Expertise = reader.GetInt32(reader.GetOrdinal("expertise")),
+                            Speed = reader.GetDouble(reader.GetOrdinal("speed")),
+                            SocketAmount = reader.GetInt32(reader.GetOrdinal("socket_amount")),
+                            SocketBonusStat = reader.GetString(reader.GetOrdinal("socket_bonus_stat")),
+                            SocketBonusAmount = reader.GetInt32(reader.GetOrdinal("socket_bonus_amount")),
+                            Enchants = reader.GetInt32(reader.GetOrdinal("enchant"))
+                        };
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException($"No item found with id {id}");
+                    }
+                }
+            }
+
+            return item;
         }
     }
 }

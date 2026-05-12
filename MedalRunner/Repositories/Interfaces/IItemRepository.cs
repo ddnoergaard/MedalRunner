@@ -8,5 +8,6 @@ namespace MedalRunner.Repositories.Interfaces
         Task UpdateItem(Item item);
         Task DeleteItem(int id);
         Task<List<Item>> GetAllItemsAsync();
+        Task<Item> GetByItemId(int id);
     }
 }
