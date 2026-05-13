@@ -17,7 +17,7 @@ namespace MedalRunner.Models
         public int? MinDamage { get; set; }
         public int? MaxDamage { get; set; }
         public int? Intellect { get; set; }
-        public int? Strenght { get; set; }
+        public int? Strength { get; set; }
         public int? Agility { get; set; }
         public int? Spirit { get; set; }
         public int? Stamina { get; set; }

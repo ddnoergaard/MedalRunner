@@ -88,4 +88,29 @@
             </table>
         </div>
     </div>
+    <div class="section-five">
+        <h2>Items dropped in @Model.Dungeon.Name</h2>
+        <p>@ViewData["item-error-msg"]</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Material</th>
+                    <th>Item Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Item i in Model.Items)
+                {
+                    <tr>
+                        <td><img class="col-image" src="@i.ImageUrl" style=""></td>
+                        <td class="col-name">@i.Name</td>
+                        <td class="col-name">@i.Material</td>
+                        <td class="col-name">@i.ItemLevel</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

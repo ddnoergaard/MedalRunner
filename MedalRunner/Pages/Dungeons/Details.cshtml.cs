@@ -12,13 +12,16 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
     {
         private readonly IDungeonService _dungeonService;
         private readonly IScoreboardService _scoreboardService;
+        private readonly IItemService _itemService;
         public Dungeon Dungeon { get; set; } = new Dungeon();
         public List<Scoreboard> ScoreboardEntries { get; set; } = new List<Scoreboard>();
+        public List<Models.Item> Items { get; set; } = new List<Models.Item>();
 
-        public DetailsModel(IDungeonService dungeonService, IScoreboardService scoreboardService)
+        public DetailsModel(IDungeonService dungeonService, IScoreboardService scoreboardService, IItemService itemService)
         {
             _dungeonService = dungeonService;
             _scoreboardService = scoreboardService;
+            _itemService = itemService;
         }
 
         public async Task<IActionResult> OnGet(int id, string slug)
@@ -46,6 +49,15 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
             {
                 ViewData["scoreboard-error-msg"] = $"{ex.Message}";
             }
+
+            try
+            {
+                Items = (await _itemService.GetItemsByDungeonIdAsync(id)).ToList();
+            } catch (InvalidOperationException ex)
+            {
+                ViewData["item-error-msg"] = $"{ex.Message}";
+            }
+
             return Page();
         }
     }

@@ -27,5 +27,17 @@ namespace MedalRunner.Services
         {
             await _itemRepository.DeleteItem(id);
         }
+
+        public async Task<IEnumerable<Item>> GetItemsByDungeonIdAsync(int id)
+        {
+            try
+            {
+                return await _itemRepository.GetItemsByDungeonId(id);
+            } catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }
