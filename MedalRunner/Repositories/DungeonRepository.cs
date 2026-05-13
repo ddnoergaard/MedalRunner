@@ -29,34 +29,34 @@ namespace MedalRunner.Repositories
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (await reader.ReadAsync())
-                    {
-                        //dungeon.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                        //dungeon.Name = reader.GetString(reader.GetOrdinal("name"));
-                        //dungeon.Zone = reader.GetString(reader.GetOrdinal("zone"));
-                        //dungeon.Description = reader.GetString(reader.GetOrdinal("description"));
-                        //dungeon.ImageUrl = reader.GetString(reader.GetOrdinal("image_url"));
-                        //dungeon.Platinum = reader.GetString(reader.GetOrdinal("platinum"));
-                        //dungeon.Gold = reader.GetString(reader.GetOrdinal("gold"));
-                        //dungeon.Silver = reader.GetString(reader.GetOrdinal("silver"));
-                        //dungeon.Bronze = reader.GetString(reader.GetOrdinal("bronze"));
-                        //dungeon.MobAmount = reader.GetInt32(reader.GetOrdinal("mob_amount"));
+                {
+                    //dungeon.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                    //dungeon.Name = reader.GetString(reader.GetOrdinal("name"));
+                    //dungeon.Zone = reader.GetString(reader.GetOrdinal("zone"));
+                    //dungeon.Description = reader.GetString(reader.GetOrdinal("description"));
+                    //dungeon.ImageUrl = reader.GetString(reader.GetOrdinal("image_url"));
+                    //dungeon.Platinum = reader.GetString(reader.GetOrdinal("platinum"));
+                    //dungeon.Gold = reader.GetString(reader.GetOrdinal("gold"));
+                    //dungeon.Silver = reader.GetString(reader.GetOrdinal("silver"));
+                    //dungeon.Bronze = reader.GetString(reader.GetOrdinal("bronze"));
+                    //dungeon.MobAmount = reader.GetInt32(reader.GetOrdinal("mob_amount"));
 
-                        //data.Add(dungeon);
-
-                    data.Add(new Dungeon
-                    {
-                        Id = reader.GetInt32(reader.GetOrdinal("id")),
-                        Name = reader.GetString(reader.GetOrdinal("name")),
-                        Zone = reader.GetString(reader.GetOrdinal("zone")),
-                        Description = reader.GetString(reader.GetOrdinal("description")),
-                        ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
-                        Platinum = reader.GetString(reader.GetOrdinal("platinum")),
-                        Gold = reader.GetString(reader.GetOrdinal("gold")),
-                        Silver = reader.GetString(reader.GetOrdinal("silver")),
-                        Bronze = reader.GetString(reader.GetOrdinal("bronze")),
-                        MobAmount = reader.GetInt32(reader.GetOrdinal("mob_amount"))
-                    });
-                    }
+                    //data.Add(dungeon);
+                    data.Add(DungeonMapper(reader));
+                    //data.Add(new Dungeon
+                    //{
+                    //    Id = reader.GetInt32(reader.GetOrdinal("id")),
+                    //    Name = reader.GetString(reader.GetOrdinal("name")),
+                    //    Zone = reader.GetString(reader.GetOrdinal("zone")),
+                    //    Description = reader.GetString(reader.GetOrdinal("description")),
+                    //    ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
+                    //    Platinum = reader.GetString(reader.GetOrdinal("platinum")),
+                    //    Gold = reader.GetString(reader.GetOrdinal("gold")),
+                    //    Silver = reader.GetString(reader.GetOrdinal("silver")),
+                    //    Bronze = reader.GetString(reader.GetOrdinal("bronze")),
+                    //    MobAmount = reader.GetInt32(reader.GetOrdinal("mob_amount"))
+                    //});
+                }
                 if (data.Count == 0) throw new IndexOutOfRangeException();
                 return data;               
             }
@@ -245,22 +245,24 @@ namespace MedalRunner.Repositories
                         {
                             if (await reader.ReadAsync())
                             {
-                                return new Dungeon
-                                {
-                                    Id = Convert.ToInt32(reader["id"]),
-                                    Name = Convert.ToString(reader["name"]),
-                                    Zone = Convert.ToString(reader["zone"]),
-                                    Description = Convert.ToString(reader["description"]),
-                                    Platinum = Convert.ToString(reader["platinum"]),
-                                    Gold = Convert.ToString(reader["gold"]),
-                                    Silver = Convert.ToString(reader["silver"]),
-                                    Bronze = Convert.ToString(reader["bronze"]),
-                                    MobAmount = Convert.ToInt32(reader["mob_amount"]),
-                                    ImageUrl = Convert.ToString(reader["image_url"]),
-                                    DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
-                                    BannerImageUrl = Convert.ToString(reader["banner_image"])
+                                return DungeonMapper(reader);
 
-                                };
+                                //return new Dungeon
+                                //{
+                                //    Id = Convert.ToInt32(reader["id"]),
+                                //    Name = Convert.ToString(reader["name"]),
+                                //    Zone = Convert.ToString(reader["zone"]),
+                                //    Description = Convert.ToString(reader["description"]),
+                                //    Platinum = Convert.ToString(reader["platinum"]),
+                                //    Gold = Convert.ToString(reader["gold"]),
+                                //    Silver = Convert.ToString(reader["silver"]),
+                                //    Bronze = Convert.ToString(reader["bronze"]),
+                                //    MobAmount = Convert.ToInt32(reader["mob_amount"]),
+                                //    ImageUrl = Convert.ToString(reader["image_url"]),
+                                //    DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
+                                //    BannerImageUrl = Convert.ToString(reader["banner_image"])
+
+                                //};
                             }
                             throw new ArgumentException("No dungeon by that id found");
                         }
@@ -272,6 +274,26 @@ namespace MedalRunner.Repositories
                 }
             }
         }
+        
+        
+        private Dungeon DungeonMapper(SqlDataReader reader)
+        {
+            return new Dungeon
+            {
+                Id = Convert.ToInt32(reader["id"]),
+                Name = Convert.ToString(reader["name"]),
+                Zone = Convert.ToString(reader["zone"]),
+                Description = Convert.ToString(reader["description"]),
+                Platinum = Convert.ToString(reader["platinum"]),
+                Gold = Convert.ToString(reader["gold"]),
+                Silver = Convert.ToString(reader["silver"]),
+                Bronze = Convert.ToString(reader["bronze"]),
+                MobAmount = Convert.ToInt32(reader["mob_amount"]),
+                ImageUrl = Convert.ToString(reader["image_url"]),
+                DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
+                BannerImageUrl = Convert.ToString(reader["banner_image"])
 
+            };
+        }
     }
 }

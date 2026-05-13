@@ -72,5 +72,14 @@ namespace MedalRunner.Services
                 throw;
             }
         }
+    
+        public List<Dungeon> DungeonReadyCheck(List<Dungeon> allDungeons)
+        {
+            List<Dungeon> checkedDungeons; 
+            
+
+            return checkedDungeons;
+        }
+
     }
 }
