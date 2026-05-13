@@ -1,10 +1,44 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home | Earn your medal!";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/public/index.css" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="fp-hero-section-container">
+    <div class="fp-hs-left-container">
+        <h1>The Ultimate MoP Challenge Mode Platform</h1>
+        <p>Track your runs, optimize your gear, and climb the leaderboard. Built for players who compete.</p>
+        <div class="fp-hs-left-cta-container">
+            <a class="fp-cta-btn" asp-page="/Register">Get Started Free</a>
+            <a class="fp-cta-btn" asp-page="/Scoreboard">Browse Scoreboard</a>
+        </div>
+    </div>
+    <div class="fp-hs-right-container">
+        <img src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/general/hero-section-image.png" alt="">
+    </div>
+</div>
+<div class="fp-second-section-container">
+    <h2>Get Started in 4 simple steps</h2>
+    <div class="second-card-container">
+        <div class="feature-card">
+            <h3>Create an account</h3>
+            <p>Register for free and set up your MedalRunner profile in seconds</p>
+        </div>
+        <div class="feature-card">
+            <h3>Create Character</h3>
+            <p>Build your WoW character and select your class, spec, and current gear to get started.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Equip Gear</h3>
+            <p>Log the items you have and let MedalRunner identify your BIS upgrades across all three difficulty tiers</p>
+        </div>
+        <div class="feature-card">
+            <h3>Go for GLORY</h3>
+            <p>Hit the dungeons, track your run times, and compete for a spot on the Challenge Mode leaderboard</p>
+        </div>
+    </div>
+    <a class="fp-cta-btn section-s-cta" asp-page="/Register">Get started!</a>
 </div>
