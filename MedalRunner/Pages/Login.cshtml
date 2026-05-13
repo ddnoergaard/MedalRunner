@@ -2,3 +2,27 @@
 @model MedalRunner.Pages.LoginModel
 @{
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/public/login.css" />
+}
+
+<div class="login-container">
+    <div class="login-left">
+        <h1 class="dark-text">Login</h1>
+        <p class="dark-text">Welcome back. Pick up where you left off and keep chasing your next medal.</p>
+    </div>
+    <div class="login-right">
+        <form method="post">
+            <div class="input-container">
+                <label class="dark-text" for="">Email</label>
+                <input class="dark-text" type="email" placeholder="you@email.com">
+            </div>
+            <div class="input-container">
+                <label class="dark-text" for="">Password</label>
+                <input class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
+            </div>
+            <button class="form-btn" type="submit">Login</button>
+        </form>
+        <a class="register-text" asp-page="/Register">... Or Register</a>
+    </div>
+</div>

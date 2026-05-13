@@ -1,0 +1,129 @@
+﻿@import url("/css/colors.css");
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: fit-content;
+    justify-content: center;
+}
+
+h2 {
+    font-weight: bolder;
+}
+
+.pricing-container {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: column;
+    gap: 2rem;
+    place-items: center;
+    text-align: center;
+    padding: 5rem 0 5rem 0;
+}
+
+.top-container {
+    width: 50%;
+}
+
+    .top-container > p {
+        color: var(--color-text-secondary)
+    }
+
+.bottom-container {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    height: fit-content;
+    padding: 1rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.pc-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.pricing-card {
+    display: flex;
+    min-width: 10rem;
+    min-height: fit-content;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid white;
+    border-radius: 1rem;
+}
+
+.pc-free {
+    background-color: var(--color-horde);
+    border: 1px solid var(--color-horde-subtle);
+}
+
+.pc-premium {
+    background-color: var(--color-alliance);
+    border: 1px solid var(--color-alliance-subtle)
+}
+
+.pc-challenger {
+    background-color: #EBB865;
+    bordeR: 1px solid #ac8649;
+}
+
+.dark-text {
+    color: var(--color-bg-surface);
+}
+
+.price {
+    font-size: 4rem;
+    margin: 1rem;
+}
+
+    .price > span {
+        font-size: 2rem;
+        color: var(--color-bg-surface);
+        padding-right: 0.2rem;
+    }
+
+.p-c-top {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+
+.p-c-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+    .p-c-bottom > ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+.cta-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid white;
+    border-radius: 1rem;
+    cursor: pointer;
+    width: 50%;
+    place-self: center;
+    transition: 0.3s ease;
+}
+
+    .cta-btn:hover {
+        background-color: white;
+        color: var(--color-bg-surface)
+    }

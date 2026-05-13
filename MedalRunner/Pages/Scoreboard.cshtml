@@ -2,3 +2,75 @@
 @model MedalRunner.Pages.ScoreboardModel
 @{
 }
+
+@section Styles {
+    <link href="/css/public/scoreboard.css" rel="stylesheet" />
+}
+
+<div class="scoreboard-container">
+    <div class="section-one">
+        <h1>Scoreboards</h1>
+        <p>Track and compare performance across all players and dungeons.</p>
+        <p>Use the filters below to narrow down results by player, dungeon, difficulty, or time period.</p>
+    </div>
+    <div class="section-two">
+        <form action="" method="get">
+            <div>
+
+                <select name="DungeonName">
+                    <option value="">Choose a dungeon</option>
+                    <option value="Temple of the Jade Serpent">Temple of the Jade Serpent</option>
+                    <option value="Stormstout Brewery">Stormstout Brewery</option>
+                    <option value="Shado-Pan Monastery">Shado-Pan Monastery</option>
+                    <option value="Siege of Niuzao Temple">Siege of Niuzao Temple</option>
+                    <option value="Gate of the Setting Sun">Gate of the Setting Sun</option>
+                    <option value="Mogu'shan Palace">Mogu'shan Palace</option>
+                    <option value="Scholomance">Scholomance</option>
+                    <option value="Scarlet Halls">Scarlet Halls</option>
+                    <option value="Scarlet Monastery">Scarlet Monastery</option>
+                </select>
+                <input type="text" placeholder="Character name">
+                <select name="Difficulty" id="">
+                    <option value="">Difficulty</option>
+                    <option value="">Platinum</option>
+                    <option value="">Gold</option>
+                    <option value="">Silver</option>
+                    <option value="">Bronze</option>
+                </select>
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="section-three">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dungeon</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scarlet Halls</td>
+                    <td>Uther Lightbringer</td>
+                    <td>24:35</td>
+                    <td>13/05/2026</td>
+                </tr>
+                <tr>
+                    <td>Scarlet Halls</td>
+                    <td>Uther Lightbringer</td>
+                    <td>24:35</td>
+                    <td>13/05/2026</td>
+                </tr>
+                <tr>
+                    <td>Scarlet Halls</td>
+                    <td>Uther Lightbringer</td>
+                    <td>24:35</td>
+                    <td>13/05/2026</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,4 +1,44 @@
 ﻿@page
 @model MedalRunner.Pages.RegisterModel
 @{
+
 }
+@section Styles {
+    <link href="/css/public/register.css" rel="stylesheet" />
+}
+
+<div class="register-container">
+    <h1 class="dark-text">JOIN THE FIGHT</h1>
+    <p class="sub-header">Register today!</p>
+    <div class="register-right">
+        <form method="post">
+            <div class="name-input-container">
+                <div class="input-container">
+                    <label class="dark-text" for="">First Name</label>
+                    <input class="dark-text" type="text" placeholder="Arthas">
+                </div>
+                <div class="input-container">
+                    <label class="dark-text" for="">Last Name</label>
+                    <input class="dark-text" type="text" placeholder="Menethil">
+                </div>
+
+            </div>
+            <div class="input-container">
+                <label class="dark-text" for="">Email</label>
+                <input class="dark-text" type="email" placeholder="you@email.com">
+            </div>
+            <div class="password-input-container">
+                <div class="input-container">
+                    <label class="dark-text" for="">Password</label>
+                    <input class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
+                </div>
+                <div class="input-container">
+                    <label class="dark-text" for="">Confirm Password</label>
+                    <input class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
+                </div>
+            </div>
+            <button class="form-btn" type="submit">Register</button>
+        </form>
+        <a class="register-text" asp-page="/Login">...Or continue by logging in</a>
+    </div>
+</div>

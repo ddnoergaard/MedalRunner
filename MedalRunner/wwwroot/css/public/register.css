@@ -1,0 +1,107 @@
+﻿@import url("/css/colors.css");
+
+body {
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 80vh;
+    background-image: url(https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/general/join-the-fight.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+}
+
+.dark-text {
+    color: black !important;
+}
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: fit-content;
+    background-color: var(--color-text-primary);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--color-horde-subtle) 0px 2px 8px 0px;
+}
+
+.sub-header {
+    color: black;
+    margin: 0 0 2rem 0;
+    align-self: center;
+}
+
+.register-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+h1 {
+    align-self: center;
+    margin-bottom: 0.5rem;
+}
+
+.name-input-container, .password-input-container {
+    display: flex;
+    gap: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+    .input-container > input {
+        border-radius: 1rem;
+        padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+        border: 1px solid var(--color-text-secondary);
+        /*transition: 3s ease-in-out;*/
+    }
+
+        .input-container > input:active {
+            border: 1px solid var(--color-bg-base)
+        }
+
+.form-btn {
+    width: 50%;
+    place-self: center;
+    color: black;
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+    .form-btn:hover {
+        background-color: var(--color-alliance);
+        color: white;
+    }
+
+.register-text {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    transition: all 0.3s;
+}
+
+    .register-text:hover {
+        color: #2c2c2c;
+        transform: scale(1.01);
+    }
