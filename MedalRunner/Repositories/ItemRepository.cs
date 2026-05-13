@@ -44,7 +44,7 @@ namespace MedalRunner.Repositories
                     item.MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage"));
                     item.MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage"));
                     item.Intellect = reader.GetInt32(reader.GetOrdinal("intellect"));
-                    item.Strenght = reader.GetInt32(reader.GetOrdinal("strenght"));
+                    item.Strength = reader.GetInt32(reader.GetOrdinal("strength"));
                     item.Agility = reader.GetInt32(reader.GetOrdinal("agility"));
                     item.Spirit = reader.GetInt32(reader.GetOrdinal("spirit"));
                     item.Stamina = reader.GetInt32(reader.GetOrdinal("stamina"));
@@ -75,7 +75,7 @@ namespace MedalRunner.Repositories
                         MinDamage = reader.GetInt32(reader.GetOrdinal("min_damage")),
                         MaxDamage = reader.GetInt32(reader.GetOrdinal("max_damage")),
                         Intellect = reader.GetInt32(reader.GetOrdinal("intellect")),
-                        Strenght = reader.GetInt32(reader.GetOrdinal("strenght")),
+                        Strength = reader.GetInt32(reader.GetOrdinal("strength")),
                         Agility = reader.GetInt32(reader.GetOrdinal("agility")),
                         Spirit = reader.GetInt32(reader.GetOrdinal("spirit")),
                         Stamina = reader.GetInt32(reader.GetOrdinal("stamina")),
