@@ -19,7 +19,7 @@ namespace MedalRunner.Pages.Admin.Item
 
         public IActionResult OnGet(int id)
         {
-            Item = _itemService.GetAllItems().Result.FirstOrDefault(i => i.Id == id);
+            Item = _itemService.GetAllItem().Result.FirstOrDefault(i => i.Id == id);
             if (Item == null)
             {
                 return RedirectToPage("/NotFound");
@@ -35,7 +35,7 @@ namespace MedalRunner.Pages.Admin.Item
                 return Page();
             }
             _itemService.UpdateItem(Item);
-            return RedirectToPage("GetAllItems");
+            return RedirectToPage("GetAllItem");
         }
     }
 }

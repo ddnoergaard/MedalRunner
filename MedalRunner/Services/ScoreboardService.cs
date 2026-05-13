@@ -18,6 +18,10 @@ namespace MedalRunner.Services
             return await _scoreboardRepository.GetAllScores();
         }
 
+        public async Task<Scoreboard> GetScoreById(int id)
+        {
+            return await _scoreboardRepository.GetScoreById(id);
+        }
         public async Task<IEnumerable<Scoreboard>> GetScoreboardsOnDungeonIdAsync(int dungeonId)
         {
             try

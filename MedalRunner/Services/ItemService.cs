@@ -18,7 +18,7 @@ namespace MedalRunner.Services
         {
             try
             {
-                return await _itemRepository.GetAllItemsAsync();
+                return await _itemRepository.GetAllItemAsync();
             }
             catch(SqlException ex)
             {

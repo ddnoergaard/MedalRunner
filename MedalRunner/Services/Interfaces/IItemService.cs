@@ -8,7 +8,7 @@ namespace MedalRunner.Services.Interfaces
         Task UpdateItem(Item item);
         Task DeleteItem(int id);
         Task<Item?> GetByItemId(int id);
-        Task<List<Item>> GetAllItems();
+        Task<IEnumerable<Item>> GetAllItem();
         Task<IEnumerable<Item>> GetItemsByDungeonIdAsync(int id);
     }
 }

@@ -14,7 +14,7 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<List<Item>> GetAllItemsAsync()
+        public async Task<List<Item>> GetAllItemAsync()
         {
             //Create a list to store all the items that we retrieve from the database
             List<Item> data = new List<Item>();
