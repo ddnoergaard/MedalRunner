@@ -2,3 +2,31 @@
 @model MedalRunner.Pages.App.Character.IndexModel
 @{
 }
+@using MedalRunner.Models;
+@using MedalRunner.Services;
+
+<h1>Characters</h1>
+
+@foreach (Character character in Model._characters)
+{
+    <div class="container">
+        <div>
+            <img src="ImageUrl">
+        </div>
+
+        <div class="text-column border-column">
+            <p>@character.Name</p>
+            <p>@character.Race</p>
+            <p>@character.Specialization</p>
+            <p>@character.CharacterClass</p>
+        </div>
+        <div>
+            <a class="btn btn-danger btn-sm" type="button" title="Edit" asp-page="Edit" asp-route-id="Charachter.Id">Edit</a>
+            <a class="btn btn-danger btn-sm" type="button" title="Delete" asp-page="Delete" asp-route-id="Character.Id">Delete</a>
+        </div>
+    </div>
+}
+
+<p>
+    <a class="btn btn-danger" asp-page="Create">Create a new Character</a>
+</p>
