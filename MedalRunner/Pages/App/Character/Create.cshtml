@@ -9,6 +9,7 @@
 		<span asp-validation-for="@Model.character.Name" class="text-danger"></span>
 	</div>
 	<div class="form-group">
+		<label asp-for="@Model.character.Race" class="controll-label"></label>
 		<select name="Race" id="@Model.character.Race">
 			<option value="null">Please select a Race</option>
 			<option value="Human">Human</option>
@@ -27,6 +28,7 @@
 		</select>
 	</div>
 	<div class="form-group">
+		<label asp-for="@Model.character.CharacterClass" class="controll-label"></label>
 		<select name="Character Class" id="@Model.character.CharacterClass">
 			<option value="null">Please select a Class</option>
 			<option value="Warrior">Warrior</option>
