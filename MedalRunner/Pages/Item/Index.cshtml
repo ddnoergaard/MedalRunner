@@ -12,6 +12,7 @@
             <th>Name</th>
             <th>Material</th>
             <th>Item Level</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
                 <td class="col-name">@i.Name</td>
                 <td class="col-name">@i.Material</td>
                 <td class="col-name">@i.ItemLevel</td>
+                <td><a asp-page="Details" asp-route-id="@i.Id">Show more</a></td>
             </tr>
         }
     </tbody>
