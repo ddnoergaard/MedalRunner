@@ -2,3 +2,81 @@
 @model MedalRunner.Pages.Public_pages.Item.DetailsModel
 @{
 }
+<h1>@Model._item.Name</h1>
+
+<img src="@Model._item.ImageUrl" alt="@Model._item.Name" />
+
+<h3>General</h3>
+<p>Item Level: @Model._item.ItemLevel</p>
+<p>Rarity: @Model._item.Rarity</p>
+<p>Difficulty: @Model._item.Difficulty</p>
+<p>Material: @Model._item.Material</p>
+
+<h3>Stats</h3>
+@if (Model._item.Armor > 0)
+{
+    <p>Armor: @Model._item.Armor</p>
+}
+@if (Model._item.MinDamage > 0)
+{
+    <p>Min Damage: @Model._item.MinDamage</p>
+}
+@if (Model._item.MaxDamage > 0)
+{
+    <p>Max Damage: @Model._item.MaxDamage</p>
+}
+@if (Model._item.Intellect != 0)
+{
+    <p>Intellect: @Model._item.Intellect</p>
+}
+@if (Model._item.Strength != 0)
+{
+    <p>Strength: @Model._item.Strength</p>
+}
+@if (Model._item.Agility != 0)
+{
+    <p>Agility: @Model._item.Agility</p>
+}
+@if (Model._item.Stamina != 0)
+{
+    <p>Stamina: @Model._item.Stamina</p>
+}
+
+<h3>Secondary Stats</h3>
+@if (Model._item.Haste != 0)
+{
+    <p>Haste: @Model._item.Haste</p>
+}
+@if (Model._item.Crit != 0)
+{
+    <p>Crit: @Model._item.Crit</p>
+}
+@if (Model._item.Mastery != 0)
+{
+    <p>Mastery: @Model._item.Mastery</p>
+}
+@if (Model._item.Dodge != 0)
+{
+    <p>Dodge: @Model._item.Dodge</p>
+}
+@if (Model._item.Parry != 0)
+{
+    <p>Parry: @Model._item.Parry</p>
+}
+@if (Model._item.Hit != 0)
+{
+    <p>Hit: @Model._item.Hit</p>
+}
+@if (Model._item.Expertise != 0)
+{
+    <p>Expertise: @Model._item.Expertise</p>
+}
+
+@if (Model._item.SocketAmount != 0 && Model._item.SocketAmount != 0)
+{
+    <h3>Sockets</h3>
+    <p>Socket Amount: @Model._item.SocketAmount</p>
+    <p>Socket Bonus: @Model._item.SocketBonusAmount @Model._item.SocketBonusStat</p>
+}
+
+<a asp-page="Index">Back to list</a>

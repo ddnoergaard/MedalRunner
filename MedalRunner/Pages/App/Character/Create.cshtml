@@ -9,9 +9,22 @@
 		<span asp-validation-for="@Model.character.Name" class="text-danger"></span>
 	</div>
 	<div class="form-group">
-		<label asp-for="@Model.character.Race" class="control-label"></label>
-		<input asp-for="@Model.character.Race" class="form-control" />
-		<span asp-validation-for="@Model.character.Race" class="text-danger"></span>
+		<select name="Race" id="@Model.character.Race">
+			<option value="null">Please select a Race</option>
+			<option value="Human">Human</option>
+			<option value="Dwarf">Dwarf</option>
+			<option value="Gnome">Gnome</option>
+			<option value="Night Elf">Night Elf</option>
+			<option value="Drenei">Drenei</option>
+			<option value="Worgen">Worgen</option>
+			<option value="Pandaren">Pandaren</option>
+			<option value="Orc">Orc</option>
+			<option value="Troll">Troll</option>
+			<option value="Tauren">Tauren</option>
+			<option value="Undead">Undead</option>
+			<option value="Blood Elf">Blood Elf</option>
+			<option value="Goblin">Goblin</option>
+		</select>
 	</div>
 	<div class="form-group">
 		<select name="Character Class" id="@Model.character.CharacterClass">
