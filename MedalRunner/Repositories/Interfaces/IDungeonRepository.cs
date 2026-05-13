@@ -4,10 +4,10 @@ namespace MedalRunner.Repositories.Interfaces
 {
     public interface IDungeonRepository
     {
+        Task<List<Dungeon>> GetAllDungeonsAsync();
         Task AddDungeonAsync(Dungeon dungeon);
         Task UpdateDungeonAsync(Dungeon dungeon);
         Task DeleteDungeonAsync(int id);
-        Task<List<Dungeon>> GetAllDungeonsAsync();
         Task<IEnumerable<Boss>> GetBossesByDungeonIdAsync(int dungeonId);
         Task<Dungeon> GetDungeonByIdAsync(int id);
     }

@@ -2,3 +2,87 @@
 @model MedalRunner.Pages.Admin_pages.AddDungeonModel
 @{
 }
+<h1>Create a new Dungeon</h1>
+
+
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Dungeon.Name" class="control-label"></label>
+        <input asp-for="Dungeon.Name" class="form-control" />
+        <span asp-validation-for="Dungeon.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dungeon.Zone" class="control-label"></label>
+        <input asp-for="Dungeon.Zone" class="form-control" />
+        <span asp-validation-for="Dungeon.Zone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dungeon.Description" class="control-label"></label>
+        <input asp-for="Dungeon.Description" class="form-control" />
+        <span asp-validation-for="Dungeon.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dungeon.ImageUrl" class="control-label"></label>
+        <input asp-for="Dungeon.ImageUrl" class="form-control" />
+        <span asp-validation-for="Dungeon.ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dungeon.DungeonMapUrl" class="control-label"></label>
+        <input asp-for="Dungeon.DungeonMapUrl" class="form-control" />
+        <span asp-validation-for="Dungeon.DungeonMapUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dungeon.Platinum" class="control-label"></label>
+        <input asp-for="Dungeon.Platinum" class="form-control" />
+        <span asp-validation-for="Dungeon.Platinum" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dungeon.Gold" class="control-label"></label>
+        <input asp-for="Dungeon.Gold" class="form-control" />
+        <span asp-validation-for="Dungeon.Gold" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dungeon.Silver" class="control-label"></label>
+        <input asp-for="Dungeon.Silver" class="form-control" />
+        <span asp-validation-for="Dungeon.Silver" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dungeon.Bronze" class="control-label"></label>
+        <input asp-for="Dungeon.Bronze" class="form-control" />
+        <span asp-validation-for="Dungeon.Bronze" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dungeon.MobAmount" class="control-label"></label>
+        <input asp-for="Dungeon.MobAmount" class="form-control" />
+        <span asp-validation-for="Dungeon.MobAmount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Boss 1</label>
+        <input name="BossNames[0]" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Boss 2</label>
+        <input name="BossNames[1]" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Boss 3</label>
+        <input name="BossNames[2]" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Boss 4</label>
+        <input name="BossNames[3]" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Boss 5</label>
+        <input name="BossNames[4]" class="form-control" />
+    </div>
+     
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

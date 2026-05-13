@@ -14,7 +14,7 @@
         public string Silver { get; set; }
         public string Bronze { get; set; }
         public int MobAmount { get; set; }
-        public List<Boss> Bosses { get; set; }
+        public IEnumerable<Boss> Bosses { get; set; }
 
         public Dungeon()
         {

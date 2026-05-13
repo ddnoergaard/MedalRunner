@@ -1,4 +1,49 @@
 ﻿@page
-@model MedalRunner.Pages.Admin_pages.Dungeon.AllDungeonsModel
+@model MedalRunner.Pages.Admin_pages.Dungeon.IndexModel
 @{
 }
+
+<h1>All Dungeons</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Zone</th>
+            <th>Description</th>
+            <th>ImageUrl</th>
+            <th>DungeonMapUrl</th>
+            <th>Platinum</th>
+            <th>Gold</th>
+            <th>Silver</th>
+            <th>Bronze</th>
+            <th>MobAmount</th>
+            <th>Bosses</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dungeon in Model.Dungeons)
+        {
+            <tr>
+                <td>@dungeon.Id</td>
+                <td>@dungeon.Name</td>
+                <td>@dungeon.Zone</td>
+                <td>@dungeon.Description</td>
+                <td>@dungeon.ImageUrl</td>
+                <td>@dungeon.DungeonMapUrl</td>
+                <td>@dungeon.Platinum</td>
+                <td>@dungeon.Gold</td>
+                <td>@dungeon.Silver</td>
+                <td>@dungeon.Bronze</td>
+                <td>@dungeon.MobAmount</td>
+                <td>@string.Join(", ", dungeon.Bosses?.Select(b => b.Name) ?? new List<string>())</td>
+                <td>
+                    <a class="btn btn-primary" asp-page="/Admin/Dungeon/Edit" asp-route-id="@dungeon.Id">Edit</a>
+                    <a class="btn btn-danger" asp-page="/Admin/Dungeon/Delete" asp-route-id="@dungeon.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

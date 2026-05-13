@@ -23,13 +23,14 @@ namespace MedalRunner.Pages.Admin_pages
 
         }
 
-        public void OnPost(Models.Item item)
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
-                return;
+                return Page();
             }
-            _itemService.AddItem(item);
+            _itemService.AddItem(Item);
+            return RedirectToPage("Index");
         }
     }
 }

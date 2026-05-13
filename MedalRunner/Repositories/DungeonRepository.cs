@@ -17,9 +17,7 @@ namespace MedalRunner.Repositories
 
         public async Task<List<Dungeon>> GetAllDungeonsAsync()
         {
-            //Create a list to store all the dungeons that we retrieve from the database
             List<Dungeon> data = new List<Dungeon>();
-            //Create Instance of dungeon for later use
             Dungeon dungeon = new Dungeon();
 
             string sqlQuery = "Select * FROM Dungeons";
@@ -29,9 +27,7 @@ namespace MedalRunner.Repositories
                 await connection.OpenAsync();
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
-                //Check if query is usable if not throw exception
-               
-                // while still more to read, add to data list and then return said list
+
                 while (await reader.ReadAsync())
                     {
                         //dungeon.Id = reader.GetInt32(reader.GetOrdinal("id"));
@@ -62,9 +58,7 @@ namespace MedalRunner.Repositories
                     });
                     }
                 if (data.Count == 0) throw new IndexOutOfRangeException();
-                return data;
-
-               
+                return data;               
             }
         }
 
@@ -101,20 +95,24 @@ namespace MedalRunner.Repositories
 
         public async Task UpdateDungeonAsync(Dungeon dungeon)
         {
-            string sqlQuery = "UPDATE dungeons" +
-                "SET name = @name" +
-                "zone = @zone" +
-                "description = @description" +
-                "platinum = @platinum" +
-                "gold = @gold" +
-                "silver = @silver" +
-                "bronze = @bronze" +
-                "mop_amount = @mopAmount" +
+            string sqlQuery = "UPDATE dungeons SET " +
+                "name = @name, " +
+                "zone = @zone, " +
+                "description = @description, " +
+                "platinum = @platinum, " +
+                "gold = @gold, " +
+                "silver = @silver, " +
+                "bronze = @bronze, " +
+                "mop_amount = @mopAmount " +
                 "WHERE id = @id";
+
+            string deleteJunctionQuery = "DELETE FROM dungeon_bosses WHERE dungeon_id = @dungeonId";
+            string insertJunctionQuery = "INSERT INTO dungeon_bosses(dungeon_id, boss_id) VALUES (@dungeonId, @bossId)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 await con.OpenAsync();
+
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@id", dungeon.Id);
@@ -130,9 +128,28 @@ namespace MedalRunner.Repositories
                     {
                         await cmd.ExecuteNonQueryAsync();
                     }
-                    catch (SqlException ex)
+                    catch (SqlException)
                     {
                         throw;
+                    }
+                }
+
+                using (SqlCommand cmd = new SqlCommand(deleteJunctionQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                if (dungeon.Bosses != null)
+                {
+                    foreach (var boss in dungeon.Bosses)
+                    {
+                        using (SqlCommand cmd = new SqlCommand(insertJunctionQuery, con))
+                        {
+                            cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
+                            cmd.Parameters.AddWithValue("@bossId", boss.Id);
+                            await cmd.ExecuteNonQueryAsync();
+                        }
                     }
                 }
             }

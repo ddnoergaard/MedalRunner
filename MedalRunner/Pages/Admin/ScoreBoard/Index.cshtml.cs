@@ -9,7 +9,7 @@ namespace MedalRunner.Pages.Admin.ScoreBoard
     {
         private readonly IScoreboardService _scoreBoard;
 
-        public List<Scoreboard> Scoreboard { get; set; }
+        public List<Models.Scoreboard> Score { get; set; }
 
         public IndexModel(IScoreboardService scoreBoard)
         {
@@ -17,7 +17,7 @@ namespace MedalRunner.Pages.Admin.ScoreBoard
         }
         public async Task OnGet()
         {
-            Scoreboard = await _scoreBoard.GetAllScores();
+            Score = await _scoreBoard.GetAllScores();
         }
 
         public IActionResult SortByNameOnPost()

@@ -10,38 +10,47 @@
     <div class="form-group">
         <label asp-for="Item.Name" class="control-label"></label>
         <input asp-for="Item.Name" class="form-control" />
+        <span asp-validation-for="Item.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.Slot" class="control-label"></label>
         <input asp-for="Item.Slot" class="form-control" />
+        <span asp-validation-for="Item.Slot" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.ImageUrl" class="control-label"></label>
         <input asp-for="Item.ImageUrl" class="form-control" />
+        <span asp-validation-for="Item.ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.ItemLevel" class="control-label"></label>
         <input asp-for="Item.ItemLevel" class="form-control" />
+        <span asp-validation-for="Item.ItemLevel" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.Rarity" class="control-label"></label>
         <input asp-for="Item.Rarity" class="form-control" />
+        <span asp-validation-for="Item.Rarity" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.Difficulty" class="control-label"></label>
         <input asp-for="Item.Difficulty" class="form-control" />
+        <span asp-validation-for="Item.Difficulty" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.Material" class="control-label"></label>
         <input asp-for="Item.Material" class="form-control" />
+        <span asp-validation-for="Item.Material" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.Source" class="control-label"></label>
         <input asp-for="Item.Source" class="form-control" />
+        <span asp-validation-for="Item.Source" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.Armor" class="control-label"></label>
         <input asp-for="Item.Armor" class="form-control" />
+        <span asp-validation-for="Item.Armor" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Item.MinDamage" class="control-label"></label>
@@ -120,6 +129,11 @@
         <input asp-for="Item.Enchants" class="form-control" />
     </div>
 
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <button type="submit" class="btn">Create</button>
 
 </form>
+    </div>
+
+    <button type="submit" class="btn">Create</button>

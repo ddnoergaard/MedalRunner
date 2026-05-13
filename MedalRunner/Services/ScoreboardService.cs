@@ -49,5 +49,7 @@ namespace MedalRunner.Services
             List<Scoreboard> scores = await _scoreboardRepository.GetAllScores();
             return scores.Where(s => s.Name.Contains(str, StringComparison.OrdinalIgnoreCase));
         }
+
+
     }
 }
