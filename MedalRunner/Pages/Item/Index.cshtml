@@ -5,6 +5,29 @@
 
 <h1>Items</h1>
 
+<table>
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Material</th>
+            <th>Item Level</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Models.Item i in Model._items)
+        {
+            <tr>
+                <td><img class="col-image" src="@i.ImageUrl" style=""></td>
+                <td class="col-name">@i.Name</td>
+                <td class="col-name">@i.Material</td>
+                <td class="col-name">@i.ItemLevel</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* <!--
 <div class="item-grid">
     @foreach (Models.Item item in Model._items)
     {
@@ -18,3 +41,4 @@
         </div>
     }
 </div>
+--> *@

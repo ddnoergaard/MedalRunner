@@ -21,7 +21,7 @@ namespace MedalRunner.Repositories
             //Create Instance of item for later use
             Item item = new Item();
 
-            string sqlQuery = "Select * FROM Dungeons";
+            string sqlQuery = "Select * FROM items";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -217,37 +217,38 @@ WHERE db.dungeon_id = @dungeonId";
                     {
                         while (await reader.ReadAsync())
                         {
-                            tempList.Add(new Item
-                            {
-                                Id = GetNullableInt(reader, "id"), //reader.GetInt32(reader.GetOrdinal("id")),
-                                Name = GetNullableString(reader, "name"), //reader.GetString(reader.GetOrdinal("name")),
-                                Slot = GetNullableInt(reader, "gear_slot"), //reader.GetInt32(reader.GetOrdinal("gear_slot")),
-                                ImageUrl = GetNullableString(reader, "image_url"), //reader.GetString(reader.GetOrdinal("image_url")),
-                                ItemLevel = GetNullableInt(reader, "item_level"), //reader.GetInt32(reader.GetOrdinal("item_level")),
-                                Rarity = GetNullableString(reader, "rarity"), //reader.GetString(reader.GetOrdinal("rarity")),
-                                Difficulty = GetNullableString(reader, "difficulty"), //reader.GetString(reader.GetOrdinal("difficulty")),
-                                Material = GetNullableString(reader, "material"), //reader.GetString(reader.GetOrdinal("material")),
-                                Armor = GetNullableInt(reader, "armor"), //reader.GetInt32(reader.GetOrdinal("armor")),
-                                MinDamage = GetNullableInt(reader, "min_damage"), //reader.GetInt32(reader.GetOrdinal("min_damage")),
-                                MaxDamage = GetNullableInt(reader, "max_damage"), //reader.GetInt32(reader.GetOrdinal("max_damage")),
-                                Intellect = GetNullableInt(reader, "intellect"), //reader.GetInt32(reader.GetOrdinal("intellect")),
-                                Strength = GetNullableInt(reader, "strength"), //reader.GetInt32(reader.GetOrdinal("strength")),
-                                Agility = GetNullableInt(reader, "agility"), //reader.GetInt32(reader.GetOrdinal("agility")),
-                                Spirit = GetNullableInt(reader, "spirit"), //reader.GetInt32(reader.GetOrdinal("spirit")),
-                                Stamina = GetNullableInt(reader, "stamina"), //reader.GetInt32(reader.GetOrdinal("stamina")),
-                                Haste = GetNullableInt(reader, "haste"), //reader.GetInt32(reader.GetOrdinal("haste")),
-                                Crit = GetNullableInt(reader, "crit"), //reader.GetInt32(reader.GetOrdinal("crit")),
-                                Mastery = GetNullableInt(reader, "mastery"), //reader.GetInt32(reader.GetOrdinal("mastery")),
-                                Dodge = GetNullableInt(reader, "dodge"), //reader.GetInt32(reader.GetOrdinal("dodge")),
-                                Parry = GetNullableInt(reader, "parry"), //reader.GetInt32(reader.GetOrdinal("parry")),
-                                Hit = GetNullableInt(reader, "hit"), //reader.GetInt32(reader.GetOrdinal("hit")),
-                                Expertise = GetNullableInt(reader, "expertise"), //reader.GetInt32(reader.GetOrdinal("expertise")),
-                                Speed = Convert.ToDouble(reader["speed"]), //reader.GetDouble(reader.GetOrdinal("speed")),
-                                SocketAmount = GetNullableInt(reader, "socket_amount"), //reader.GetInt32(reader.GetOrdinal("socket_amount")),
-                                SocketBonusStat = GetNullableString(reader, "socket_bonus_stat"), //reader.GetString(reader.GetOrdinal("socket_bonus_stat")),
-                                SocketBonusAmount = GetNullableInt(reader, "socket_bonus_amount"), //reader.GetInt32(reader.GetOrdinal("socket_bonus_amount")),
-                                Enchants = GetNullableInt(reader, "enchant") //reader.GetInt32(reader.GetOrdinal("enchant"))
-                            });
+                            tempList.Add(ItemMapper(reader));
+                            //tempList.Add(new Item
+                            //{
+                            //    Id = GetNullableInt(reader, "id"), //reader.GetInt32(reader.GetOrdinal("id")),
+                            //    Name = GetNullableString(reader, "name"), //reader.GetString(reader.GetOrdinal("name")),
+                            //    Slot = GetNullableInt(reader, "gear_slot"), //reader.GetInt32(reader.GetOrdinal("gear_slot")),
+                            //    ImageUrl = GetNullableString(reader, "image_url"), //reader.GetString(reader.GetOrdinal("image_url")),
+                            //    ItemLevel = GetNullableInt(reader, "item_level"), //reader.GetInt32(reader.GetOrdinal("item_level")),
+                            //    Rarity = GetNullableString(reader, "rarity"), //reader.GetString(reader.GetOrdinal("rarity")),
+                            //    Difficulty = GetNullableString(reader, "difficulty"), //reader.GetString(reader.GetOrdinal("difficulty")),
+                            //    Material = GetNullableString(reader, "material"), //reader.GetString(reader.GetOrdinal("material")),
+                            //    Armor = GetNullableInt(reader, "armor"), //reader.GetInt32(reader.GetOrdinal("armor")),
+                            //    MinDamage = GetNullableInt(reader, "min_damage"), //reader.GetInt32(reader.GetOrdinal("min_damage")),
+                            //    MaxDamage = GetNullableInt(reader, "max_damage"), //reader.GetInt32(reader.GetOrdinal("max_damage")),
+                            //    Intellect = GetNullableInt(reader, "intellect"), //reader.GetInt32(reader.GetOrdinal("intellect")),
+                            //    Strength = GetNullableInt(reader, "strength"), //reader.GetInt32(reader.GetOrdinal("strength")),
+                            //    Agility = GetNullableInt(reader, "agility"), //reader.GetInt32(reader.GetOrdinal("agility")),
+                            //    Spirit = GetNullableInt(reader, "spirit"), //reader.GetInt32(reader.GetOrdinal("spirit")),
+                            //    Stamina = GetNullableInt(reader, "stamina"), //reader.GetInt32(reader.GetOrdinal("stamina")),
+                            //    Haste = GetNullableInt(reader, "haste"), //reader.GetInt32(reader.GetOrdinal("haste")),
+                            //    Crit = GetNullableInt(reader, "crit"), //reader.GetInt32(reader.GetOrdinal("crit")),
+                            //    Mastery = GetNullableInt(reader, "mastery"), //reader.GetInt32(reader.GetOrdinal("mastery")),
+                            //    Dodge = GetNullableInt(reader, "dodge"), //reader.GetInt32(reader.GetOrdinal("dodge")),
+                            //    Parry = GetNullableInt(reader, "parry"), //reader.GetInt32(reader.GetOrdinal("parry")),
+                            //    Hit = GetNullableInt(reader, "hit"), //reader.GetInt32(reader.GetOrdinal("hit")),
+                            //    Expertise = GetNullableInt(reader, "expertise"), //reader.GetInt32(reader.GetOrdinal("expertise")),
+                            //    Speed = Convert.ToDouble(reader["speed"]), //reader.GetDouble(reader.GetOrdinal("speed")),
+                            //    SocketAmount = GetNullableInt(reader, "socket_amount"), //reader.GetInt32(reader.GetOrdinal("socket_amount")),
+                            //    SocketBonusStat = GetNullableString(reader, "socket_bonus_stat"), //reader.GetString(reader.GetOrdinal("socket_bonus_stat")),
+                            //    SocketBonusAmount = GetNullableInt(reader, "socket_bonus_amount"), //reader.GetInt32(reader.GetOrdinal("socket_bonus_amount")),
+                            //    Enchants = GetNullableInt(reader, "enchant") //reader.GetInt32(reader.GetOrdinal("enchant"))
+                            //});
                         }
                         if (tempList.Count == 0) throw new InvalidOperationException("No item for that dungeon");
                         return tempList;
