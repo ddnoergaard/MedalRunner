@@ -1,6 +1,7 @@
 ﻿using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Services
 {
@@ -11,6 +12,18 @@ namespace MedalRunner.Services
         public ItemService(IItemRepository itemRepository)
         {
             _itemRepository = itemRepository;
+        }
+
+        public async Task<IEnumerable<Item>> GetAllItem()
+        {
+            try
+            {
+                return await _itemRepository.GetAllItemsAsync();
+            }
+            catch(SqlException ex)
+            {
+                throw;
+            }
         }
 
         public async Task AddItem(Item item)
@@ -39,5 +52,17 @@ namespace MedalRunner.Services
             }
         }
 
+
+        public async Task<Item> GetByItemId(int id)
+        {
+            try
+            {
+                return await _itemRepository.GetByItemId(id);
+            }
+            catch(SqlException ex)
+            {
+                throw;
+            }
+        }
     }
 }
