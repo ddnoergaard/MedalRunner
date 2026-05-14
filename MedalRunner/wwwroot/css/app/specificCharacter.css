@@ -1,0 +1,155 @@
+﻿body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.top-container {
+    display: grid;
+    width: 100vw;
+    height: fit-content;
+    grid-template-columns: 1fr 2fr;
+    padding-bottom: 5rem;
+}
+
+.top-left {
+    border-right: 1px solid white;
+}
+
+.top-left-top {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid white;
+    padding: 5rem 0 3rem 0;
+}
+
+.char-name {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.top-l-t-one, .top-l-t-two {
+    display: flex;
+    justify-content: space-around;
+}
+
+    .top-l-t-one > p, .top-l-t-two > p {
+        font-size: 1.5rem;
+        margin: 1rem
+    }
+
+.top-left-bottom {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.top-l-b-attributes {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.top-l-b-stat-container {
+    width: 50%;
+    place-self: center;
+}
+
+.stat-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.top-l-stat {
+    text-align: start;
+    font-size: 1.3rem;
+}
+
+.top-right {
+    display: flex;
+    padding-top: 5rem;
+    flex-direction: column;
+    place-items: center;
+    gap: 1.5rem;
+}
+
+.two-slots {
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+}
+
+.three-slots {
+    display: flex;
+    justify-content: space-evenly;
+    width: 68%;
+}
+
+.two-slots > a, .four-slots > a {
+    cursor: pointer;
+    transition: .3s;
+}
+
+    .two-slots > a:hover, .four-slots > a:hover {
+        transform: scale(1.01);
+    }
+
+.four-slots {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    border-top: 1px solid white;
+    gap: 2rem;
+}
+
+.bis-select-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+form > button {
+    background: transparent;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    padding: 1rem;
+    transition: .3s;
+}
+
+    form > button:hover {
+        cursor: pointer;
+        background-color: var(--color-bg-base);
+        color: white;
+        transform: scale(1.01);
+    }
+
+.table-container {
+    width: 100%;
+}
+
+table {
+    width: 75%;
+    border-collapse: collapse;
+    place-self: center;
+}
+
+th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #555;
+    font-size: 14px;
+}

@@ -2,3 +2,109 @@
 @model MedalRunner.Pages.App.Character.DetailsModel
 @{
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/app/specificCharacter.css" />
+}
+
+<div class="character-container">
+    <div class="top-container">
+        <div class="top-left">
+            <div class="top-left-top">
+                <p class="char-name">Char name</p>
+                <div class="top-l-t-one">
+                    <p>Ilvl</p>
+                    <p>Race</p>
+                </div>
+                <div class="top-l-t-two">
+                    <p>Class</p>
+                    <p>Spec</p>
+                </div>
+            </div>
+            <div class="top-left-bottom">
+                <p class="top-l-b-attributes">Attributes</p>
+                <div class="top-l-b-stat-container">
+                    <div class="stat-container">
+                        <p class="top-l-stat">Stamina</p>
+                        <p>XXXX</p>
+                    </div>
+                    <div class="stat-container">
+                        <p class="top-l-stat">Strength</p>
+                        <p>XXXX</p>
+                    </div>
+                    <div class="stat-container">
+                        <p class="top-l-stat">Intellect</p>
+                        <p>XXXX</p>
+                    </div>
+                    <div class="stat-container">
+                        <p class="top-l-stat">Agility</p>
+                        <p>XXXX</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="three-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <p>CHAR NAME</p>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="two-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="two-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="two-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="two-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="two-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="two-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+            <div class="four-slots">
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <a asp-page="/character/change"><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-container">
+        <div class="bis-select-container">
+            <form class="bis-select" asp-page-handler="Bis" method="post"><button type="submit">BIS</button></form>
+            <form class="bis-select" asp-page-handler="RegularBis" method="post"><button type="submit">REGULAR BIS</button></form>
+            <form class="bis-select" asp-page-handler="DGBis" method="post"><button type="submit">DAD GAMER BIS</button></form>
+        </div>
+        <div class="tabel-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Drop by</th>
+                        <th>Dungeon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Shoulders</td>
+                        <td>Axel</td>
+                        <td>The school</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
