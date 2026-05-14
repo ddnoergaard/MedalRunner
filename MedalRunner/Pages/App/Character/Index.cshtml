@@ -2,6 +2,11 @@
 @model MedalRunner.Pages.App.Character.IndexModel
 @{
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/public/specficDungeon.css" />
+}
+
 @using MedalRunner.Models;
 @using MedalRunner.Services;
 
@@ -30,3 +35,26 @@
 <p>
     <a class="btn btn-danger" asp-page="Create">Create a new Character</a>
 </p>
+
+<div class="characters-container">
+    <div class="left">
+        <h1>Choose your character</h1>
+        <p>Select one of your characters to view gear recommendations, track your Challenge Mode runs, and compare your setup against the best times on the leaderboard.</p>
+        <p>New characters can be created from the panel on the right.</p>
+    </div>
+    <div class="right">
+        <div class="char-card">
+            <div class="char-card-one">
+                <p>Character name</p>
+                <p>Paladin</p>
+            </div>
+            <div class="char-card-two">
+                <p>Level 90</p>
+                <a asp-page="/Character/Details">Log in</a>
+            </div>
+        </div>
+        <div class="char-create">
+            <a asp-page="/Character/Create" asp-route-id="">+</a>
+        </div>
+    </div>
+</div>

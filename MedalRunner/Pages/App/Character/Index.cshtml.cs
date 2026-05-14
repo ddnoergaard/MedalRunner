@@ -9,7 +9,7 @@ namespace MedalRunner.Pages.App.Character
     public class IndexModel : PageModel
     {
         private readonly ICharacterService _characterService;
-        public List<Models.Character> _characters;
+        public List<Models.Character> _characters { get; set; } = new List<Models.Character>();
 
         public IndexModel(ICharacterService characterService)
         {
