@@ -351,5 +351,27 @@ WHERE db.dungeon_id = @dungeonId";
 
             return item;
         }
+
+        public async Task<string> GetItemSlotNameAsync(int id)
+        {
+            string sqlQuery = "SELECT name FROM gear_slots WHERE id = @id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    try
+                    {
+                        return Convert.ToString(await cmd.ExecuteScalarAsync());
+                    } catch (SqlException)
+                    {
+                        throw new ArgumentException("No slot found with that Id");
+                    }
+                }
+            }
+        }
+
     }
 }

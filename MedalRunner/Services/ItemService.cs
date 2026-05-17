@@ -2,6 +2,7 @@
 using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
 using Microsoft.Data.SqlClient;
+using System.Diagnostics;
 
 namespace MedalRunner.Services
 {
@@ -64,5 +65,17 @@ namespace MedalRunner.Services
                 throw;
             }
         }
+
+        public async Task<string> GetItemSlotNameAsync(int id)
+        {
+            try
+            {
+                return await _itemRepository.GetItemSlotNameAsync(id);
+            } catch (ArgumentException ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

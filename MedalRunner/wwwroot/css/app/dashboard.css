@@ -1,0 +1,94 @@
+﻿@import url("/css/colors.css");
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100vw;
+    min-height: 70vh;
+}
+
+.account-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    gap: 5rem;
+    padding-top: 5rem;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+    .top-section > p {
+        font-size: 2rem;
+    }
+
+#date {
+    font-size: 1rem !important;
+    place-self: center;
+    color: var(--color-text-secondary);
+}
+
+.second-section {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+    .second-section > div > p {
+        place-self: center;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #555;
+    font-size: 14px;
+}
+
+th {
+    border: none !important;
+}
+
+tbody tr:hover {
+    background: #2a2a2a;
+}
+
+.third-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    place-self: center;
+    gap: 2rem;
+}
+
+.quick-actions {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+    .quick-actions > a {
+        cursor: pointer;
+        border: 1px solid white;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        transition: .3s;
+    }
+
+        .quick-actions > a:hover {
+            background-color: var(--color-text-secondary);
+            transform: scale(1.01);
+        }

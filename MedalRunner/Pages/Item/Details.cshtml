@@ -1,4 +1,172 @@
-﻿@page "{id:int}"
+﻿@page "{id:int}/{slug?}"
 @model MedalRunner.Pages.Public_pages.Item.DetailsModel
 @{
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/app/account.css" />
+}
+
+<div class="item-container">
+    <div class="top-section">
+        <h1>@Model.Item.Name</h1>
+        <p>Item level: @Model.Item.ItemLevel</p>
+    </div>
+    <div class="mid-section">
+        <div class="img-container">
+            <img src="@Model.Item.ImageUrl" alt="">
+        </div>
+        <div class="stat-card">
+            @if (!Model.IsWeapon)
+            {
+                <p class="stat" id="title">@Model.Item.Name</p>
+                <p class="stat" id="item-level">Item level: @Model.Item.ItemLevel</p>
+                <div class="type-materiale-container">
+                    <p class="stat" id="type">@Model.SlotName</p>
+                    <p class="stat" id="material">@Model.Item.Material</p>
+                </div>
+                <p class="stat" id="armor">@Model.Item.Armor armor</p>
+                @if (Model.Item.Stamina > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Stamina Strength</p>
+                }
+                @if (Model.Item.Strength > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Strength Strength</p>
+                }
+                @if (Model.Item.Intellect > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Intellect Intellect</p>
+                }
+                @if (Model.Item.Spirit > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Spirit Spirit</p>
+                }
+                @if (Model.Item.Haste > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Haste Haste</p>
+                }
+                @if (Model.Item.Crit > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Crit Crit</p>
+                }
+                @if (Model.Item.Mastery > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Mastery Mastery</p>
+                }
+                @if (Model.Item.Dodge > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Dodge Dodge</p>
+                }
+                @if (Model.Item.Parry > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Parry Parry</p>
+                }
+                @if (Model.Item.Hit > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Hit Hit</p>
+                }
+                @if (Model.Item.Expertise > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Expertise Expertise</p>
+                }
+                
+                <div class="socket-container">
+                    @for (int i = 0; i <= Model.Item.SocketAmount; i++)
+                    {
+                        <div></div>
+                        <p> Socket</p>
+                    }
+                </div>
+            }
+            <!--HVIS DET ER WEAPON-->
+            @if (Model.IsWeapon)
+            {
+                <p class="stat" id="title">@Model.Item.Name</p>
+                <p class="stat" id="item-level">Item level: @Model.Item.ItemLevel</p>
+                <div class="type-materiale-container">
+                    <p class="stat" id="type">Sword</p>
+                    <p class="stat" id="material">One hand</p>
+                </div>
+                <div class="damage-speed-container">
+                    <p class="stat" id="min-max-dmg">@Model.Item.MinDamage - @Model.Item.MaxDamage Damage</p>
+                    <p class="stat" id="speed">Speed @Model.Item.Speed</p>
+                </div>
+                <p class="stat" id="dps">(@Model.DPS damage per second)</p>
+                @if (Model.Item.Stamina > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Stamina Strength</p>
+                }
+                @if (Model.Item.Strength > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Strength Strength</p>
+                }
+                @if (Model.Item.Intellect > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Intellect Intellect</p>
+                }
+                @if (Model.Item.Spirit > 0)
+                {
+                    <p class="stat" id="primary-stat">+@Model.Item.Spirit Spirit</p>
+                }
+                @if (Model.Item.Haste > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Haste Haste</p>
+                }
+                @if (Model.Item.Crit > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Crit Crit</p>
+                }
+                @if (Model.Item.Mastery > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Mastery Mastery</p>
+                }
+                @if (Model.Item.Dodge > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Dodge Dodge</p>
+                }
+                @if (Model.Item.Parry > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Parry Parry</p>
+                }
+                @if (Model.Item.Hit > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Hit Hit</p>
+                }
+                @if (Model.Item.Expertise > 0)
+                {
+                    <p class="stat" id="secondary-stat">+@Model.Item.Expertise Expertise</p>
+                }
+
+                <div class="socket-container">
+                    @for (int i = 0; i <= Model.Item.SocketAmount; i++)
+                    {
+                        <div></div>
+                        <p> Socket</p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="end-section">
+        <h2>Dropped by</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Dungeon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-image">
+                        <img src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/bosses/Armsmaster%20Harlan.png" alt="">
+                    </td>
+                    <td>Armsmaster Harlan</td>
+                    <td>Scarlet Monastery</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

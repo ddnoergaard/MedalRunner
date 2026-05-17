@@ -1,4 +1,5 @@
 using MedalRunner.Repositories.Interfaces;
+using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,17 +7,51 @@ namespace MedalRunner.Pages.Public_pages.Item
 {
     public class DetailsModel : PageModel
     {
-        private readonly IItemRepository _itemRepository;
-        public Models.Item _item { get; set; }
+        private readonly IItemService _itemService;
+        public Models.Item Item { get; set; }
+        public bool IsWeapon { get; set; }
+        public string SlotName { get; set; }
+        public decimal? DPS { get; set; }
 
-        public DetailsModel(IItemRepository itemRepository)
+        public DetailsModel(IItemService itemService)
         {
-            _itemRepository = itemRepository;
+            _itemService = itemService;
         }
 
-        public async Task OnGetAsync(int id)
+        private bool IsWeaponCheck(int id)
         {
-            _item = await _itemRepository.GetByItemId(id);
+            List<int> weaponInts = new List<int> { 15, 16 };
+            if (weaponInts.Contains(id)) {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task OnGet(int id)
+        {
+            try
+            {
+                Item = await _itemService.GetByItemId(id);
+            } catch (Exception ex)
+            {
+                ViewData["item-error-msg"] = $"{ex.Message}";
+            }
+            
+            IsWeapon = IsWeaponCheck(Item.Slot);
+
+            try
+            {
+                SlotName = await _itemService.GetItemSlotNameAsync(Item.Slot);
+            } catch (ArgumentException ex)
+            {
+                ViewData["slot-name-error-msg"] = $"{ex.Message}";
+            }
+
+            if (IsWeapon)
+            {
+                DPS = Math.Round(Convert.ToDecimal(((Item.MinDamage + Item.MaxDamage) / 2) / Item.Speed), 2);
+            }
+
         }
     }
 }

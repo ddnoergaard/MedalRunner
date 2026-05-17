@@ -2,3 +2,62 @@
 @model MedalRunner.Pages.App.AccountModel
 @{
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/app/account.css" />
+
+}
+
+<div class="account-container">
+    <div class="top-section">
+        <h1>Account</h1>
+        <div>
+            <p>Full name</p>
+            <p>Created at: <i>17/05/2026</i></p>
+        </div>
+        <div>
+            <p>Email@email.dk</p>
+            <p>Password (In astrix?)</p>
+        </div>
+    </div>
+    <div class="second-section">
+        <h2>Subscription</h2>
+        <div>
+            <div class="sub-card">
+                <p>Challenger Tier</p>
+                <p class="price">€<span style="font-size: 2vw;">X</span></p>
+                <p class="secondary-text">sample text sample text sample text sample text sample <br> text sample text sample text sample text</p>
+            </div>
+            <div class="sub-text">
+                <p>Features</p>
+                <ul class="sub-ul">
+                    <li>Track unlimited runs</li>
+                    <li>Unlimited character amount</li>
+                    <li>Full run history with timestamps</li>
+                    <li>Detailed split tracking per boss</li>
+                    <li>Leaderboard access across all realms</li>
+                    <li>Medal breakdwon by dungeon</li>
+                    <li>Compare runs across characters</li>
+                    <li>Export run data to CSV</li>
+                    <li>Custom run notes and tags</li>
+                    <li>Early acces to new features</li>
+                </ul>
+                <div class="sub-button-container">
+                    <button id="btn-cancel">Cancel</button>
+                    <button id="btn-upgrade">Upgrade</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="del-acc-section">
+        <div class="del-acc-left">
+            <h2>Delete account?</h2>
+            <p class="secondary-text">Deleting your account is permanent and will remove your access immediately. All your runs, characters, and medal data will be hidden from public view.</p>
+            <p class="secondary-text">Your data will be retained for up to 2 years, during which you can recover your account through our Account Recovery process. After this period, all data will be permanently deleted and cannot be restored</p>
+        </div>
+        <div class="del-acc-right">
+            <button>Delete account</button>
+        </div>
+
+    </div>
+</div>

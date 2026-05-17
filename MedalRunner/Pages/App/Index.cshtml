@@ -3,3 +3,66 @@
 @{
     Layout = "_LayoutApp";
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/app/dashboard.css" />
+
+}
+
+<div class="account-container">
+    <div class="top-section">
+        <p>Hello, FirstName</p>
+        <p id="date">17/05/2026</p>
+    </div>
+    <div class="second-section">
+        <div>
+            <p>header for table 1</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data 1</th>
+                        <th>Data 2</th>
+                        <th>Data 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                        <td>Z</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <p>header for table 2</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data 1</th>
+                        <th>Data 2</th>
+                        <th>Data 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                        <td>Z</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="third-section">
+        <div>
+            <h2>Quick actions</h2>
+        </div>
+        <div class="quick-actions">
+            <a asp-page="">Characters</a>
+            <a asp-page="">Scoreboard</a>
+            <a asp-page="">Account</a>
+            <a asp-page="/Logout">Logout</a>
+        </div>
+    </div>
+</div>
