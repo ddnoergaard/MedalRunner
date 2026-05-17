@@ -26,6 +26,11 @@ namespace MedalRunner.Services
             }
         }
 
+        public async Task<IEnumerable<Item>> GetAllItemsWithSourceAsync()
+        {
+            return await _itemRepository.GetAllItemsWithSourceAsync();
+        }
+
         public async Task AddItem(Item item)
         {
             await _itemRepository.AddItem(item);

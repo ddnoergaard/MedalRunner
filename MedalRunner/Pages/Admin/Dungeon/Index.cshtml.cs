@@ -19,6 +19,11 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
         public async Task OnGet()
         {
             Dungeons = await _dungeonService.GetAllDungeons();
+
+            foreach (var dungeon in Dungeons)
+            {
+                dungeon.Bosses = await _dungeonService.GetBossesAsync(dungeon.Id);
+            }
         }
     }
 }

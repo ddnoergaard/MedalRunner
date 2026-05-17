@@ -64,8 +64,11 @@ namespace MedalRunner.Repositories
 
         public async Task AddDungeonAsync(Dungeon dungeon)
         {
-            string sqlQuery = "INSERT INTO dungeons(name, zone, description, platinum, gold, silver, bronze, mop_amount)" +
-                "VALUES (name = @name, zone = @zone, description = @description, platinum = @platinum, gold = @gold, silver = @silver, bronze = @bronze, mop_amount = @mopAmount)";
+            string sqlQuery = "INSERT INTO dungeons(name, zone, description, platinum, gold, silver, bronze, mob_amount, image_url, dungeon_map_url)" +
+                " VALUES (@name, @zone, @description, @platinum, @gold, @silver, @bronze, @mobAmount, @imageUrl, @dungeonMapUrl);" +
+                " SELECT SCOPE_IDENTITY();";
+
+            string insertJunctionQuery = "INSERT INTO dungeon_bosses(dungeon_id, boss_id) VALUES (@dungeonId, @bossId)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -80,14 +83,30 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@gold", dungeon.Gold);
                     cmd.Parameters.AddWithValue("@silver", dungeon.Silver);
                     cmd.Parameters.AddWithValue("@bronze", dungeon.Bronze);
-                    cmd.Parameters.AddWithValue("@mopAmount", dungeon.MobAmount);
+                    cmd.Parameters.AddWithValue("@mobAmount", dungeon.MobAmount);
+                    cmd.Parameters.AddWithValue("@imageUrl", dungeon.ImageUrl ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@dungeonMapUrl", dungeon.DungeonMapUrl ?? (object)DBNull.Value);
                     try
                     {
-                        await cmd.ExecuteNonQueryAsync();
+                        var result = await cmd.ExecuteScalarAsync();
+                        dungeon.Id = Convert.ToInt32(result);
                     }
                     catch (SqlException ex)
                     {
                         throw;
+                    }
+                }
+
+                if (dungeon.Bosses != null)
+                {
+                    foreach (var boss in dungeon.Bosses)
+                    {
+                        using (SqlCommand cmd = new SqlCommand(insertJunctionQuery, con))
+                        {
+                            cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
+                            cmd.Parameters.AddWithValue("@bossId", boss.Id);
+                            await cmd.ExecuteNonQueryAsync();
+                        }
                     }
                 }
             }

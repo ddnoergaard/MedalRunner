@@ -17,7 +17,7 @@ namespace MedalRunner.Repositories
         {
             List<Scoreboard> data = new List<Scoreboard>();
 
-            string sqlQuery = "SELECT * FROM Scoreboard";
+            string sqlQuery = "SELECT * FROM scoreboards";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -52,7 +52,7 @@ namespace MedalRunner.Repositories
         public async Task<Scoreboard> GetScoreById(int id)
         {
             Scoreboard score = new Scoreboard();
-            string sqlQuery = "SELECT * FROM Scoreboard WHERE id = @id";
+            string sqlQuery = "SELECT * FROM scoreboards WHERE id = @id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -123,8 +123,8 @@ namespace MedalRunner.Repositories
 
         public async Task UpdateScore(Scoreboard score)
         {
-            string sqlQuery = "UPDATE Scoreboard " +
-                "SET dungeon = @dungeon, score = @score, run_date = @runDate, created_at = @CreatedAt, is_active = @isActive, " +
+            string sqlQuery = "UPDATE scoreboards " +
+                "SET dungeon = @dungeon, score = @score, run_date = @runDate, created_at = @CreatedAt, is_active = @isActive " +
                 "WHERE id = @id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -152,7 +152,7 @@ namespace MedalRunner.Repositories
 
         public async Task SetInactive(int id)
         {
-            string sqlQuery = "UPDATE Scoreboard " +
+            string sqlQuery = "UPDATE scoreboards " +
                 "SET is_active = 0 " +
                 "WHERE id = @id";
 
@@ -178,7 +178,7 @@ namespace MedalRunner.Repositories
 
         public async Task SetActive(int id)
         {
-            string sqlQuery = "UPDATE Scoreboard " +
+            string sqlQuery = "UPDATE scoreboards " +
                 "SET is_active = 1 " +
                 "WHERE id = @id";
 

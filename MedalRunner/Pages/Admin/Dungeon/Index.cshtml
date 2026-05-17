@@ -5,22 +5,22 @@
 
 <h1>All Dungeons</h1>
 
+<div class="table-wrapper">
 <table class="table">
     <thead>
         <tr>
             <th>Id</th>
+            <th></th>
             <th>Name</th>
             <th>Zone</th>
-            <th>Description</th>
-            <th>ImageUrl</th>
-            <th>DungeonMapUrl</th>
+            <th style="min-width:20rem;">Description</th>
             <th>Platinum</th>
             <th>Gold</th>
             <th>Silver</th>
             <th>Bronze</th>
             <th>MobAmount</th>
             <th>Bosses</th>
-            <th></th>
+            <th>Modify</th>
         </tr>
     </thead>
     <tbody>
@@ -28,22 +28,27 @@
         {
             <tr>
                 <td>@dungeon.Id</td>
-                <td>@dungeon.Name</td>
+                <td><img src="@dungeon.ImageUrl" alt="@dungeon.Name" style="height:2.5rem;width:auto;border-radius:3px;" /></td>
+                <td><a class="nav-item-link" href="@dungeon.DungeonMapUrl" target="_blank">@dungeon.Name</a></td>
                 <td>@dungeon.Zone</td>
                 <td>@dungeon.Description</td>
-                <td>@dungeon.ImageUrl</td>
-                <td>@dungeon.DungeonMapUrl</td>
                 <td>@dungeon.Platinum</td>
                 <td>@dungeon.Gold</td>
                 <td>@dungeon.Silver</td>
                 <td>@dungeon.Bronze</td>
                 <td>@dungeon.MobAmount</td>
-                <td>@string.Join(", ", dungeon.Bosses?.Select(b => b.Name) ?? new List<string>())</td>
+                    <td>
+                        @foreach (var boss in dungeon.Bosses)
+                        {
+                            <span>@boss.Name</span><br />
+                        }
+                    </td>
                 <td>
-                    <a class="btn btn-primary" asp-page="/Admin/Dungeon/Edit" asp-route-id="@dungeon.Id">Edit</a>
+                    <a class="btn btn-primary" asp-page="/Admin/Dungeon/Update" asp-route-id="@dungeon.Id">Edit</a>
                     <a class="btn btn-danger" asp-page="/Admin/Dungeon/Delete" asp-route-id="@dungeon.Id">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</div>

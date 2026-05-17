@@ -9,8 +9,40 @@ namespace MedalRunner.Models
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; } = string.Empty;
 
+        public enum GearSlot
+        {
+            Tabard    = 0,
+            Head      = 1,
+            Neck      = 2,
+            Shoulders = 3,
+            Back      = 4,
+            Chest     = 5,
+            Wrists    = 6,
+            Hands     = 7,
+            Belt      = 8,
+            Legs      = 9,
+            Feet      = 10,
+            Ring1     = 11,
+            Ring2     = 12,
+            Trinket1  = 13,
+            Trinket2  = 14,
+            MainHand  = 15,
+            OffHand   = 16
+        }
+
         [Required(ErrorMessage = "Slot is required.")]
         public int Slot { get; set; }
+
+        public string SlotName => ((GearSlot)Slot) switch
+        {
+            GearSlot.Ring1    => "Ring",
+            GearSlot.Ring2    => "Ring",
+            GearSlot.Trinket1 => "Trinket",
+            GearSlot.Trinket2 => "Trinket",
+            GearSlot.MainHand => "Main-Hand",
+            GearSlot.OffHand  => "Off-Hand",
+            var s             => s.ToString()
+        };
 
         [Required(ErrorMessage = "Image URL is required.")]
         public string ImageUrl { get; set; } = string.Empty;
@@ -31,10 +63,13 @@ namespace MedalRunner.Models
         [Required(ErrorMessage = "Source is required.")]
         public string Source { get; set; } = string.Empty;
 
+        public string? DropBoss { get; set; }
+        public string? DropDungeon { get; set; }
+        public int? BossId { get; set; }
+
         [Required(ErrorMessage = "Armor is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Armor must be 0 or greater.")]
         public int Armor { get; set; }
-
         public int? MinDamage { get; set; }
         public int? MaxDamage { get; set; }
         public int? Intellect { get; set; }

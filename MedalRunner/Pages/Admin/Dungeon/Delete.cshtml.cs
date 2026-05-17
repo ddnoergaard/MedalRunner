@@ -15,17 +15,21 @@ namespace MedalRunner.Pages.Admin_pages
             _dungeonService = dungeonService;
         }
 
-        public void OnGet()
+        // CHANGED: was empty - now loads the dungeon so the confirmation page can display its name
+        public async Task<IActionResult> OnGetAsync(int id)
         {
+            Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
+            if (Dungeon == null)
+            {
+                return RedirectToPage("/NotFound");
+            }
+            return Page();
         }
 
-        public IActionResult OnPost()
+        // CHANGED: was synchronous OnPost() - now properly awaits DeleteDungeon
+        public async Task<IActionResult> OnPostAsync()
         {
-            var deletedItem = _dungeonService.DeleteDungeon(Dungeon.Id);
-            if (deletedItem == null)
-            {
-                return RedirectToPage("/Pages/Error");
-            }
+            await _dungeonService.DeleteDungeon(Dungeon.Id);
             return RedirectToPage("/Admin/Dungeon/Index");
         }
     }

@@ -47,12 +47,12 @@ namespace MedalRunner.Repositories
         public async Task AddItem(Item item)
         {
             string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, strength, agility, " +
-                "spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant)" +
-                
-                "VALUES (name = @name, gear_slot = @gear_slot, image_url = @image_url, item_level = @item_level, rarity = @rarity, difficulty = @difficulty, material = @material, " +
-                "armor = @armor, min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
-                "stamina = @stamina, haste = @haste, crit = @crit, mastery = @mastery, dodge = @dodge, parry = @parry, hit = @hit, expertise = @expertise, speed = @speed, " +
-                "socket_amount = @socket_amount, socket_bonus_stat = @socket_bonus_stat, socket_bonus_amount = @socket_bonus_amount, enchant = @enchant)";
+                "spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant) " +
+                "VALUES (@name, @gear_slot, @image_url, @item_level, @rarity, @difficulty, @material, " +
+                "@armor, @min_damage, @max_damage, @intellect, @strength, @agility, @spirit, " +
+                "@stamina, @haste, @crit, @mastery, @dodge, @parry, @hit, @expertise, @speed, " +
+                "@socket_amount, @socket_bonus_stat, @socket_bonus_amount, @enchant); " +
+                "SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -68,8 +68,8 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@difficulty", item.Difficulty);
                     cmd.Parameters.AddWithValue("@material", item.Material);
                     cmd.Parameters.AddWithValue("@armor", item.Armor);
-                    cmd.Parameters.AddWithValue("@min_damage", item.MinDamage);
-                    cmd.Parameters.AddWithValue("@max_damage", item.MaxDamage);
+                    cmd.Parameters.AddWithValue("@min_damage", item.MinDamage ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@max_damage", item.MaxDamage ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@intellect", item.Intellect ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@strength", item.Strength ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@agility", item.Agility ?? (object)DBNull.Value);
@@ -88,30 +88,35 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@socket_bonus_amount", item.SocketBonusAmount ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@enchant", item.Enchants ?? (object)DBNull.Value);
 
-                    try
-                    {
-                        await cmd.ExecuteNonQueryAsync();
-                    }
-                    catch (SqlException ex)
-                    {
-                        Console.WriteLine($"SQL Error: {ex.Message}");
-                    }
-
+                    var result = await cmd.ExecuteScalarAsync();
+                    item.Id = Convert.ToInt32(result);
                 }
 
-
+                // CHANGED: after inserting the item, also writes the drop source to the boss_drops junction table
+                if (item.BossId.HasValue)
+                {
+                    string junctionQuery = "INSERT INTO boss_drops(boss_id, item_id) VALUES (@bossId, @itemId)";
+                    using (SqlCommand cmd = new SqlCommand(junctionQuery, con))
+                    {
+                        cmd.Parameters.AddWithValue("@bossId", item.BossId.Value);
+                        cmd.Parameters.AddWithValue("@itemId", item.Id);
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                }
             }
         }
 
         public async Task UpdateItem(Item item)
         {
-            string sqlQuery = "UPDATE items" +
-                "SET name = @name, gear_slot = @gear_slot, image_url = @image_url, item_level = @item_level, rarity = @rarity, difficulty = @difficulty, material = @material, armor = @armor," +
-                 "min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
+            string sqlQuery = "UPDATE items " +
+                "SET name = @name, gear_slot = @gear_slot, image_url = @image_url, item_level = @item_level, rarity = @rarity, difficulty = @difficulty, material = @material, armor = @armor, " +
+                "min_damage = @min_damage, max_damage = @max_damage, intellect = @intellect, strength = @strength, agility = @agility, spirit = @spirit, " +
                 "stamina = @stamina, haste = @haste, crit = @crit, mastery = @mastery, dodge = @dodge, parry = @parry, hit = @hit, expertise = @expertise, speed = @speed, " +
-                "socket_amount = @socket_amount, socket_bonus_stat = @socket_bonus_stat, socket_bonus_amount = @socket_bonus_amount, enchant = @enchant, " +
-
+                "socket_amount = @socket_amount, socket_bonus_stat = @socket_bonus_stat, socket_bonus_amount = @socket_bonus_amount, enchant = @enchant " +
                 "WHERE id = @id";
+
+            string deleteBossDropQuery = "DELETE FROM boss_drops WHERE item_id = @itemId";
+            string insertBossDropQuery = "INSERT INTO boss_drops(boss_id, item_id) VALUES (@bossId, @itemId)";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -128,8 +133,8 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@difficulty", item.Difficulty);
                     cmd.Parameters.AddWithValue("@material", item.Material);
                     cmd.Parameters.AddWithValue("@armor", item.Armor);
-                    cmd.Parameters.AddWithValue("@min_damage", item.MinDamage);
-                    cmd.Parameters.AddWithValue("@max_damage", item.MaxDamage);
+                    cmd.Parameters.AddWithValue("@min_damage", item.MinDamage ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@max_damage", item.MaxDamage ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@intellect", item.Intellect ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@strength", item.Strength ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@agility", item.Agility ?? (object)DBNull.Value);
@@ -147,13 +152,24 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@socket_bonus_stat", item.SocketBonusStat ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@socket_bonus_amount", item.SocketBonusAmount ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@enchant", item.Enchants ?? (object)DBNull.Value);
-                    try
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                // CHANGED: clears the old boss_drops row for this item before writing the new one
+                using (SqlCommand cmd = new SqlCommand(deleteBossDropQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@itemId", item.Id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                // CHANGED: re-inserts the boss_drops row only if a boss was selected; leaving it blank clears the source
+                if (item.BossId.HasValue)
+                {
+                    using (SqlCommand cmd = new SqlCommand(insertBossDropQuery, con))
                     {
+                        cmd.Parameters.AddWithValue("@bossId", item.BossId.Value);
+                        cmd.Parameters.AddWithValue("@itemId", item.Id);
                         await cmd.ExecuteNonQueryAsync();
-                    }
-                    catch (SqlException ex)
-                    {
-                        Console.WriteLine($"SQL Error: {ex.Message}");
                     }
                 }
             }
@@ -193,6 +209,38 @@ namespace MedalRunner.Repositories
         {
             int ordinal = reader.GetOrdinal(column);
             return reader.IsDBNull(ordinal) ? "" : reader.GetString(ordinal);
+        }
+
+
+        // This method retrieves all items along with their source information (boss and dungeon) using LEFT JOINs to ensure all items are included even if they don't have a source.
+        public async Task<List<Item>> GetAllItemsWithSourceAsync()
+        {
+            string sqlQuery = @"
+                SELECT i.*, b.name AS boss_name, d.name AS dungeon_name
+                FROM items i
+                LEFT JOIN boss_drops bd ON bd.item_id = i.id
+                LEFT JOIN bosses b ON b.id = bd.boss_id
+                LEFT JOIN dungeon_bosses db ON db.boss_id = b.id
+                LEFT JOIN dungeons d ON d.id = db.dungeon_id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    List<Item> items = new List<Item>();
+                    while (await reader.ReadAsync())
+                    {
+                        // This mapper method will create an Item object from the current row in the reader, and then we manually set the DropBoss and DropDungeon properties based on the joined data.
+                        Item item = ItemMapper(reader);
+                        item.DropBoss = reader.IsDBNull(reader.GetOrdinal("boss_name")) ? null : reader.GetString(reader.GetOrdinal("boss_name"));
+                        item.DropDungeon = reader.IsDBNull(reader.GetOrdinal("dungeon_name")) ? null : reader.GetString(reader.GetOrdinal("dungeon_name"));
+                        items.Add(item);
+                    }
+                    return items;
+                }
+            }
         }
 
         public async Task<IEnumerable<Item>> GetItemsByDungeonId(int id)

@@ -18,12 +18,20 @@ namespace MedalRunner.Pages.Admin.Item
             _itemService = itemService;
         }
 
-        public void OnGet()
+        // CHANGED: was empty - now loads the item so the confirmation page can display its name
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-
+            var items = await _itemService.GetAllItemsWithSourceAsync();
+            Item = items.FirstOrDefault(i => i.Id == id);
+            if (Item == null)
+            {
+                return RedirectToPage("/NotFound");
+            }
+            return Page();
         }
 
-        public IActionResult DeleteItemOnPost()
+        // CHANGED: was named DeleteItemOnPost() which Razor Pages never calls - renamed to OnPost()
+        public IActionResult OnPost()
         {
             var deleteItem = _itemService.DeleteItem(Item.Id);
             if (deleteItem == null)

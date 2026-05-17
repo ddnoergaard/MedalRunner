@@ -9,13 +9,14 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th></th>
             <th>Name</th>
             <th>Item Level</th>
             <th>Rarity</th>
             <th>Difficulty</th>
-            <th>Slot</th>
             <th>Type</th>
-            <th>Source</th>
+            <th>Source</th>w
+            <th>Modify</th>
         </tr>
     </thead>
     <tbody>
@@ -25,16 +26,39 @@
             {
                 <tr>
                     <td>@i.Id</td>
+                    <td><img class="item-thumb" src="@i.ImageUrl" alt="@i.Name" /></td>
                     <td>@i.Name</td>
                     <td>@i.ItemLevel</td>
                     <td>@i.Rarity</td>
                     <td>@i.Difficulty</td>
-                    <td>@i.Slot</td>
-                    <td>@i.Material</td>
-                    <td>@i.Source</td>
+                    
+                    
                     <td>
-                        <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="EditItem" asp-route-id="@i.Id">Edit</a>
-                        <a class="btn btn-danger btn-sm " type="button" title="Delete" asp-page="DeleteItem" asp-route-id="@i.Id">Delete</a>
+                        @i.SlotName
+                        @if (!string.Equals(i.SlotName, i.Material, StringComparison.OrdinalIgnoreCase))
+                        {
+                            <br /><small style="color:var(--color-text-secondary)">@i.Material</small>
+                        }
+                    </td>
+
+
+                    <td>
+                        @if (i.DropDungeon != null)
+                        {
+                            @i.DropDungeon
+                            @if (i.DropBoss != null)
+                            {
+                                <br /><small style="color:var(--color-text-secondary)">@i.DropBoss</small>
+                            }
+                        }
+                        else
+                        {
+                            <span style="color:var(--color-text-secondary)">—</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="Update" asp-route-id="@i.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm " type="button" title="Delete" asp-page="Delete" asp-route-id="@i.Id">Delete</a>
                     </td>
                 </tr>
             }

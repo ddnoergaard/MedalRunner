@@ -18,7 +18,8 @@ namespace MedalRunner.Pages.Admin_pages
         [BindProperty]
         public Models.Dungeon Dungeon { get; set; }
 
-        public IEnumerable<string> BossNames { get; set; }
+        [BindProperty]
+        public IEnumerable<string> BossNames { get; set; } = new List<string>();
 
         public AddDungeonModel(IDungeonService dungeonService, IBossService bossService)
         {

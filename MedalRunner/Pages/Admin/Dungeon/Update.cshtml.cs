@@ -13,7 +13,8 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
         [BindProperty]
         public Models.Dungeon Dungeon { get; set; }
 
-        public List<string> BossNames { get; set; }
+        [BindProperty] // CHANGED: was missing [BindProperty] so boss names typed in the form were never received on POST
+        public List<string> BossNames { get; set; } = new();
 
         public UpdateDungeonModel(IDungeonService dungeonService, IBossService bossService)
         {
@@ -21,14 +22,16 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
             _bossService = bossService;
         }
 
-        public IActionResult OnGet(int id)
+        // CHANGED: was blocking .Result - now async; also pre-fills BossNames from existing dungeon bosses
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Dungeon = _dungeonService.GetAllDungeons().Result.FirstOrDefault(i => i.Id == id);
+            Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
             if (Dungeon == null)
             {
                 return RedirectToPage("/NotFound");
             }
-
+            var bosses = await _dungeonService.GetBossesAsync(id);
+            BossNames = bosses.Select(b => b.Name).ToList(); // CHANGED: pre-fills the boss name inputs with current values
             return Page();
         }
 
@@ -53,7 +56,7 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
 
             await _dungeonService.UpdateDungeon(Dungeon);
 
-            return RedirectToPage("AllDungeons");
+            return RedirectToPage("/Admin/Dungeon/Index"); // CHANGED: was "AllDungeons" which doesn't exist
         }
     }
 }
