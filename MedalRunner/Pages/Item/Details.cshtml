@@ -4,12 +4,12 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/app/account.css" />
+    <link rel="stylesheet" href="~/css/public/specific-item.css" />
 }
 
 <div class="item-container">
     <div class="top-section">
-        <h1>@Model.Item.Name @ViewData["item-error-msg"];</h1>
+        <h1>@Model.Item.Name @ViewData["item-error-msg"]</h1>
         <p>Item level: @Model.Item.ItemLevel</p>
     </div>
     <div class="mid-section">
@@ -19,7 +19,7 @@
         <div class="stat-card">
             @if (!Model.IsWeapon)
             {
-                <p class="stat" id="title">@Model.Item.Name</p>
+                <p class="stat" id="title" style="color:@Model.TitleColor">@Model.Item.Name</p>
                 <p class="stat" id="item-level">Item level: @Model.Item.ItemLevel</p>
                 <div class="type-materiale-container">
                     <p class="stat" id="type">@Model.SlotName @ViewData["slot-name-error-msg"]</p>
@@ -71,18 +71,22 @@
                     <p class="stat" id="secondary-stat">+@Model.Item.Expertise Expertise</p>
                 }
                 
-                <div class="socket-container">
-                    @for (int i = 0; i <= Model.Item.SocketAmount; i++)
-                    {
-                        <div></div>
-                        <p> Socket</p>
-                    }
-                </div>
+                @if (Model.Item.SocketAmount > 0)
+                {
+                    <div class="socket-container">
+                        @for (int i = 0; i <= Model.Item.SocketAmount; i++)
+                        {
+                            <div></div>
+                            <p> Socket</p>
+                        }
+                    </div>
+                }
+                
             }
             <!--HVIS DET ER WEAPON-->
             @if (Model.IsWeapon)
             {
-                <p class="stat" id="title">@Model.Item.Name</p>
+                <p class="stat" id="title" style="color:@Model.TitleColor">@Model.Item.Name</p>
                 <p class="stat" id="item-level">Item level: @Model.Item.ItemLevel</p>
                 <div class="type-materiale-container">
                     <p class="stat" id="type">Sword</p>
@@ -138,13 +142,16 @@
                     <p class="stat" id="secondary-stat">+@Model.Item.Expertise Expertise</p>
                 }
 
-                <div class="socket-container">
-                    @for (int i = 0; i <= Model.Item.SocketAmount; i++)
-                    {
-                        <div></div>
-                        <p> Socket</p>
-                    }
-                </div>
+                @if (Model.Item.SocketAmount > 0)
+                {
+                    <div class="socket-container">
+                        @for (int i = 0; i <= Model.Item.SocketAmount; i++)
+                        {
+                            <div></div>
+                            <p> Socket</p>
+                        }
+                    </div>
+                }
             }
         </div>
     </div>

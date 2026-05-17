@@ -9,11 +9,12 @@ namespace MedalRunner.Pages.Public_pages.Item
     {
         private readonly IItemService _itemService;
         public Models.Item Item { get; set; }
-        public bool IsWeapon { get; set; }
+        public bool IsWeapon { get; set; } = new bool();
         public string SlotName { get; set; }
         public decimal? DPS { get; set; }
         public string WeaponHandAmount { get; set; }
         public string WeaponType { get; set; }
+        public string TitleColor { get; set; }
 
         public DetailsModel(IItemService itemService)
         {
@@ -27,6 +28,17 @@ namespace MedalRunner.Pages.Public_pages.Item
                 return true;
             }
             return false;
+        }
+
+        private string TitleColorCheck(string rarity)
+        {
+            if (Item.Rarity == "Common") return "white";
+            if (Item.Rarity == "Uncommon") return "#1BE900";
+            if (Item.Rarity == "Rare") return "#0A6CDD";
+            if (Item.Rarity == "Epic") return "#A32AA2";
+            if (Item.Rarity == "Legendary") return "#FF7E09";
+            if (Item.Rarity == "Heirloom") return "#937F48";
+            return "white";
         }
 
         public async Task OnGet(int id)
@@ -51,6 +63,7 @@ namespace MedalRunner.Pages.Public_pages.Item
 
             if (IsWeapon)
             {
+                if (Item.Speed == 0) Item.Speed = 1.90;
                 DPS = Math.Round(Convert.ToDecimal(((Item.MinDamage + Item.MaxDamage) / 2) / Item.Speed), 2);
                 String[] tempList = Item.Material.Split("-");
                 if (tempList[0].Contains("1h")) WeaponHandAmount = "One-hand";
@@ -66,8 +79,9 @@ namespace MedalRunner.Pages.Public_pages.Item
                     WeaponType = "Dagger";
                     WeaponHandAmount = "One-hand";
                 }
-
             }
+
+            TitleColor = TitleColorCheck(Item.Rarity);
 
         }
     }
