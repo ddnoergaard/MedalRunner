@@ -89,8 +89,8 @@
                 <p class="stat" id="title" style="color:@Model.TitleColor">@Model.Item.Name</p>
                 <p class="stat" id="item-level">Item level: @Model.Item.ItemLevel</p>
                 <div class="type-materiale-container">
-                    <p class="stat" id="type">Sword</p>
-                    <p class="stat" id="material">One hand</p>
+                    <p class="stat" id="type">@Model.WeaponType</p>
+                    <p class="stat" id="material">@Model.WeaponHandAmount</p>
                 </div>
                 <div class="damage-speed-container">
                     <p class="stat" id="min-max-dmg">@Model.Item.MinDamage - @Model.Item.MaxDamage Damage</p>
@@ -162,17 +162,18 @@
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
-                    <th>Dungeon</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="col-image">
-                        <img src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/bosses/Armsmaster%20Harlan.png" alt="">
-                    </td>
-                    <td>Armsmaster Harlan</td>
-                    <td>Scarlet Monastery</td>
-                </tr>
+                @foreach (Models.Boss boss in Model.BossList)
+                {
+                    <tr>
+                        <td class="col-image">
+                            <img src="@boss.ImageUrl" alt="">
+                        </td>
+                        <td>@boss.Name</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
