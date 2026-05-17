@@ -9,7 +9,7 @@
 
 <div class="item-container">
     <div class="top-section">
-        <h1>@Model.Item.Name</h1>
+        <h1>@Model.Item.Name @ViewData["item-error-msg"];</h1>
         <p>Item level: @Model.Item.ItemLevel</p>
     </div>
     <div class="mid-section">
@@ -22,7 +22,7 @@
                 <p class="stat" id="title">@Model.Item.Name</p>
                 <p class="stat" id="item-level">Item level: @Model.Item.ItemLevel</p>
                 <div class="type-materiale-container">
-                    <p class="stat" id="type">@Model.SlotName</p>
+                    <p class="stat" id="type">@Model.SlotName @ViewData["slot-name-error-msg"]</p>
                     <p class="stat" id="material">@Model.Item.Material</p>
                 </div>
                 <p class="stat" id="armor">@Model.Item.Armor armor</p>

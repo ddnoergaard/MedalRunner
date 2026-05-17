@@ -12,6 +12,8 @@ namespace MedalRunner.Pages.Public_pages.Item
         public bool IsWeapon { get; set; }
         public string SlotName { get; set; }
         public decimal? DPS { get; set; }
+        public string WeaponHandAmount { get; set; }
+        public string WeaponType { get; set; }
 
         public DetailsModel(IItemService itemService)
         {
@@ -50,6 +52,21 @@ namespace MedalRunner.Pages.Public_pages.Item
             if (IsWeapon)
             {
                 DPS = Math.Round(Convert.ToDecimal(((Item.MinDamage + Item.MaxDamage) / 2) / Item.Speed), 2);
+                String[] tempList = Item.Material.Split("-");
+                if (tempList[0].Contains("1h")) WeaponHandAmount = "One-hand";
+                if (tempList[0].Contains("2h")) WeaponHandAmount = "Two-hand";
+                if (tempList[0].Contains("offh")) WeaponHandAmount = "Off-hand";
+                if (tempList[1].Contains("mace")) WeaponType = "Mace";
+                if (tempList[1].Contains("polearm")) WeaponType = "Polearm";
+                if (tempList[1].Contains("axe")) WeaponType = "Axe";
+                if (tempList[1].Contains("shield")) WeaponType = "Shield";
+                if (tempList[1].Contains("sword")) WeaponType = "Sword";
+                if (WeaponType is null)
+                {
+                    WeaponType = "Dagger";
+                    WeaponHandAmount = "One-hand";
+                }
+
             }
 
         }
