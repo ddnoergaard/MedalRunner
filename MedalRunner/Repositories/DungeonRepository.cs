@@ -50,6 +50,7 @@ namespace MedalRunner.Repositories
                         Zone = reader.GetString(reader.GetOrdinal("zone")),
                         Description = reader.GetString(reader.GetOrdinal("description")),
                         ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
+                        DungeonMapUrl = reader.GetString(reader.GetOrdinal("dungeon_map_url")),
                         Platinum = reader.GetString(reader.GetOrdinal("platinum")),
                         Gold = reader.GetString(reader.GetOrdinal("gold")),
                         Silver = reader.GetString(reader.GetOrdinal("silver")),
