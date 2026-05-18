@@ -14,13 +14,13 @@ namespace MedalRunner.Pages.App.Character
         }
 
         [BindProperty]
-        public Models.Character character { get; set; }
+        public Models.Character character { get; set; } = new Models.Character();
 
         public void OnGet()
         {
         }
         
-        public async Task<IActionResult> OnPostAsynch()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
