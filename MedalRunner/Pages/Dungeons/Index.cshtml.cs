@@ -20,7 +20,15 @@ namespace MedalRunner.Pages.Public_pages.Dungeons
         }
         public async Task OnGet()
         {
-            _dungeons = await _dungeonService.GetAllDungeons();
+            try
+            {
+                _dungeons = await _dungeonService.GetAllDungeons();
+
+            }
+            catch(IndexOutOfRangeException ex)
+            {
+                ViewData["dungeon-error-msg"] = $"{ex.Message}";
+            }
             foreach (Dungeon dungeon in _dungeons)
             {
                 dungeon.Bosses = (await _dungeonService.GetBossesAsync(dungeon.Id)).ToList();
