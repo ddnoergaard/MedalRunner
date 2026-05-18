@@ -218,7 +218,7 @@ namespace MedalRunner.Repositories
 
                 if (bossIds.Count == 0)
                 {
-                    return bosses;
+                    throw new IndexOutOfRangeException();
                 }
 
                 string sqlQueryBosses = $"SELECT * FROM bosses WHERE id IN ({string.Join(", ", bossIds)})";
@@ -235,6 +235,10 @@ namespace MedalRunner.Repositories
                                 Name = Convert.ToString(reader["name"]),
                                 ImageUrl = Convert.ToString(reader["image_url"])
                             });
+                        }
+                        if(bosses.Count == 0)
+                        {
+                            throw new IndexOutOfRangeException();
                         }
                         return bosses;
                     }

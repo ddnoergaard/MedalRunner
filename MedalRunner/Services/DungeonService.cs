@@ -69,7 +69,7 @@ public class DungeonService : IDungeonService
         {
             return await _dungeonRepository.GetBossesByDungeonIdAsync(dungeonId);
         }
-        catch (SqlException)
+        catch (IndexOutOfRangeException)
         {
             throw;
         }
