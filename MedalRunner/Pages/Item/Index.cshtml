@@ -2,7 +2,11 @@
 @model MedalRunner.Pages.Public_pages.Item.IndexModel
 @{
 }
-
+<style>
+    body {
+        overflow-x: hidden;
+    }
+</style>
 <h1>Items</h1>
 
 <table>
@@ -12,6 +16,7 @@
             <th>Name</th>
             <th>Material</th>
             <th>Item Level</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +27,7 @@
                 <td class="col-name">@i.Name</td>
                 <td class="col-name">@i.Material</td>
                 <td class="col-name">@i.ItemLevel</td>
+                <td><a asp-page="/Item/Details" asp-route-id="@i.Id" asp-route-slug="@i.Name.Replace(" ", "-")">See more</a></td>
             </tr>
         }
     </tbody>

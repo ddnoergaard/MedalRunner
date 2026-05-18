@@ -79,5 +79,16 @@ namespace MedalRunner.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<Boss>> GetBossesByItemId(int id)
+        {
+            try
+            {
+                return await _bossRepository.GetBossesByItemId(id);
+            } catch (ArgumentException ex)
+            {
+                throw;
+            }
+        }
     }
 }

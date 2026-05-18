@@ -1,0 +1,90 @@
+﻿@import url("/css/colors.css");
+
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+    width: 100vw;
+    padding: 5rem 0 5rem 0;
+}
+
+.scoreboard-container {
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 25vw 5vh 25vw;
+    gap: 1.5rem;
+    width: 50%;
+}
+
+.section-two {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    justify-content: space-around;
+}
+
+    .section-two > form > div {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .section-two > form {
+        display: flex;
+        gap: 2rem;
+    }
+
+input, select, option, button {
+    color: var(--color-text-secondary) !important;
+}
+
+input, select {
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+button {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #555;
+    font-size: 14px;
+}
+
+th {
+    font-weight: 500;
+    color: #aaa;
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background: #2a2a2a;
+}
+
+th {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+td {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}

@@ -183,5 +183,52 @@ namespace MedalRunner.Repositories
             }
         }
 
+        public async Task<IEnumerable<Boss>> GetBossesByItemId(int id)
+        {
+            string sqlQuery = "SELECT boss_id FROM boss_drops WHERE item_id = @id";
+            List<int> bossIds = new List<int>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("id", id);
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            bossIds.Add(Convert.ToInt32(reader["boss_id"]));
+                        }
+                    }
+                }
+
+                if (bossIds.Count == 0) throw new ArgumentException("No bosses associated with that item id");
+
+                string bossQuery = $"SELECT * FROM bosses WHERE id IN ({string.Join(", ", bossIds)})";
+                List<Boss> bossList = new List<Boss>();
+
+
+                using (SqlCommand cmdBoss = new SqlCommand(bossQuery, con))
+                {
+                    using (SqlDataReader reader = await cmdBoss.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            bossList.Add(new Boss
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                Name = Convert.ToString(reader["name"]),
+                                ImageUrl = Convert.ToString(reader["image_url"])
+                            });
+                        }
+                        if (bossList.Count == 0) throw new ArgumentException("No bosses found");
+                    }
+                }
+                return bossList;
+            }
+        }
+
     }
 }

@@ -1,0 +1,112 @@
+﻿body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    min-height: 70vh;
+    justify-content: center;
+}
+
+.characters-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70vw;
+    height: 70vh;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding-right: 10rem;
+    margin-top: 5rem;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border-left: 1px solid white;
+}
+
+.char-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid white;
+    border-width: 80%;
+    padding: 1rem 2rem 1rem 2rem;
+    background-image: url(https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/general/parchment_paper.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.char-card-one {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .char-card-one > p {
+        font-size: 2rem;
+        margin: 0;
+        color: var(--color-bg-base)
+    }
+
+.char-card-two {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+    .char-card-two > p, .char-card-two > a {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        color: var(--color-bg-base)
+    }
+
+    .char-card-two > a {
+        background: var(--color-border);
+        color: white;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid white;
+        transition: .3s;
+    }
+
+        .char-card-two > a:hover {
+            transform: scale(1.02);
+            cursor: pointer;
+            background: #5a5959;
+        }
+
+.char-create {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    place-self: center;
+    padding: 1rem 2rem 1rem 2rem;
+}
+
+    .char-create a {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-top: 2rem;
+    }
+
+    .char-create > a:hover {
+        background: white;
+        color: var(--color-border);
+        cursor: pointer;
+    }

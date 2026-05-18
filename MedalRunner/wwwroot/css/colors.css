@@ -14,4 +14,19 @@
     /* text */
     --color-text-primary: #FFFFFF;
     --color-text-secondary: #888888;
+    /*ITEM color*/
+    --color-item-common: white;
+    --color-item-uncommon: #1BE900;
+    --color-item-rare: #0A6CDD;
+    --color-item-epic: #A32AA2;
+    --color-item-legendary: #FF7E09;
+    --color-item-heirloom: #937F48;
+    --color-item-secondary-stat: #01D503;
+    /*SOCKETS*/
+    --color-socket-red-inner: #6C2424;
+    --color-socket-red-outer: #B03C38;
+    --color-socket-blue-inner: #101C39;
+    --color-socket-blue-outer: #2D3C8C;
+    --color-socket-yellow-inner: #AD8229;
+    --color-socket-yellow-outer: #AD9A31;
 }

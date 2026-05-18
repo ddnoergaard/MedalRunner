@@ -10,5 +10,6 @@ namespace MedalRunner.Repositories.Interfaces
         Task UpdateImageUrlAsync(int bossId, string imageUrl);
         Task<Boss> GetBossByIdAsync(int id);
         Task<Boss> GetBossByNameAsync(string name);
+        Task<IEnumerable<Boss>> GetBossesByItemId(int id);
     }
 }
