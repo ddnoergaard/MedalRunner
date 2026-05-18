@@ -21,7 +21,7 @@ public class DungeonService : IDungeonService
         {
             await _dungeonRepository.AddDungeonAsync(dungeon);
         }
-        catch (Exception)
+        catch (SqlException)
         {
             throw;
         }
@@ -33,7 +33,7 @@ public class DungeonService : IDungeonService
         {
             await _dungeonRepository.UpdateDungeonAsync(dungeon);
         }
-        catch (Exception)
+        catch (SqlException)
         {
             throw;
         }
@@ -45,7 +45,7 @@ public class DungeonService : IDungeonService
         {
             await _dungeonRepository.DeleteDungeonAsync(id);
         }
-        catch (Exception)
+        catch (SqlException)
         {
             throw;
         }
@@ -57,7 +57,7 @@ public class DungeonService : IDungeonService
         {
             return await _dungeonRepository.GetAllDungeonsAsync(); 
         }
-        catch (Exception)
+        catch (IndexOutOfRangeException)
         {
             throw;
         }
@@ -69,7 +69,7 @@ public class DungeonService : IDungeonService
         {
             return await _dungeonRepository.GetBossesByDungeonIdAsync(dungeonId);
         }
-        catch (Exception)
+        catch (SqlException)
         {
             throw;
         }

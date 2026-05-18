@@ -186,7 +186,7 @@ namespace MedalRunner.Repositories
                     {
                         await cmd.ExecuteNonQueryAsync();
                     }
-                    catch (SqlException ex)
+                    catch (SqlException)
                     {
                         throw;
                     }
