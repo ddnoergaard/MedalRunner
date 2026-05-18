@@ -1,6 +1,5 @@
 ﻿using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
-using MedalRunner.Models;
 using MedalRunner.Repositories;
 using MedalRunner.Pages.Public_pages.Dungeons;
 using Microsoft.Data.SqlClient;
@@ -18,27 +17,62 @@ public class DungeonService : IDungeonService
 
     public async Task AddDungeon(Dungeon dungeon)
     {
-        await _dungeonRepository.AddDungeonAsync(dungeon);
+        try
+        {
+            await _dungeonRepository.AddDungeonAsync(dungeon);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public async Task UpdateDungeon(Dungeon dungeon)
     {
-        await _dungeonRepository.UpdateDungeonAsync(dungeon);
+        try
+        {
+            await _dungeonRepository.UpdateDungeonAsync(dungeon);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public async Task DeleteDungeon(int id)
     {
-        await _dungeonRepository.DeleteDungeonAsync(id);
+        try
+        {
+            await _dungeonRepository.DeleteDungeonAsync(id);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public async Task<List<Dungeon>> GetAllDungeons()
     {
-        return await _dungeonRepository.GetAllDungeonsAsync(); 
+        try
+        {
+            return await _dungeonRepository.GetAllDungeonsAsync(); 
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public async Task<IEnumerable<Boss>> GetBossesAsync(int dungeonId)
     {
-        return await _dungeonRepository.GetBossesByDungeonIdAsync(dungeonId);
+        try
+        {
+            return await _dungeonRepository.GetBossesByDungeonIdAsync(dungeonId);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public async Task<Dungeon> GetDungeonByIdAsync(int id)

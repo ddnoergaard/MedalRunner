@@ -27,38 +27,14 @@ namespace MedalRunner.Repositories
                 await connection.OpenAsync();
                 SqlCommand cmd = new SqlCommand(sqlQuery, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
-
+                
                 while (await reader.ReadAsync())
                 {
-                    //dungeon.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                    //dungeon.Name = reader.GetString(reader.GetOrdinal("name"));
-                    //dungeon.Zone = reader.GetString(reader.GetOrdinal("zone"));
-                    //dungeon.Description = reader.GetString(reader.GetOrdinal("description"));
-                    //dungeon.ImageUrl = reader.GetString(reader.GetOrdinal("image_url"));
-                    //dungeon.Platinum = reader.GetString(reader.GetOrdinal("platinum"));
-                    //dungeon.Gold = reader.GetString(reader.GetOrdinal("gold"));
-                    //dungeon.Silver = reader.GetString(reader.GetOrdinal("silver"));
-                    //dungeon.Bronze = reader.GetString(reader.GetOrdinal("bronze"));
-                    //dungeon.MobAmount = reader.GetInt32(reader.GetOrdinal("mob_amount"));
-
-                    //data.Add(dungeon);
                     data.Add(DungeonMapper(reader));
-                    //data.Add(new Dungeon
-                    //{
-                    //    Id = reader.GetInt32(reader.GetOrdinal("id")),
-                    //    Name = reader.GetString(reader.GetOrdinal("name")),
-                    //    Zone = reader.GetString(reader.GetOrdinal("zone")),
-                    //    Description = reader.GetString(reader.GetOrdinal("description")),
-                    //    ImageUrl = reader.GetString(reader.GetOrdinal("image_url")),
-                    //    Platinum = reader.GetString(reader.GetOrdinal("platinum")),
-                    //    Gold = reader.GetString(reader.GetOrdinal("gold")),
-                    //    Silver = reader.GetString(reader.GetOrdinal("silver")),
-                    //    Bronze = reader.GetString(reader.GetOrdinal("bronze")),
-                    //    MobAmount = reader.GetInt32(reader.GetOrdinal("mob_amount"))
-                    //});
                 }
                 if (data.Count == 0) throw new IndexOutOfRangeException();
-                return data;               
+                return data;
+                   
             }
         }
 
@@ -91,7 +67,7 @@ namespace MedalRunner.Repositories
                         var result = await cmd.ExecuteScalarAsync();
                         dungeon.Id = Convert.ToInt32(result);
                     }
-                    catch (SqlException ex)
+                    catch (SqlException)
                     {
                         throw;
                     }
@@ -105,7 +81,14 @@ namespace MedalRunner.Repositories
                         {
                             cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
                             cmd.Parameters.AddWithValue("@bossId", boss.Id);
-                            await cmd.ExecuteNonQueryAsync();
+                            try
+                            {
+                                await cmd.ExecuteNonQueryAsync();
+                            }
+                            catch (SqlException)
+                            {
+                                throw;
+                            }
                         }
                     }
                 }
@@ -156,7 +139,15 @@ namespace MedalRunner.Repositories
                 using (SqlCommand cmd = new SqlCommand(deleteJunctionQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
-                    await cmd.ExecuteNonQueryAsync();
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync();
+
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
                 }
 
                 if (dungeon.Bosses != null)
@@ -167,7 +158,14 @@ namespace MedalRunner.Repositories
                         {
                             cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
                             cmd.Parameters.AddWithValue("@bossId", boss.Id);
-                            await cmd.ExecuteNonQueryAsync();
+                            try
+                            {
+                                await cmd.ExecuteNonQueryAsync();
+                            }
+                            catch (SqlException)
+                            {
+                                throw;
+                            }
                         }
                     }
                 }
@@ -264,7 +262,15 @@ namespace MedalRunner.Repositories
                         {
                             if (await reader.ReadAsync())
                             {
-                                return DungeonMapper(reader);
+                                try
+                                {
+                                    return DungeonMapper(reader);
+
+                                }
+                                catch (SqlException)
+                                {
+                                    throw;
+                                }
 
                                 //return new Dungeon
                                 //{
@@ -312,7 +318,7 @@ namespace MedalRunner.Repositories
                 DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
                 BannerImageUrl = Convert.ToString(reader["banner_image"])
 
-            };
+            }; 
         }
     }
 }
