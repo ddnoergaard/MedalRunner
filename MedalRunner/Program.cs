@@ -58,7 +58,7 @@ builder.Services.AddScoped<IGlyphService, GlyphService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IScoreboardService, ScoreboardService>();
 builder.Services.AddScoped<IUserService, UserService>();
-//builder.Services.AddScoped<CookieService>();
+builder.Services.AddScoped<CookieService>();
 
 var app = builder.Build();
 Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
