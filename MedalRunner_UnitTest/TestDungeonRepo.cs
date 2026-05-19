@@ -11,15 +11,31 @@ namespace MedalRunner_UnitTest
     {
         DungeonRepository _dungeonRepo = new DungeonRepository("Data Source= mssql4.unoeuro.com, 1433 ;Initial Catalog=danieldn_dk_db_medal_runner;Persist Security Info=True;User ID=danieldn_dk;Password=n4fA9F3tEpc6dGehyzDb;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
 
-        
-        
+        Dungeon testDungeon;
 
         [TestInitialize]
         public async Task BeforeTestAsync()
         {
-            List<Dungeon> dungeons;
-            dungeons = await _dungeonRepo.GetAllDungeonsAsync();
+            testDungeon = new Dungeon
+            {
+                Name = "TestDungeon",
+                Zone = "TestZone",
+                Description = "TestDescription",
+                ImageUrl = "TestImage",
+                DungeonMapUrl = "TestMapImage",
+                BannerImageUrl = "BannerTest",
+                Platinum = "Test",
+                Gold = "Test",
+                Silver = "Test",
+                Bronze = "Test",
+                MobAmount = 12
+
+            };
+
+            await _dungeonRepo.AddDungeonAsync(testDungeon);
+
         }
+        
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -41,6 +57,20 @@ namespace MedalRunner_UnitTest
         public async Task TestGetBossesByDungeonIdException1()
         {
             await _dungeonRepo.GetBossesByDungeonIdAsync(50);  
+        }
+
+        [TestCleanup]
+        public async Task AfterTestAsync()
+        {
+            List<Dungeon> dungeons = await _dungeonRepo.GetAllDungeonsAsync();
+
+            foreach(Dungeon dungeon in dungeons)
+            {
+                if(dungeon.Name == "TestDungeon")
+                {
+                    await _dungeonRepo.DeleteDungeonAsync(dungeon.Id);
+                }
+            }
         }
     }
 }
