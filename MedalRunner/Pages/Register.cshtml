@@ -14,27 +14,27 @@
         <form method="post">
             <div class="name-input-container">
                 <div class="input-container">
-                    <label class="dark-text" for="">First Name</label>
-                    <input class="dark-text" type="text" placeholder="Arthas">
+                    <label class="dark-text" for="@Model.UserName">First Name</label>
+                    <input asp-for="@Model.UserName" class="dark-text" type="text" placeholder="Arthas">
                 </div>
                 <div class="input-container">
-                    <label class="dark-text" for="">Last Name</label>
-                    <input class="dark-text" type="text" placeholder="Menethil">
+                    <label class="dark-text" for="@Model.UserLastName">Last Name</label>
+                    <input asp-for="@Model.UserLastName" class="dark-text" type="text" placeholder="Menethil">
                 </div>
 
             </div>
             <div class="input-container">
-                <label class="dark-text" for="">Email</label>
-                <input class="dark-text" type="email" placeholder="you@email.com">
+                <label class="dark-text" for="@Model.UserEmail">Email</label>
+                <input asp-for="@Model.UserEmail" class="dark-text" type="text" placeholder="you@email.com">
             </div>
             <div class="password-input-container">
                 <div class="input-container">
-                    <label class="dark-text" for="">Password</label>
-                    <input class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
+                    <label class="dark-text" for="@Model.Password">Password</label>
+                    <input asp-for="@Model.Password" class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
                 </div>
                 <div class="input-container">
-                    <label class="dark-text" for="">Confirm Password</label>
-                    <input class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
+                    <label class="dark-text" for="@Model.ComparePassword">Confirm Password</label>
+                    <input asp-for="@Model.ComparePassword" class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
                 </div>
             </div>
             <button class="form-btn" type="submit">Register</button>

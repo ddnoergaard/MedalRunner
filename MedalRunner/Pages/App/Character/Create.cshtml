@@ -31,17 +31,57 @@
 		<label asp-for="@Model.character.CharacterClass" class="controll-label"></label>
 		<select name="Character Class" id="@Model.character.CharacterClass">
 			<option value="null">Please select a Class</option>
-			<option value="Warrior">Warrior</option>
-			<option value="Paladin">Paladin</option>
-			<option value="Hunter">Hunter</option>
-			<option value="Priest">Priest</option>
-			<option value="Druid">Druid</option>
-			<option value="Warlock">Warlock</option>
-			<option value="Monk">Monk</option>
-			<option value="Deathknight">Death Knight</option>
-			<option value="Mage">Mage</option>
-			<option value="Rouge">Rouge</option>
-			<option value="Shaman">Shaman</option>
+			<option value="1">Death Knight</option>
+			<option value="2">Druid</option>
+			<option value="3">Hunter</option>
+			<option value="4">Mage</option>
+			<option value="5">Monk</option>
+			<option value="6">Paladin</option>
+			<option value="7">Priest</option>
+			<option value="8">Rouge</option>
+			<option value="9">Shaman</option>
+			<option value="10">Warlock</option>
+			<option value="11">Warrior</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label asp-for="@Model.character.Specialization" class="control-label"></label>
+		<select name="Class spec" id="@Model.character.Specialization">
+			<option value="null">Please select a Specialization</option>
+			<option value="1">Blood</option>
+			<option value="2">Frost</option>
+			<option value="3">Unholy</option>
+			<option value="4">Balance</option>
+			<option value="5">Feral</option>
+			<option value="6">Guardian</option>
+			<option value="7">Restoration-Druid</option>
+			<option value="8">Beast Mastery</option>
+			<option value="9">Marksmanship</option>
+			<option value="10">Survival</option>
+			<option value="11">Arcane</option>
+			<option value="12">Fire</option>
+			<option value="13">Frost</option>
+			<option value="14">Brewmaster</option>
+			<option value="15">Mistweaver</option>
+			<option value="16">Windwalker</option>
+			<option value="17">Holy-Paladin</option>
+			<option value="18">Protection-Paladin</option>
+			<option value="19">Retrebution</option>
+			<option value="20">Discipline</option>
+			<option value="21">Holy-Priest</option>
+			<option value="22">Shadow</option>
+			<option value="23">Assasination</option>
+			<option value="24">Outlaw</option>
+			<option value="25">Subtlety</option>
+			<option value="26">Elemental</option>
+			<option value="27">Enhancement</option>
+			<option value="28">Restoration-Shaman</option>
+			<option value="29">Affliction</option>
+			<option value="30">Demonology</option>
+			<option value="31">Destruction</option>
+			<option value="32">Arms</option>
+			<option value="33">Fury</option>
+			<option value="34">Protection-Warrior</option>
 		</select>
 	</div>
 
