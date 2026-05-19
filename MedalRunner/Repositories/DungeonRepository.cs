@@ -185,20 +185,19 @@ namespace MedalRunner.Repositories
         public async Task DeleteDungeonAsync(int id)
         {
             string sqlQuery = "DELETE FROM dungeons WHERE id = @id";
-
+            
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 await con.OpenAsync();
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
-                    try
+                    
+                    int count = await cmd.ExecuteNonQueryAsync();
+                    
+                    if (count <= 0) 
                     {
-                        await cmd.ExecuteNonQueryAsync();
-                    }
-                    catch (SqlException)
-                    {
-                        throw;
+                        throw new ArgumentException();
                     }
                 }
             }
@@ -270,46 +269,35 @@ namespace MedalRunner.Repositories
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@dungeonId", id);
-                    try
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
-                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        if (await reader.ReadAsync())
                         {
-                            if (await reader.ReadAsync())
-                            {
-                                try
-                                {
-                                    return DungeonMapper(reader);
 
-                                }
-                                catch (SqlException)
-                                {
-                                    throw;
-                                }
+                            return DungeonMapper(reader);
 
-                                //return new Dungeon
-                                //{
-                                //    Id = Convert.ToInt32(reader["id"]),
-                                //    Name = Convert.ToString(reader["name"]),
-                                //    Zone = Convert.ToString(reader["zone"]),
-                                //    Description = Convert.ToString(reader["description"]),
-                                //    Platinum = Convert.ToString(reader["platinum"]),
-                                //    Gold = Convert.ToString(reader["gold"]),
-                                //    Silver = Convert.ToString(reader["silver"]),
-                                //    Bronze = Convert.ToString(reader["bronze"]),
-                                //    MobAmount = Convert.ToInt32(reader["mob_amount"]),
-                                //    ImageUrl = Convert.ToString(reader["image_url"]),
-                                //    DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
-                                //    BannerImageUrl = Convert.ToString(reader["banner_image"])
 
-                                //};
-                            }
-                            throw new ArgumentException("No dungeon by that id found");
+
+                            //return new Dungeon
+                            //{
+                            //    Id = Convert.ToInt32(reader["id"]),
+                            //    Name = Convert.ToString(reader["name"]),
+                            //    Zone = Convert.ToString(reader["zone"]),
+                            //    Description = Convert.ToString(reader["description"]),
+                            //    Platinum = Convert.ToString(reader["platinum"]),
+                            //    Gold = Convert.ToString(reader["gold"]),
+                            //    Silver = Convert.ToString(reader["silver"]),
+                            //    Bronze = Convert.ToString(reader["bronze"]),
+                            //    MobAmount = Convert.ToInt32(reader["mob_amount"]),
+                            //    ImageUrl = Convert.ToString(reader["image_url"]),
+                            //    DungeonMapUrl = Convert.ToString(reader["dungeon_map_url"]),
+                            //    BannerImageUrl = Convert.ToString(reader["banner_image"])
+
+                            //};
                         }
-                    } catch (SqlException)
-                    {
-                        throw;
-                    } 
-                    
+                        throw new ArgumentException("No dungeon by that id found");
+                    }
                 }
             }
         }

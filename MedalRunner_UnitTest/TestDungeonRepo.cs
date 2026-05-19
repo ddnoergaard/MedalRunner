@@ -9,13 +9,7 @@ namespace MedalRunner_UnitTest
     [TestClass]
     public sealed class TestDungeonRepo
     {
-        private static string conString;
-        public TestDungeonRepo(IConfiguration configuration)
-        {
-            conString = configuration.GetConnectionString("DefaultConnection");
-        }
-
-        DungeonRepository _dungeonRepo = new DungeonRepository(conString);
+        DungeonRepository _dungeonRepo = new DungeonRepository("Data Source= mssql4.unoeuro.com, 1433 ;Initial Catalog=danieldn_dk_db_medal_runner;Persist Security Info=True;User ID=danieldn_dk;Password=n4fA9F3tEpc6dGehyzDb;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
 
         
         
@@ -25,14 +19,21 @@ namespace MedalRunner_UnitTest
         {
             List<Dungeon> dungeons;
             dungeons = await _dungeonRepo.GetAllDungeonsAsync();
-        }   
-        
-        
+        }
+
         [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task TestDungeonByIdException1()
+        {
+            await _dungeonRepo.GetDungeonByIdAsync(30);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public async Task TestDeleteDungeonAsyncException1()
         {
-            await _dungeonRepo.DeleteDungeonAsync(100);    
+            await _dungeonRepo.DeleteDungeonAsync(100);
+            
         }
 
         [TestMethod]
