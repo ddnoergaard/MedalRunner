@@ -1,6 +1,7 @@
 using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Services
 {
@@ -127,6 +128,17 @@ namespace MedalRunner.Services
                 slotAmount += item.SocketAmount;
             }
             return slotAmount;
+        }
+
+        public async Task<IEnumerable<Character>> GetCharactersByUserId(int userId)
+        {
+            try
+            {
+                return await _characterRepository.GetCharactersByUserId(userId);
+            } catch (SqlException)
+            {
+                throw;
+            }
         }
     }
 }

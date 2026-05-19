@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
+        public int ClassId { get; set; }
         public CharacterClass CharacterClass { get; set; }
         public List<Item> Weapon { get; set; }
         public List<Item> Gear { get; set; }

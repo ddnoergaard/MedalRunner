@@ -9,5 +9,6 @@ namespace MedalRunner.Services.Interfaces
         Task Create(Character character);
         Task Update(Character character);
         Task Delete(int id);
+        Task<IEnumerable<Character>> GetCharactersByUserId(int userId);
     }
 }
