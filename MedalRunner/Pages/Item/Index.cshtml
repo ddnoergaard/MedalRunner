@@ -6,10 +6,57 @@
     body {
         overflow-x: hidden;
     }
+
+    .container {
+        display: flex;
+        width: 100vw;
+        min-height: 70vh;
+        justify-content: center;
+    }
+
+    main {
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 75%;
+        place-items: center;
+        place-self: center;
+    }
+
+    td {
+        text-align:center;
+    }
+
 </style>
 <h1>Items</h1>
 
-<table>
+<div style="width:100%;">
+    <form method="post" asp-page-handler="Filter" style="display:flex;width:50%;justify-content:space-evenly;place-self:center;">
+        <input placeholder="Item name" asp-for="NameSearch" style="color:black;width:15rem;"/>
+        <select name="MaterialSearch" style="color:black">
+            <option value="" style="color:black">Select one</option>
+            <option value="Cloth" style="color:black">Cloth</option>
+            <option value="Leather" style="color:black">Leather</option>
+            <option value="Mail" style="color:black">Mail</option>
+            <option value="Plate" style="color:black">Plate</option>
+            <option value="1h-sword" style="color:black">1h-sword</option>
+            <option value="1h-mace" style="color:black">1h-mace</option>
+            <option value="1h-axe" style="color:black">1h-axe</option>
+            <option value="Dagger" style="color:black">Dagger</option>
+            <option value="Staff" style="color:black">Staff</option>
+            <option value="Bow" style="color:black">Bow</option>
+        </select>
+        <select name="IsOneHanded" style="color:black">
+            <option value="" style="color:black">Select an option</option>
+            <option value="true" style="color:black">One-hand</option>
+            <option value="false" style="color:black">Two-hand</option>
+        </select>
+        <button action="submit" style="color:black">Search</button>
+    </form>
+    <p>@ViewData["search-error-msg"]</p>
+</div>
+
+<table style="width:75%">
     <thead>
         <tr>
             <th>Image</th>
@@ -20,16 +67,32 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Models.Item i in Model._items)
+        @if (Model.DisplayItems is null || Model.DisplayItems.Count == 0)
         {
-            <tr>
-                <td><img class="col-image" src="@i.ImageUrl" style=""></td>
-                <td class="col-name">@i.Name</td>
-                <td class="col-name">@i.Material</td>
-                <td class="col-name">@i.ItemLevel</td>
-                <td><a asp-page="/Item/Details" asp-route-id="@i.Id" asp-route-slug="@i.Name.Replace(" ", "-")">See more</a></td>
-            </tr>
+            @foreach (Models.Item i in Model._items)
+            {
+                <tr>
+                    <td><img class="col-image" src="@i.ImageUrl"></td>
+                    <td class="col-name">@i.Name</td>
+                    <td class="col-name">@i.Material</td>
+                    <td class="col-name">@i.ItemLevel</td>
+                    <td><a asp-page="/Item/Details" asp-route-id="@i.Id" asp-route-slug="@i.Name.Replace(" ", "-")">See more</a></td>
+                </tr>
+            }
+        } else
+        {
+            @foreach (Models.Item i in Model.DisplayItems)
+            {
+                <tr>
+                    <td><img class="col-image" src="@i.ImageUrl" style=""></td>
+                    <td class="col-name">@i.Name</td>
+                    <td class="col-name">@i.Material</td>
+                    <td class="col-name">@i.ItemLevel</td>
+                    <td><a asp-page="/Item/Details" asp-route-id="@i.Id" asp-route-slug="@i.Name.Replace(" ", "-")">See more</a></td>
+                </tr>
+            }
         }
+
     </tbody>
 </table>
 
