@@ -9,34 +9,85 @@
 @using MedalRunner.Services;
 <h1>Dungeons</h1>
 
+<div style="width:100%;">
+    <form method="post" asp-page-handler="Filter" style="display:flex;width:50%;justify-content:space-evenly;place-self:center;">
+        <input placeholder="Item name" asp-for="NameSearch" style="color:black;width:15rem;" />
+        <select name="ZoneSearch" style="color:black">
+            <option value="" style="color:black">Select one</option>
+            <option value="Jade Forest" style="color:black">Jade Forest</option>
+            <option value="Valley of the Four Winds" style="color:black">Valley of the Four Winds</option>
+            <option value="Kun-Lai Summit" style="color:black">Kun-Lai Summit</option>
+            <option value="Townlong Steppes" style="color:black">Townlong Steppes</option>
+            <option value="Dread Wastes" style="color:black">Dread Wastes</option>
+            <option value="Vale of Eternal Blossoms" style="color:black">Vale of Eternal Blossoms</option>
+            <option value="Tirisfal Glades" style="color:black">Tirisfal Glades</option>
+        </select>
+        <input placeholder="Boss name" asp-for="BossSearch" style="color:black;width:15rem;" />
+        <button action="submit" style="color:black">Search</button>
+    </form>
+    <p>@ViewData["search-error-msg"]</p>
+</div>
 
-@foreach (Dungeon dungeon in Model._dungeons)
+@if (Model.DisplayDungeons.Count > 0)
 {
-    <div class="card-container">
-        <div>
-            <img src="@dungeon.ImageUrl">
-        </div>
+    @foreach (Dungeon dungeon in Model.DisplayDungeons)
+    {
+        <div class="card-container">
+            <div>
+                <img src="@dungeon.ImageUrl">
+            </div>
 
-        <div class="card-text-column card-border-column">
-            <p>Dungeon Name: <br />@dungeon.Name</p>
-            <p>Dungeon Descreption: <br />@dungeon.Description</p>
-            <p>Dungeon Zone: <br />@dungeon.Zone</p>
-        </div>
-        <div class="card-double-container">
-            <div class="card-text-column">
-                <h3>Boss list</h3>
-                <ul>
-                    @foreach (Boss boss in dungeon.Bosses)
-                    {
-                        <li>@boss.Name</li>
-                    }
-                </ul>
+            <div class="card-text-column card-border-column">
+                <p>Dungeon Name: <br />@dungeon.Name</p>
+                <p>Dungeon Descreption: <br />@dungeon.Description</p>
+                <p>Dungeon Zone: <br />@dungeon.Zone</p>
             </div>
-            <div class="align-a">
-                <a asp-page="/Dungeons/Details" asp-route-id="@dungeon.Id" asp-route-slug="@dungeon.Name.Replace(' ', '-').ToLower()">See more</a>
+            <div class="card-double-container">
+                <div class="card-text-column">
+                    <h3>Boss list</h3>
+                    <ul>
+                        @foreach (Boss boss in dungeon.Bosses)
+                        {
+                            <li>@boss.Name</li>
+                        }
+                    </ul>
+                </div>
+                <div class="align-a">
+                    <a asp-page="/Dungeons/Details" asp-route-id="@dungeon.Id" asp-route-slug="@dungeon.Name.Replace(' ', '-').ToLower()">See more</a>
+                </div>
             </div>
         </div>
-    </div>
-    <gap></gap>
+        <gap></gap>
+    }
+} else
+{
+    @foreach (Dungeon dungeon in Model.Dungeons)
+    {
+        <div class="card-container">
+            <div>
+                <img src="@dungeon.ImageUrl">
+            </div>
+
+            <div class="card-text-column card-border-column">
+                <p>Dungeon Name: <br />@dungeon.Name</p>
+                <p>Dungeon Descreption: <br />@dungeon.Description</p>
+                <p>Dungeon Zone: <br />@dungeon.Zone</p>
+            </div>
+            <div class="card-double-container">
+                <div class="card-text-column">
+                    <h3>Boss list</h3>
+                    <ul>
+                        @foreach (Boss boss in dungeon.Bosses)
+                        {
+                            <li>@boss.Name</li>
+                        }
+                    </ul>
+                </div>
+                <div class="align-a">
+                    <a asp-page="/Dungeons/Details" asp-route-id="@dungeon.Id" asp-route-slug="@dungeon.Name.Replace(' ', '-').ToLower()">See more</a>
+                </div>
+            </div>
+        </div>
+        <gap></gap>
+    }
 }
-

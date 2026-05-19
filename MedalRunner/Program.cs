@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Add services to the container.
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/App", "PlayerOnly");
-    options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
+options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
 });
 
 builder.Services.AddAuthorization(options =>
@@ -57,7 +57,7 @@ builder.Services.AddScoped<IGlyphService, GlyphService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IScoreboardService, ScoreboardService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<CookieService>();
+//builder.Services.AddScoped<CookieService>();
 
 var app = builder.Build();
 

@@ -6,12 +6,33 @@
     body {
         overflow-x: hidden;
     }
+
+    .container {
+        display: flex;
+        width: 100vw;
+        min-height: 70vh;
+        justify-content: center;
+    }
+
+    main {
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 75%;
+        place-items: center;
+        place-self: center;
+    }
+
+    td {
+        text-align:center;
+    }
+
 </style>
 <h1>Items</h1>
 
-<div>
-    <form method="post" asp-page-handler="Filter">
-        <input placeholder="Item name" asp-for="NameSearch" style="color:black"/>
+<div style="width:100%;">
+    <form method="post" asp-page-handler="Filter" style="display:flex;width:50%;justify-content:space-evenly;place-self:center;">
+        <input placeholder="Item name" asp-for="NameSearch" style="color:black;width:15rem;"/>
         <select name="MaterialSearch" style="color:black">
             <option value="" style="color:black">Select one</option>
             <option value="Cloth" style="color:black">Cloth</option>
@@ -35,7 +56,7 @@
     <p>@ViewData["search-error-msg"]</p>
 </div>
 
-<table>
+<table style="width:75%">
     <thead>
         <tr>
             <th>Image</th>
@@ -51,7 +72,7 @@
             @foreach (Models.Item i in Model._items)
             {
                 <tr>
-                    <td><img class="col-image" src="@i.ImageUrl" style=""></td>
+                    <td><img class="col-image" src="@i.ImageUrl"></td>
                     <td class="col-name">@i.Name</td>
                     <td class="col-name">@i.Material</td>
                     <td class="col-name">@i.ItemLevel</td>
