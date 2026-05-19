@@ -14,12 +14,13 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<int> AddAsync(Character character)
+        public async Task AddAsync(Character character, int userId)
         {
             string sql = @"
                 INSERT INTO characters (name, race, characterClass, specialization, createdAt)
                 OUTPUT INSERTED.id
                 VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
+            int newCharId = 0;
 
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
@@ -32,11 +33,31 @@ namespace MedalRunner.Repositories
 
             try
             {
-                return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                newCharId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
             }
             catch (SqlException ex)
             {
                 throw;
+            }
+
+            string sqlQueryJunction = "INSERT INTO user_characters(user_id, character_id) VALUES (@userId, @characterId)";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmdJunction = new SqlCommand(sqlQueryJunction, con))
+                {
+                    cmdJunction.Parameters.AddWithValue("@userId", userId);
+                    cmdJunction.Parameters.AddWithValue("@characterId", newCharId);
+                    try
+                    {
+                        await cmdJunction.ExecuteNonQueryAsync();
+                    } catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
             }
 
 
@@ -58,6 +79,51 @@ namespace MedalRunner.Repositories
             catch (SqlException ex)
             {
                 throw;
+            }
+        }
+
+        public async Task<IEnumerable<Character>> GetCharactersByUserId (int userId)
+        {
+            string sqlQuery = "SELECT character_id FROM user_characters WHERE user_id = @id";
+            List<int> charId = new List<int>();
+            
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", userId);
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            charId.Add(Convert.ToInt32(reader["character_id"]));
+                        }
+                    }
+                }
+                string sqlQueryCharacter = $"SELECT * from character WHERE id IN {string.Join(", ", charId)}";
+                List<Character> charList = new List<Character>();
+                using (SqlCommand cmd = new SqlCommand(sqlQueryCharacter, con))
+                {
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            charList.Add(new Character
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                ClassId = Convert.ToInt32(reader["class_id"]),
+                                Specialization = Convert.ToInt32(reader["spec_id"]),
+                                Name = Convert.ToString(reader["name"]),
+                                Race = Convert.ToString(reader["race"]),
+                                CreatedAt = Convert.ToDateTime(reader["created_at"])
+                            });
+                        }
+                    }
+                }
+                if (charList.Count == 0) throw new ArgumentException("No character found");
+                return charList;
             }
         }
 

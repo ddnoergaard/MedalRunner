@@ -12,7 +12,7 @@
 
 <h1>Characters</h1>
 
-@foreach (Character character in Model._characters)
+@foreach (Character character in Model.Characters)
 {
     <div class="container">
         <div>
@@ -31,10 +31,6 @@
         </div>
     </div>
 }
-
-<p>
-    <a class="btn btn-danger" asp-page="Create">Create a new Character</a>
-</p>
 
 <div class="characters-container">
     <div class="left">

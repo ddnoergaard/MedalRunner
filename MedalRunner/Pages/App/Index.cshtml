@@ -10,8 +10,8 @@
 
 <div class="account-container">
     <div class="top-section">
-        <p>Hello, FirstName</p>
-        <p id="date">17/05/2026</p>
+        <p>@Model.Name</p>
+        <p id="date">@Model.TodayDate</p>
     </div>
     <div class="second-section">
         <div>
@@ -58,10 +58,10 @@
             <h2>Quick actions</h2>
         </div>
         <div class="quick-actions">
-            <a asp-page="">Characters</a>
+            <a asp-page="/App/Character/Index">Characters</a>
             <a asp-page="">Scoreboard</a>
-            <a asp-page="">Account</a>
-            <a asp-page="/Logout">Logout</a>
+            <a asp-page="/App/Account">Account</a>
+            <a asp-page="/App/Logout">Logout</a>
         </div>
     </div>
 </div>
