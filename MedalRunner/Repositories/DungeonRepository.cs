@@ -10,6 +10,16 @@ namespace MedalRunner.Repositories
     {
         private string _connectionString;
 
+        public DungeonRepository()
+        {
+            
+        }
+
+        public DungeonRepository(string conString)
+        {
+            _connectionString = conString;
+        }
+
         public DungeonRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
