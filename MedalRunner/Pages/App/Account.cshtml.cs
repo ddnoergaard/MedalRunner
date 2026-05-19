@@ -2,6 +2,7 @@ using MedalRunner.Services;
 using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using System.Security.Claims;
 
 namespace MedalRunner.Pages.App
@@ -23,9 +24,21 @@ namespace MedalRunner.Pages.App
 
         public async Task<IActionResult> OnPostDelete()
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            var email = User.FindFirst(ClaimTypes.Email).Value;
+            var user = await _userService.GetUserByEmail(email);
 
-            
+            try
+            {
+                await _userService.DeleteUserById(user.Id);
+                await _cookieService.SignOutAsync();
+
+                return RedirectToPage("/Index");
+            }
+            catch(SqlException ex)
+            {
+                ViewData["delete-account-msg"] = $"{ex.Message}";
+            }
+            return Page();
         }
     }
 }

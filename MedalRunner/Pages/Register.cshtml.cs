@@ -31,7 +31,7 @@ namespace MedalRunner.Pages
         [BindProperty]
         public string ComparePassword { get; set; }
 
-        [BindProperty]
+        //[BindProperty]
         public Models.User user { get; set; } = new Models.User();
 
         private PasswordHasher<string> passwordHasher = new PasswordHasher<string>();

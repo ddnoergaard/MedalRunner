@@ -38,11 +38,11 @@ namespace MedalRunner.Services
             }
         }
 
-        public async Task Create(Character character)
+        public async Task Create(Character character, int userId)
         {
             try
             {
-                await _characterRepository.AddAsync(character);
+                await _characterRepository.AddAsync(character, userId);
             }
             catch(Exception ex)
             {
