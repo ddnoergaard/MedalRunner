@@ -15,14 +15,15 @@
         <form method="post">
             <div class="input-container">
                 <label class="dark-text" for="">Email</label>
-                <input class="dark-text" type="email" placeholder="you@email.com">
+                <input asp-for="@Model.Email" class="dark-text" type="email" placeholder="you@email.com"> 
             </div>
             <div class="input-container">
                 <label class="dark-text" for="">Password</label>
-                <input class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗">
+                <input asp-for="@Model.Password" class="dark-text" type="password" placeholder="∗∗∗∗∗∗∗∗∗∗∗∗"> 
             </div>
             <button class="form-btn" type="submit">Login</button>
         </form>
+        <p>@ViewData["login-error-msg"]</p>
         <a class="register-text" asp-page="/Register">... Or Register</a>
     </div>
 </div>

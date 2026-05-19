@@ -21,10 +21,6 @@
 
         public User()
         {
-            FirstName = "";
-            LastName = "";
-            Email = "";
-            Password = "";  
         }
     }
 }

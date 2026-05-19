@@ -47,7 +47,7 @@ namespace MedalRunner.Repositories
 
         public async Task<User> GetUserByEmail(string Email)
         {
-            string sqlQuery = "SELECT email, password FROM users WHERE email = @Email";
+            string sqlQuery = "SELECT * FROM users WHERE email = @Email";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -63,7 +63,13 @@ namespace MedalRunner.Repositories
                                 return new User
                                 {
                                     Email = Convert.ToString(reader["email"]),
-                                    Password = Convert.ToString(reader["password"])
+                                    Password = Convert.ToString(reader["password"]),
+                                    RoleId = Convert.ToInt32(reader["role_id"]),
+                                    FirstName = Convert.ToString(reader["first_name"]),
+                                    LastName = Convert.ToString(reader["last_name"]),
+                                    SubscriptionId = Convert.ToInt32(reader["subscription_id"]),
+                                    CreatedAt = Convert.ToDateTime(reader["created_at"]),
+                                    Id = Convert.ToInt32(reader["id"])
                                 };
                             }
                         throw new ArgumentException("No User with that Email found");
