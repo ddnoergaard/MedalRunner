@@ -82,5 +82,27 @@ namespace MedalRunner.Repositories
             }
         }
 
+        public async Task DeleteUserById(int id)
+        {
+            string sqlQuery = "DELETE FROM users WHERE id = @userId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@userId", id);
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
     }
 }

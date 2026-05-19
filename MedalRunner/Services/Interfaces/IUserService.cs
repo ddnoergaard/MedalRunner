@@ -6,5 +6,6 @@ namespace MedalRunner.Services.Interfaces
     {
         Task Create(User user);
         Task<User> GetUserByEmail(string Email);
+        Task DeleteUserById(int userId);
     }
 }

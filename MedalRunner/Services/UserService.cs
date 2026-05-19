@@ -37,5 +37,17 @@ namespace MedalRunner.Services
                 throw;
             }
         }
+
+        public async Task DeleteUserById(int userId)
+        {
+            try
+            {
+                await _userRepository.DeleteUserById(userId);
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
     }
 }
