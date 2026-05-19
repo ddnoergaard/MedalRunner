@@ -1,5 +1,6 @@
 ﻿using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Services
 {
@@ -11,5 +12,17 @@ namespace MedalRunner.Services
         {
             _classRepository = classRepository;
         }
+
+        public async Task<string> GetClassNameOnId(int id)
+        {
+            try
+            {
+                return await _classRepository.GetClassNameOnId(id);
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
+
     }
 }

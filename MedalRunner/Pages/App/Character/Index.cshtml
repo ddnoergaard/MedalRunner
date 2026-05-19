@@ -12,7 +12,7 @@
 
 <h1>Characters</h1>
 
-@foreach (Character character in Model.Characters)
+@* @foreach (Character character in Model.Characters)
 {
     <div class="container">
         <div>
@@ -30,7 +30,7 @@
             <a class="btn btn-danger btn-sm" type="button" title="Delete" asp-page="Delete" asp-route-id="Character.Id">Delete</a>
         </div>
     </div>
-}
+} *@
 
 <div class="characters-container">
     <div class="left">
@@ -39,18 +39,28 @@
         <p>New characters can be created from the panel on the right.</p>
     </div>
     <div class="right">
-        <div class="char-card">
-            <div class="char-card-one">
-                <p>Character name</p>
-                <p>Paladin</p>
-            </div>
-            <div class="char-card-two">
-                <p>Level 90</p>
-                <a asp-page="/Character/Details">Log in</a>
-            </div>
-        </div>
+        @if (Model.Characters.Count > 0)
+        {
+            @foreach (Character c in Model.Characters)
+            {
+                <div class="char-card">
+                    <div class="char-card-one">
+                        <p>@c.Name</p>
+                        <p>Paladin</p>
+                    </div>
+                    <div class="char-card-two">
+                        <p>Level 90</p>
+                        <a asp-page="/Character/Details" asp-route-id="@c.Id">Log in</a>
+                    </div>
+                </div>
+            }
+        } else
+        {
+            <p>No characters found.</p>
+        }
+
         <div class="char-create">
-            <a asp-page="/Character/Create" asp-route-id="">+</a>
+            <a asp-page="/Character/Create">+</a>
         </div>
     </div>
 </div>

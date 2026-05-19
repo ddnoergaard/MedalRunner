@@ -2,5 +2,6 @@
 {
     public interface IClassService
     {
+        Task<string> GetClassNameOnId(int id);
     }
 }
