@@ -10,7 +10,7 @@
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.character.Race" class="controll-label"></label>
-		<select name="Race" id="@Model.character.Race">
+		<select asp-for="character.Race">
 			<option value="null">Please select a Race</option>
 			<option value="Human">Human</option>
 			<option value="Dwarf">Dwarf</option>
@@ -29,7 +29,7 @@
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.character.CharacterClass" class="controll-label"></label>
-		<select name="Character Class" id="@Model.character.CharacterClass">
+		<select asp-for="character.CharacterClass">
 			<option value="null">Please select a Class</option>
 			<option value="1">Death Knight</option>
 			<option value="2">Druid</option>
@@ -46,7 +46,7 @@
 	</div>
 	<div class="form-group">
 		<label asp-for="@Model.character.Specialization" class="control-label"></label>
-		<select name="Class spec" id="@Model.character.Specialization">
+		<select asp-for="character.Specialization">
 			<option value="null">Please select a Specialization</option>
 			<option value="1">Blood</option>
 			<option value="2">Frost</option>

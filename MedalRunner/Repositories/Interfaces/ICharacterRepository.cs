@@ -10,6 +10,7 @@ namespace MedalRunner.Repositories.Interfaces
         Task<int> AddAsync(Character character);
         Task UpdateAsync(Character character);
         Task DeleteAsync(int id);
-
+        // Returns all items equipped by a character via the character_items junction table
+        Task<List<Item>> GetItemsByCharacterIdAsync(int characterId);
     }
 }

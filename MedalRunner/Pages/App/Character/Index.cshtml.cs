@@ -16,7 +16,7 @@ namespace MedalRunner.Pages.App.Character
             _characterService = characterService;
         }
 
-        public async Task OnGetAsynch()
+        public async Task OnGetAsync()
         {
             _characters = (await _characterService.GetAll()).ToList();
         }

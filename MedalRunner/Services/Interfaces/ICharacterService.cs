@@ -9,5 +9,7 @@ namespace MedalRunner.Services.Interfaces
         Task Create(Character character);
         Task Update(Character character);
         Task Delete(int id);
+        // Returns all items equipped by a character
+        Task<List<Item>> GetCharacterItemsAsync(int characterId);
     }
 }
