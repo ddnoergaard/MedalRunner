@@ -21,9 +21,9 @@ builder.Services.AddAuthorization(options =>
 
 //Cookie auth -> Hvor brugere bliver sendt til hvis de ikke har adgang.
 /*
-    Hvis en bruger ikke er logget ind, og prøver at tilgå en auth page, så bliver de redirectet til /Login
-    Hvis en bruger er logget ind, og prøver at tilgå Admin siderne, så bliver de redirected to /Error
- */
+    Hvis en bruger ikke er logget ind, og pr
+//    Hvis en bruger er logget ind, og prøver at tilgå Admin siderne, så bliver de redirected to /Error
+// */
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
