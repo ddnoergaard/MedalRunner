@@ -7,5 +7,7 @@ namespace MedalRunner.Repositories.Interfaces
         Task AddUser(User user);
 
         Task<User> GetUserByEmail(string Email);
+
+        Task DeleteUserById(int id);
     }
 }
