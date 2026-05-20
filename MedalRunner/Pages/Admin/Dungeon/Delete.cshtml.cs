@@ -1,6 +1,7 @@
 using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Pages.Admin_pages
 {
@@ -18,7 +19,15 @@ namespace MedalRunner.Pages.Admin_pages
         // CHANGED: was empty - now loads the dungeon so the confirmation page can display its name
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
+            try
+            {
+                Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
+
+            }
+            catch(ArgumentException ex)
+            {
+                ViewData["dungeonGet-error-msg"] = $"{ex.Message}";
+            }
             if (Dungeon == null)
             {
                 return RedirectToPage("/NotFound");
@@ -29,7 +38,19 @@ namespace MedalRunner.Pages.Admin_pages
         // CHANGED: was synchronous OnPost() - now properly awaits DeleteDungeon
         public async Task<IActionResult> OnPostAsync()
         {
-            await _dungeonService.DeleteDungeon(Dungeon.Id);
+            try
+            {
+                await _dungeonService.DeleteDungeon(Dungeon.Id);
+
+            }
+            catch (ArgumentException ex)
+            {
+                ViewData["dungeonDelete-error-msg"] = $"{ex.Message}";
+            }
+            catch (SqlException ex)
+            {
+                ViewData["dungeonDelete-error-msg"] = $"{ex.Message}";
+            }
             return RedirectToPage("/Admin/Dungeon/Index");
         }
     }
