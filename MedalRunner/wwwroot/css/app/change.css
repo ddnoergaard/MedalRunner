@@ -118,12 +118,9 @@
 .item-list-entry {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0.6rem 1rem;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.15s;
+    overflow: hidden;
 }
 
     .item-list-entry:hover {
@@ -134,6 +131,20 @@
         border-color: #f0a500;
         background: rgba(240, 165, 0, 0.1);
     }
+
+.item-list-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    width: 100%;
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+}
 
 .item-thumb {
     width: 40px;
@@ -168,3 +179,37 @@
     .btn-compare:hover {
         background: #d49200;
     }
+
+.btn-cancel,
+.btn-accept {
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    background: #f0a500;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.15s;
+}
+
+.btn-cancel:hover,
+.btn-accept:hover {
+    background: #d49200;
+}
+
+.btn-accept:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-up   { color: #4caf50; font-size: 0.85em; }
+.stat-down { color: #f44336; font-size: 0.85em; }

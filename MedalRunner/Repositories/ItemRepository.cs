@@ -46,9 +46,9 @@ namespace MedalRunner.Repositories
 
         public async Task AddItem(Item item)
         {
-            string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, strength, agility, " +
-                "spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, socket_bonus_amount, enchant) " +
-                "VALUES (@name, @gear_slot, @image_url, @item_level, @rarity, @difficulty, @material, " +
+            string sqlQuery = "INSERT INTO items(name, gear_slot, image_url, item_level, rarity, difficulty, material, armor, min_damage, max_damage, intellect, " +
+                "strength, agility, spirit, stamina, haste, crit, mastery, dodge, parry, hit, expertise, speed, socket_amount, socket_bonus_stat, " +
+                "socket_bonus_amount, enchant) VALUES (@name, @gear_slot, @image_url, @item_level, @rarity, @difficulty, @material, " +
                 "@armor, @min_damage, @max_damage, @intellect, @strength, @agility, @spirit, " +
                 "@stamina, @haste, @crit, @mastery, @dodge, @parry, @hit, @expertise, @speed, " +
                 "@socket_amount, @socket_bonus_stat, @socket_bonus_amount, @enchant); " +
@@ -419,6 +419,37 @@ WHERE db.dungeon_id = @dungeonId";
                     }
                 }
             }
+        }
+
+        public async Task<List<Item>> GetItemsByCharacterIdAsync(int characterId)
+        {
+            var items = new List<Item>();
+
+            string sqlQuery = @"
+                SELECT i.*
+                FROM character_gear cg
+                INNER JOIN items i ON i.id = cg.item_id
+                WHERE cg.character_id = @characterId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@characterId", characterId);
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            items.Add(ItemMapper(reader));
+                        }
+                    }
+                }
+            }
+
+            return items;
         }
 
     }

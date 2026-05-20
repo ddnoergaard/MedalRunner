@@ -8,10 +8,12 @@ namespace MedalRunner.Services
     public class CharacterService : ICharacterService
     {
         private readonly ICharacterRepository _characterRepository;
+        private readonly IItemService _itemService;
 
-        public CharacterService(ICharacterRepository characterRepository)
+        public CharacterService(ICharacterRepository characterRepository, IItemService itemService)
         {
             _characterRepository = characterRepository;
+            _itemService = itemService;
         }
 
         public async Task<IEnumerable<Character>> GetAll()
@@ -74,28 +76,15 @@ namespace MedalRunner.Services
             }
         }
 
-        // Delegates to repository to fetch all items equipped by a character
-        //public async Task<List<Item>> GetCharacterItemsAsync(int characterId)
-        //{
-        //    return await _characterRepository.GetItemsByCharacterIdAsync(characterId);
-        //}
-
         public async Task<List<Dungeon>> DungeonReadyCheck(List<Dungeon> allDungeons, Character specificCharacter)
         {
-            int? slotCheckAmount = 0;
-
-
             List<Dungeon> checkedDungeons = new List<Dungeon>();
-            Character character = await _characterRepository.GetByIdAsync(specificCharacter.Id);
-            List<Item> characterItems = new List<Item>();
-            
-            //Adds Amount of gem slots to slotCeckAmount and returns Character items to the list characterItems
-            slotCheckAmount += ReturnCountItems(character.Gear, characterItems);
-            slotCheckAmount += ReturnCountItems(character.Weapon, characterItems);
+            List<Item> characterItems = await _itemService.GetItemsByCharacterIdAsync(specificCharacter.Id);
+
+            int? slotCheckAmount = characterItems.Sum(i => i.SocketAmount ?? 0);
 
             foreach (Dungeon checkDungeon in allDungeons)
-            { 
-
+            {
                 //Checks required slot amount for each dungeon in the list can also be done by name
                 switch (checkDungeon.Id)
                 {
@@ -117,23 +106,9 @@ namespace MedalRunner.Services
                             checkedDungeons.Add(checkDungeon);
                         }
                         break;
-
-                }  
+                }
             }
             return checkedDungeons;
-        }
-
-        // Helper method to count socket slots and bring together gear and weapons
-        private int? ReturnCountItems(List<Item> items, List<Item> returnList)
-        {
-            int? slotAmount = 0;
-            foreach(Item item in items)
-            {
-                returnList.Add(item);
-
-                slotAmount += item.SocketAmount;
-            }
-            return slotAmount;
         }
 
         public async Task<IEnumerable<Character>> GetCharactersByUserId(int userId)
@@ -148,6 +123,11 @@ namespace MedalRunner.Services
             {
                 throw;
             }
+        }
+
+        public async Task EquipItem(int characterId, int oldItemId, int newItemId)
+        {
+            await _characterRepository.EquipItemAsync(characterId, oldItemId, newItemId);
         }
     }
 }

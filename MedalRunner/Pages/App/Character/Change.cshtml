@@ -1,9 +1,6 @@
-﻿@page "{itemId:int}"
+﻿@page "{characterId:int}/{slot:int}/{itemId:int}"
 @model MedalRunner.Pages.App.Character.ChangeModel
 @using MedalRunner.Models
-@{
-    var equipped = Model.EquippedItem;
-}
 
 @section Styles {
     <link rel="stylesheet" href="~/css/app/change.css" />
@@ -11,43 +8,94 @@
 
 <div class="change-page">
 
-    <h2 class="change-title">Compare — @equipped.SlotName</h2>
+    <h2 class="change-title">Compare &mdash; @((Item.GearSlot)Model.CurrentSlot)</h2>
 
     <div class="compare-container">
 
         @* Left: currently equipped item *@
-        <div class="compare-card equipped">
-            <div class="card-header">
-                <img src="@equipped.ImageUrl" alt="@equipped.Name" class="item-image" />
-                <span class="item-name">@equipped.Name</span>
-                <span class="item-meta">ilvl @equipped.ItemLevel, @equipped.Rarity, @equipped.Difficulty</span>
+        @if (Model.EquippedItem == null)
+        {
+            <div class="compare-card equipped empty">
+                <p class="empty-hint">No item equipped in this slot</p>
             </div>
-            <div class="card-stats">
-                @if (equipped.Armor > 0)      { <p>Armor: @equipped.Armor</p> }
-                @if (equipped.Stamina > 0)    { <p>Stamina: @equipped.Stamina</p> }
-                @if (equipped.Strength > 0)   { <p>Strength: @equipped.Strength</p> }
-                @if (equipped.Agility > 0)    { <p>Agility: @equipped.Agility</p> }
-                @if (equipped.Intellect > 0)  { <p>Intellect: @equipped.Intellect</p> }
-                @if (equipped.Spirit > 0)     { <p>Spirit: @equipped.Spirit</p> }
-                @if (equipped.Haste > 0)      { <p>Haste: @equipped.Haste</p> }
-                @if (equipped.Crit > 0)       { <p>Crit: @equipped.Crit</p> }
-                @if (equipped.Mastery > 0)    { <p>Mastery: @equipped.Mastery</p> }
-                @if (equipped.Dodge > 0)      { <p>Dodge: @equipped.Dodge</p> }
-                @if (equipped.Parry > 0)      { <p>Parry: @equipped.Parry</p> }
-                @if (equipped.Hit > 0)        { <p>Hit: @equipped.Hit</p> }
-                @if (equipped.Expertise > 0)  { <p>Expertise: @equipped.Expertise</p> }
-                @if (equipped.MinDamage > 0)  { <p>Damage: @equipped.MinDamage – @equipped.MaxDamage</p> }
+        }
+        else
+        {
+            <div class="compare-card equipped">
+                <div class="card-header">
+                    <img src="@Model.EquippedItem.ImageUrl" alt="@Model.EquippedItem.Name" class="item-image" />
+                    <span class="item-name">@Model.EquippedItem.Name</span>
+                    <span class="item-meta">ilvl @Model.EquippedItem.ItemLevel, @Model.EquippedItem.Rarity, @Model.EquippedItem.Difficulty</span>
+                </div>
+                <div class="card-stats">
+                    @if (Model.EquippedItem.Armor > 0)
+                    {
+                        <p>Armor: @Model.EquippedItem.Armor</p>
+                    }
+                    @if (Model.EquippedItem.Stamina > 0)
+                    {
+                        <p>Stamina: @Model.EquippedItem.Stamina</p>
+                    }
+                    @if (Model.EquippedItem.Strength > 0)
+                    {
+                        <p>Strength: @Model.EquippedItem.Strength</p>
+                    }
+                    @if (Model.EquippedItem.Agility > 0)
+                    {
+                        <p>Agility: @Model.EquippedItem.Agility</p>
+                    }
+                    @if (Model.EquippedItem.Intellect > 0)
+                    {
+                        <p>Intellect: @Model.EquippedItem.Intellect</p>
+                    }
+                    @if (Model.EquippedItem.Spirit > 0)
+                    {
+                        <p>Spirit: @Model.EquippedItem.Spirit</p>
+                    }
+                    @if (Model.EquippedItem.Haste > 0)
+                    {
+                        <p>Haste: @Model.EquippedItem.Haste</p>
+                    }
+                    @if (Model.EquippedItem.Crit > 0)
+                    {
+                        <p>Crit: @Model.EquippedItem.Crit</p>
+                    }
+                    @if (Model.EquippedItem.Mastery > 0)
+                    {
+                        <p>Mastery: @Model.EquippedItem.Mastery</p>
+                    }
+                    @if (Model.EquippedItem.Dodge > 0)
+                    {
+                        <p>Dodge: @Model.EquippedItem.Dodge</p>
+                    }
+                    @if (Model.EquippedItem.Parry > 0)
+                    {
+                        <p>Parry: @Model.EquippedItem.Parry</p>
+                    }
+                    @if (Model.EquippedItem.Hit > 0)
+                    {
+                        <p>Hit: @Model.EquippedItem.Hit</p>
+                    }
+                    @if (Model.EquippedItem.Expertise > 0)
+                    {
+                        <p>Expertise: @Model.EquippedItem.Expertise</p>
+                    }
+                    @if (Model.EquippedItem.MinDamage > 0)
+                    {
+                        <p>Damage: @Model.EquippedItem.MinDamage &ndash; @Model.EquippedItem.MaxDamage</p>
+                    }
+                </div>
+                <div class="card-footer">
+                    @if (!string.IsNullOrEmpty(Model.EquippedItem.DropBoss))
+                    {
+                        <p class="item-source">@Model.EquippedItem.DropBoss &middot; @Model.EquippedItem.DropDungeon</p>
+                    }
+                </div>
             </div>
-            <div class="card-footer">
-                @if (!string.IsNullOrEmpty(equipped.DropBoss))
-                {
-                    <p class="item-source">@equipped.DropBoss · @equipped.DropDungeon</p>
-                }
-            </div>
-        </div>
+        }
 
         @* Right: comparison item, empty until one is selected *@
-        @if (Model.CompareItem is null)
+        @if (Model.CompareItem == null)
         {
             <div class="compare-card compare empty">
                 <p class="empty-hint">Select an item below to compare</p>
@@ -55,33 +103,74 @@
         }
         else
         {
-            var cmp = Model.CompareItem;
             <div class="compare-card compare">
                 <div class="card-header">
-                    <img src="@cmp.ImageUrl" alt="@cmp.Name" class="item-image" />
-                    <span class="item-name">@cmp.Name</span>
-                    <span class="item-meta">ilvl @cmp.ItemLevel · @cmp.Rarity · @cmp.Difficulty</span>
+                    <img src="@Model.CompareItem.ImageUrl" alt="@Model.CompareItem.Name" class="item-image" />
+                    <span class="item-name">@Model.CompareItem.Name</span>
+                    <span class="item-meta">ilvl @Model.CompareItem.ItemLevel, @Model.CompareItem.Rarity, @Model.CompareItem.Difficulty</span>
                 </div>
                 <div class="card-stats">
-                    @if (cmp.Armor > 0)      { <p>Armor: @cmp.Armor</p> }
-                    @if (cmp.Stamina > 0)    { <p>Stamina: @cmp.Stamina</p> }
-                    @if (cmp.Strength > 0)   { <p>Strength: @cmp.Strength</p> }
-                    @if (cmp.Agility > 0)    { <p>Agility: @cmp.Agility</p> }
-                    @if (cmp.Intellect > 0)  { <p>Intellect: @cmp.Intellect</p> }
-                    @if (cmp.Spirit > 0)     { <p>Spirit: @cmp.Spirit</p> }
-                    @if (cmp.Haste > 0)      { <p>Haste: @cmp.Haste</p> }
-                    @if (cmp.Crit > 0)       { <p>Crit: @cmp.Crit</p> }
-                    @if (cmp.Mastery > 0)    { <p>Mastery: @cmp.Mastery</p> }
-                    @if (cmp.Dodge > 0)      { <p>Dodge: @cmp.Dodge</p> }
-                    @if (cmp.Parry > 0)      { <p>Parry: @cmp.Parry</p> }
-                    @if (cmp.Hit > 0)        { <p>Hit: @cmp.Hit</p> }
-                    @if (cmp.Expertise > 0)  { <p>Expertise: @cmp.Expertise</p> }
-                    @if (cmp.MinDamage > 0)  { <p>Damage: @cmp.MinDamage – @cmp.MaxDamage</p> }
+                    @if (Model.CompareItem.Armor > 0)
+                    {
+                        <p>Armor: @Model.CompareItem.Armor</p>
+                    }
+                    @if (Model.CompareItem.Stamina > 0)
+                    {
+                        <p>Stamina: @Model.CompareItem.Stamina</p>
+                    }
+                    @if (Model.CompareItem.Strength > 0)
+                    {
+                        <p>Strength: @Model.CompareItem.Strength</p>
+                    }
+                    @if (Model.CompareItem.Agility > 0)
+                    {
+                        <p>Agility: @Model.CompareItem.Agility</p>
+                    }
+                    @if (Model.CompareItem.Intellect > 0)
+                    {
+                        <p>Intellect: @Model.CompareItem.Intellect</p>
+                    }
+                    @if (Model.CompareItem.Spirit > 0)
+                    {
+                        <p>Spirit: @Model.CompareItem.Spirit</p>
+                    }
+                    @if (Model.CompareItem.Haste > 0)
+                    {
+                        <p>Haste: @Model.CompareItem.Haste</p>
+                    }
+                    @if (Model.CompareItem.Crit > 0)
+                    {
+                        <p>Crit: @Model.CompareItem.Crit</p>
+                    }
+                    @if (Model.CompareItem.Mastery > 0)
+                    {
+                        <p>Mastery: @Model.CompareItem.Mastery</p>
+                    }
+                    @if (Model.CompareItem.Dodge > 0)
+                    {
+                        <p>Dodge: @Model.CompareItem.Dodge</p>
+                    }
+                    @if (Model.CompareItem.Parry > 0)
+                    {
+                        <p>Parry: @Model.CompareItem.Parry</p>
+                    }
+                    @if (Model.CompareItem.Hit > 0)
+                    {
+                        <p>Hit: @Model.CompareItem.Hit</p>
+                    }
+                    @if (Model.CompareItem.Expertise > 0)
+                    {
+                        <p>Expertise: @Model.CompareItem.Expertise</p>
+                    }
+                    @if (Model.CompareItem.MinDamage > 0)
+                    {
+                        <p>Damage: @Model.CompareItem.MinDamage &ndash; @Model.CompareItem.MaxDamage</p>
+                    }
                 </div>
                 <div class="card-footer">
-                    @if (!string.IsNullOrEmpty(cmp.DropBoss))
+                    @if (!string.IsNullOrEmpty(Model.CompareItem.DropBoss))
                     {
-                        <p class="item-source">@cmp.DropBoss · @cmp.DropDungeon</p>
+                        <p class="item-source">@Model.CompareItem.DropBoss &middot; @Model.CompareItem.DropDungeon</p>
                     }
                 </div>
             </div>
@@ -91,49 +180,48 @@
 
     @* Item picker list *@
     <div class="item-picker">
-        <h3>Available @equipped.SlotName items</h3>
+        <h3>Available items</h3>
         @if (!Model.SlotItems.Any())
         {
             <p>No other items found for this slot.</p>
         }
         else
         {
-            <form method="post" asp-route-itemId="@equipped.Id">
-                <input type="hidden" asp-for="SelectedItemId" id="SelectedItemId" />
+            <form method="post" asp-route-characterId="@Model.RouteCharacterId"
+                               asp-route-slot="@Model.CurrentSlot"
+                               asp-route-itemId="@(Model.EquippedItem != null ? Model.EquippedItem.Id : 0)">
                 <ul class="item-list">
                     @foreach (var item in Model.SlotItems)
                     {
-                        @if (Model.CompareItem != null && Model.CompareItem.Id == item.Id)
+                        if (Model.CompareItem != null && Model.CompareItem.Id == item.Id)
                         {
-                            <li class="item-list-entry selected" onclick="selectItem(@item.Id, this)">
-                                <img src="@item.ImageUrl" alt="@item.Name" class="item-thumb" />
-                                <span class="item-list-name">@item.Name</span>
-                                <span class="item-list-meta">ilvl @item.ItemLevel · @item.Rarity</span>
+                            <li class="item-list-entry selected">
+                                <button type="submit" name="SelectedItemId" value="@item.Id" class="item-list-btn">
+                                    <img src="@item.ImageUrl" alt="@item.Name" class="item-thumb" />
+                                    <span class="item-list-name">@item.Name</span>
+                                    <span class="item-list-meta">ilvl @item.ItemLevel &middot; @item.Rarity</span>
+                                </button>
                             </li>
                         }
                         else
                         {
-                            <li class="item-list-entry" onclick="selectItem(@item.Id, this)">
-                                <img src="@item.ImageUrl" alt="@item.Name" class="item-thumb" />
-                                <span class="item-list-name">@item.Name</span>
-                                <span class="item-list-meta">ilvl @item.ItemLevel · @item.Rarity</span>
+                            <li class="item-list-entry">
+                                <button type="submit" name="SelectedItemId" value="@item.Id" class="item-list-btn">
+                                    <img src="@item.ImageUrl" alt="@item.Name" class="item-thumb" />
+                                    <span class="item-list-name">@item.Name</span>
+                                    <span class="item-list-meta">ilvl @item.ItemLevel &middot; @item.Rarity</span>
+                                </button>
                             </li>
                         }
                     }
                 </ul>
-                <button type="submit" class="btn-compare">Compare</button>
+                <div class="action-buttons">
+                    <input type="hidden" name="newItemId" value="@(Model.CompareItem != null ? Model.CompareItem.Id : 0)" />
+                    <button type="submit" asp-page-handler="Cancel" class="btn-cancel">Cancel</button>
+                    <button type="submit" asp-page-handler="Accept" class="btn-accept">Accept</button>
+                </div>
             </form>
         }
     </div>
 
 </div>
-
-@section Scripts {
-    <script>
-        function selectItem(id, el) {
-            document.getElementById('SelectedItemId').value = id;
-            document.querySelectorAll('.item-list-entry').forEach(e => e.classList.remove('selected'));
-            el.classList.add('selected');
-        }
-    </script>
-}

@@ -60,7 +60,25 @@ namespace MedalRunner.Repositories
                 }
             }
 
+            await EquipDefaultGearAsync(newCharId);
+        }
 
+        // Default starter item IDs, one per available slot (lowest id per slot in the DB)
+        private static readonly int[] DefaultItemIds = { 132, 1, 2, 3, 5, 78, 81, 80, 4, 77, 159, 6, 110 };
+
+        private async Task EquipDefaultGearAsync(int characterId)
+        {
+            await using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            foreach (int itemId in DefaultItemIds)
+            {
+                string sql = "INSERT INTO character_gear (character_id, item_id) VALUES (@characterId, @itemId)";
+                await using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
+                cmd.Parameters.Add(new SqlParameter("@itemId", SqlDbType.Int) { Value = itemId });
+                await cmd.ExecuteNonQueryAsync();
+            }
         }
 
         public async Task DeleteAsync(int id)
@@ -85,8 +103,7 @@ namespace MedalRunner.Repositories
         public async Task<IEnumerable<Character>> GetCharactersByUserId (int userId)
         {
             string sqlQuery = "SELECT character_id FROM user_characters WHERE user_id = @id";
-            List<string> charId = new List<string>();
-            
+            List<int> charIds = new List<int>();
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -98,23 +115,14 @@ namespace MedalRunner.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            charId.Add($"'{reader["character_id"]}',");
+                            charIds.Add(Convert.ToInt32(reader["character_id"]));
                         }
                     }
                 }
 
-                if (charId.Count == 0) throw new ArgumentException("No characters found");
+                if (charIds.Count == 0) throw new ArgumentException("No characters found");
 
-                if (charId.Count == 1) charId[0] = charId[0].Replace(",", "");
-
-                if (charId.Count > 1)
-                {
-                    int length = charId.Count;
-
-                    charId[length - 1] = charId[length - 1].Replace(",", "");
-                }
-
-                string sqlQueryCharacter = $"SELECT * from characters WHERE id IN ({string.Join(", ", charId)})";
+                string sqlQueryCharacter = $"SELECT * FROM characters WHERE id IN ({string.Join(",", charIds)})";
                 List<Character> charList = new List<Character>();
                 using (SqlCommand cmd = new SqlCommand(sqlQueryCharacter, con))
                 {
@@ -223,70 +231,30 @@ namespace MedalRunner.Repositories
             };
         }
 
-        // Loads all items equipped by a character by joining character_items with items
-        public async Task<List<Item>> GetItemsByCharacterIdAsync(int characterId)
+        public async Task EquipItemAsync(int characterId, int oldItemId, int newItemId)
         {
-            var items = new List<Item>();
-
-            string sql = @"
-                SELECT i.id, i.name, i.gear_slot, i.image_url, i.item_level, i.rarity,
-                       i.difficulty, i.material, i.armor, i.min_damage, i.max_damage,
-                       i.intellect, i.strength, i.agility, i.spirit, i.stamina,
-                       i.haste, i.crit, i.mastery, i.dodge, i.parry, i.hit,
-                       i.expertise, i.speed, i.socket_amount, i.socket_bonus_stat,
-                       i.socket_bonus_amount, i.enchant
-                FROM character_items ci
-                INNER JOIN items i ON i.id = ci.item_id
-                WHERE ci.character_id = @CharacterId";
-
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
-            await using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add(new SqlParameter("@CharacterId", SqlDbType.Int) { Value = characterId });
 
-            await using var rdr = await cmd.ExecuteReaderAsync();
-            while (await rdr.ReadAsync())
+            if (oldItemId == 0)
             {
-                items.Add(MapReaderToItem(rdr));
+                // Slot was empty — insert a new row
+                string sql = "INSERT INTO character_gear (character_id, item_id) VALUES (@characterId, @newItemId)";
+                await using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
+                cmd.Parameters.Add(new SqlParameter("@newItemId", SqlDbType.Int) { Value = newItemId });
+                await cmd.ExecuteNonQueryAsync();
             }
-
-            return items;
-        }
-
-        // Maps a reader row from the items table to an Item object
-        private static Item MapReaderToItem(SqlDataReader rdr)
-        {
-            return new Item
+            else
             {
-                Id         = rdr.GetInt32(rdr.GetOrdinal("id")),
-                Name       = rdr.GetString(rdr.GetOrdinal("name")),
-                Slot       = rdr.GetInt32(rdr.GetOrdinal("gear_slot")),
-                ImageUrl   = rdr.IsDBNull(rdr.GetOrdinal("image_url")) ? string.Empty : rdr.GetString(rdr.GetOrdinal("image_url")),
-                ItemLevel  = rdr.GetInt32(rdr.GetOrdinal("item_level")),
-                Rarity     = rdr.IsDBNull(rdr.GetOrdinal("rarity")) ? string.Empty : rdr.GetString(rdr.GetOrdinal("rarity")),
-                Difficulty = rdr.IsDBNull(rdr.GetOrdinal("difficulty")) ? string.Empty : rdr.GetString(rdr.GetOrdinal("difficulty")),
-                Material   = rdr.IsDBNull(rdr.GetOrdinal("material")) ? string.Empty : rdr.GetString(rdr.GetOrdinal("material")),
-                Armor         = rdr.IsDBNull(rdr.GetOrdinal("armor")) ? 0 : rdr.GetInt32(rdr.GetOrdinal("armor")),
-                MinDamage     = rdr.IsDBNull(rdr.GetOrdinal("min_damage")) ? null : rdr.GetInt32(rdr.GetOrdinal("min_damage")),
-                MaxDamage     = rdr.IsDBNull(rdr.GetOrdinal("max_damage")) ? null : rdr.GetInt32(rdr.GetOrdinal("max_damage")),
-                Intellect     = rdr.IsDBNull(rdr.GetOrdinal("intellect")) ? null : rdr.GetInt32(rdr.GetOrdinal("intellect")),
-                Strength      = rdr.IsDBNull(rdr.GetOrdinal("strength")) ? null : rdr.GetInt32(rdr.GetOrdinal("strength")),
-                Agility       = rdr.IsDBNull(rdr.GetOrdinal("agility")) ? null : rdr.GetInt32(rdr.GetOrdinal("agility")),
-                Spirit        = rdr.IsDBNull(rdr.GetOrdinal("spirit")) ? null : rdr.GetInt32(rdr.GetOrdinal("spirit")),
-                Stamina       = rdr.IsDBNull(rdr.GetOrdinal("stamina")) ? null : rdr.GetInt32(rdr.GetOrdinal("stamina")),
-                Haste         = rdr.IsDBNull(rdr.GetOrdinal("haste")) ? null : rdr.GetInt32(rdr.GetOrdinal("haste")),
-                Crit          = rdr.IsDBNull(rdr.GetOrdinal("crit")) ? null : rdr.GetInt32(rdr.GetOrdinal("crit")),
-                Mastery       = rdr.IsDBNull(rdr.GetOrdinal("mastery")) ? null : rdr.GetInt32(rdr.GetOrdinal("mastery")),
-                Dodge         = rdr.IsDBNull(rdr.GetOrdinal("dodge")) ? null : rdr.GetInt32(rdr.GetOrdinal("dodge")),
-                Parry         = rdr.IsDBNull(rdr.GetOrdinal("parry")) ? null : rdr.GetInt32(rdr.GetOrdinal("parry")),
-                Hit           = rdr.IsDBNull(rdr.GetOrdinal("hit")) ? null : rdr.GetInt32(rdr.GetOrdinal("hit")),
-                Expertise     = rdr.IsDBNull(rdr.GetOrdinal("expertise")) ? null : rdr.GetInt32(rdr.GetOrdinal("expertise")),
-                Speed         = rdr.IsDBNull(rdr.GetOrdinal("speed")) ? null : rdr.GetDouble(rdr.GetOrdinal("speed")),
-                SocketAmount      = rdr.IsDBNull(rdr.GetOrdinal("socket_amount")) ? null : rdr.GetInt32(rdr.GetOrdinal("socket_amount")),
-                SocketBonusStat   = rdr.IsDBNull(rdr.GetOrdinal("socket_bonus_stat")) ? null : rdr.GetString(rdr.GetOrdinal("socket_bonus_stat")),
-                SocketBonusAmount = rdr.IsDBNull(rdr.GetOrdinal("socket_bonus_amount")) ? null : rdr.GetInt32(rdr.GetOrdinal("socket_bonus_amount")),
-                Enchants      = rdr.IsDBNull(rdr.GetOrdinal("enchant")) ? null : rdr.GetInt32(rdr.GetOrdinal("enchant")),
-            };
+                // Slot had an item — swap it
+                string sql = "UPDATE character_gear SET item_id = @newItemId WHERE character_id = @characterId AND item_id = @oldItemId";
+                await using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
+                cmd.Parameters.Add(new SqlParameter("@oldItemId", SqlDbType.Int) { Value = oldItemId });
+                cmd.Parameters.Add(new SqlParameter("@newItemId", SqlDbType.Int) { Value = newItemId });
+                await cmd.ExecuteNonQueryAsync();
+            }
         }
     }
 }

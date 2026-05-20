@@ -2,9 +2,33 @@
 @model MedalRunner.Pages.App.Character.DetailsModel
 @using MedalRunner.Models
 @{
-    // Helper: returns the item ID for the given slot, or 0 if nothing is equipped
-    int SlotId(int slot) => Model.EquippedSlots.TryGetValue(slot, out var item) ? item.Id : 0;
-    string SlotImg(int slot, string fallback) => Model.EquippedSlots.TryGetValue(slot, out var item) ? item.ImageUrl : fallback;
+    int charId;
+    if (Model.Character != null)
+    {
+        charId = Model.Character.Id;
+    }
+    else
+    {
+        charId = 0;
+    }
+
+    int SlotId(int slot)
+    {
+        if (Model.EquippedSlots.TryGetValue(slot, out var item))
+        {
+            return item.Id;
+        }
+        return 0;
+    }
+
+    string SlotImg(int slot, string fallback)
+    {
+        if (Model.EquippedSlots.TryGetValue(slot, out var slotItem))
+        {
+            return slotItem.ImageUrl;
+        }
+        return fallback;
+    }
 }
 
 @section Styles {
@@ -17,7 +41,7 @@
             <div class="top-left-top">
                 <p class="char-name">@Model.Character?.Name</p>
                 <div class="top-l-t-one">
-                    <p>@Model.Character?.Gear?.Sum(i => i.ItemLevel) / (Model.Character?.Gear?.Count > 0 ? Model.Character.Gear.Count : 1) ilvl</p>
+                    <p>@(Model.Character?.Gear?.Count > 0 ? Model.Character.Gear.Sum(i => i.ItemLevel) / Model.Character.Gear.Count : 0) ilvl</p>
                     <p>@Model.Character?.Race</p>
                 </div>
                 <div class="top-l-t-two">
@@ -51,54 +75,88 @@
         <div class="top-right">
             <div class="three-slots">
                 @* Head (slot 1) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Head)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Head, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Head"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Head)" asp-route-itemId="@SlotId((int)Item.GearSlot.Head)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Head, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/head.png")" alt="Head" />
+                </a>
                 <p>@Model.Character?.Name</p>
                 @* Neck (slot 2) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Neck)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Neck, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Neck"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Neck)" asp-route-itemId="@SlotId((int)Item.GearSlot.Neck)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Neck, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/neck.png")" alt="Neck" />
+                </a>
             </div>
             <div class="two-slots">
                 @* Shoulders (slot 3) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Shoulders)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Shoulders, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Shoulders"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Shoulders)" asp-route-itemId="@SlotId((int)Item.GearSlot.Shoulders)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Shoulders, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/shoulders.png")" alt="Shoulders" />
+                </a>
                 @* Back (slot 4) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Back)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Back, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Back"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Back)" asp-route-itemId="@SlotId((int)Item.GearSlot.Back)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Back, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/shirt.png")" alt="Back" />
+                </a>
             </div>
             <div class="two-slots">
                 @* Chest (slot 5) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Chest)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Chest, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Chest"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Chest)" asp-route-itemId="@SlotId((int)Item.GearSlot.Chest)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Chest, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/chest.png")" alt="Chest" />
+                </a>
                 @* Wrists (slot 6) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Wrists)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Wrists, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Wrists"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Wrists)" asp-route-itemId="@SlotId((int)Item.GearSlot.Wrists)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Wrists, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/wrists.png")" alt="Wrists" />
+                </a>
             </div>
             <div class="two-slots">
                 @* Hands (slot 7) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Hands)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Hands, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Hands"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Hands)" asp-route-itemId="@SlotId((int)Item.GearSlot.Hands)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Hands, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/hands.png")" alt="Hands" />
+                </a>
                 @* Belt (slot 8) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Belt)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Belt, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Belt"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Belt)" asp-route-itemId="@SlotId((int)Item.GearSlot.Belt)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Belt, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/belt.png")" alt="Belt" />
+                </a>
             </div>
             <div class="two-slots">
                 @* Legs (slot 9) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Legs)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Legs, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Legs"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Legs)" asp-route-itemId="@SlotId((int)Item.GearSlot.Legs)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Legs, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/legs.png")" alt="Legs" />
+                </a>
                 @* Feet (slot 10) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Feet)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Feet, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Feet"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Feet)" asp-route-itemId="@SlotId((int)Item.GearSlot.Feet)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Feet, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Feet" />
+                </a>
             </div>
             <div class="two-slots">
                 @* Ring1 (slot 11) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Ring1)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Ring1, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Ring 1"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Ring1)" asp-route-itemId="@SlotId((int)Item.GearSlot.Ring1)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Ring1, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/ring.png")" alt="Ring 1" />
+                </a>
                 @* Ring2 (slot 12) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Ring2)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Ring2, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Ring 2"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Ring2)" asp-route-itemId="@SlotId((int)Item.GearSlot.Ring2)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Ring2, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/ring.png")" alt="Ring 2" />
+                </a>
             </div>
             <div class="two-slots">
                 @* Trinket1 (slot 13) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Trinket1)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Trinket1, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Trinket 1"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Trinket1)" asp-route-itemId="@SlotId((int)Item.GearSlot.Trinket1)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Trinket1, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/trinket.png")" alt="Trinket 1" />
+                </a>
                 @* Trinket2 (slot 14) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Trinket2)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Trinket2, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Trinket 2"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Trinket2)" asp-route-itemId="@SlotId((int)Item.GearSlot.Trinket2)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Trinket2, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/trinket.png")" alt="Trinket 2" />
+                </a>
             </div>
             <div class="four-slots">
                 @* Tabard (slot 0) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.Tabard)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.Tabard, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Tabard"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.Tabard)" asp-route-itemId="@SlotId((int)Item.GearSlot.Tabard)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.Tabard, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/tabard.png")" alt="Tabard" />
+                </a>
                 @* MainHand (slot 15) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.MainHand)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.MainHand, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Main Hand"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.MainHand)" asp-route-itemId="@SlotId((int)Item.GearSlot.MainHand)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.MainHand, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/1h-sword.png")" alt="Main Hand" />
+                </a>
                 @* OffHand (slot 16) *@
-                <a asp-page="/App/Character/Change" asp-route-itemId="@SlotId((int)Item.GearSlot.OffHand)"><img class="item-slot" src="@SlotImg((int)Item.GearSlot.OffHand, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png")" alt="Off Hand"></a>
+                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@((int)Item.GearSlot.OffHand)" asp-route-itemId="@SlotId((int)Item.GearSlot.OffHand)">
+                    <img class="item-slot" src="@SlotImg((int)Item.GearSlot.OffHand, "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/offhand.png")" alt="Off Hand" />
+                </a>
                 @* Placeholder for 4th slot in row *@
                 <a><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
             </div>

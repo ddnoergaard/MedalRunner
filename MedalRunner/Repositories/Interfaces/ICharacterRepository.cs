@@ -11,5 +11,6 @@ namespace MedalRunner.Repositories.Interfaces
         Task UpdateAsync(Character character);
         Task DeleteAsync(int id);
         Task<IEnumerable<Character>> GetCharactersByUserId(int userId);
+        Task EquipItemAsync(int characterId, int oldItemId, int newItemId);
     }
 }

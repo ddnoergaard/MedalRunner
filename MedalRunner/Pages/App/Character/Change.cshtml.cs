@@ -7,51 +7,80 @@ namespace MedalRunner.Pages.App.Character
     public class ChangeModel : PageModel
     {
         private readonly IItemService _itemService;
+        private readonly ICharacterService _characterService;
 
-        // The item currently equipped in the slot, passed in via route
-        public MedalRunner.Models.Item EquippedItem { get; set; }
-
-        // Items available in the same slot to compare against
-        public List<MedalRunner.Models.Item> SlotItems { get; set; } = new();
-
-        // The item selected from the list for comparison; null until the user picks one
+        public MedalRunner.Models.Item? EquippedItem { get; set; }
         public MedalRunner.Models.Item? CompareItem { get; set; }
+        public List<MedalRunner.Models.Item> SlotItems { get; set; } = new();
+        public int CurrentSlot { get; set; }
+        public int RouteCharacterId { get; set; }
 
-        // The id of the item the user selected from the list on POST
         [BindProperty]
         public int? SelectedItemId { get; set; }
 
-        public ChangeModel(IItemService itemService)
+        public ChangeModel(IItemService itemService, ICharacterService characterService)
         {
             _itemService = itemService;
+            _characterService = characterService;
         }
 
-        public async Task<IActionResult> OnGetAsync(int itemId)
+        private async Task LoadPageData(int characterId, int slot, int itemId)
         {
-            EquippedItem = await _itemService.GetByItemId(itemId);
-            if (EquippedItem == null)
-                return RedirectToPage("/NotFound");
+            CurrentSlot = slot;
+            RouteCharacterId = characterId;
 
-            // Load only items that share the same gear slot
-            SlotItems = (await _itemService.GetAllItem()).Where(i => i.Slot == EquippedItem.Slot && i.Id != EquippedItem.Id).OrderBy(i => i.Name).ToList();
+            if (itemId != 0)
+            {
+                EquippedItem = await _itemService.GetByItemId(itemId);
+            }
 
+            var allItems = await _itemService.GetAllItem();
+
+            foreach (var item in allItems)
+            {
+                if (item.Slot == slot && item.Id != itemId)
+                {
+                    SlotItems.Add(item);
+                }
+            }
+
+            SlotItems = SlotItems.OrderBy(i => i.Name).ToList();
+        }
+
+        public async Task<IActionResult> OnGetAsync(int characterId, int slot, int itemId)
+        {
+            await LoadPageData(characterId, slot, itemId);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int itemId)
+        public async Task<IActionResult> OnPostAsync(int characterId, int slot, int itemId)
         {
-            EquippedItem = await _itemService.GetByItemId(itemId);
-            if (EquippedItem == null)
-                return RedirectToPage("/NotFound");
+            await LoadPageData(characterId, slot, itemId);
 
-            var all = await _itemService.GetAllItem();
-            SlotItems = all.Where(i => i.Slot == EquippedItem.Slot && i.Id != EquippedItem.Id).OrderBy(i => i.Name).ToList();
-
-            // Load the selected comparison item if one was chosen
             if (SelectedItemId.HasValue)
-                CompareItem = SlotItems.FirstOrDefault(i => i.Id == SelectedItemId.Value);
+            {
+                foreach (var item in SlotItems)
+                {
+                    if (item.Id == SelectedItemId.Value)
+                    {
+                        CompareItem = item;
+                        break;
+                    }
+                }
+            }
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAcceptAsync(int characterId, int itemId, int newItemId)
+        {
+            await _characterService.EquipItem(characterId, itemId, newItemId);
+            return RedirectToPage("/App/Character/Details", new { id = characterId });
+        }
+
+        public IActionResult OnPostCancelAsync(int characterId)
+        {
+            return RedirectToPage("/App/Character/Details", new { id = characterId });
         }
     }
 }
