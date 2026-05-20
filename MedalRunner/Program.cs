@@ -46,6 +46,7 @@ builder.Services.AddScoped<IGlyphRepository, GlyphRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IScoreboardRepository, ScoreboardRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
 //DI - SERVICE
 builder.Services.AddScoped<IBossService, BossService>();
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IScoreboardService, ScoreboardService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<CookieService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
 var app = builder.Build();
 Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
