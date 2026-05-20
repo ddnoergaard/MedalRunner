@@ -29,12 +29,12 @@ namespace MedalRunner.Pages.App.Character
             }
 
             // Load all items equipped by this character and map them by slot
-            var items = await _characterService.GetCharacterItemsAsync(id);
+            //var items = await _characterService.GetCharacterItemsAsync(id);
 
-            foreach (var item in items)
-            {
-                EquippedSlots[item.Slot] = item;
-            }
+            //foreach (var item in items)
+            //{
+            //    EquippedSlots[item.Slot] = item;
+            //}
 
             return Page();
         }
