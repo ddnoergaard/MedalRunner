@@ -5,11 +5,11 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
-        public string ClassName { get; set; }
+        public string? ClassName { get; set; }
         public int ClassId { get; set; }
-        public CharacterClass CharacterClass { get; set; }
-        public List<Item> Weapon { get; set; }
-        public List<Item> Gear { get; set; }
+        public string CharacterClass { get; set; }
+        public List<Item>? Weapon { get; set; }
+        public List<Item>? Gear { get; set; }
         public int Specialization { get; set; }
         public DateTime CreatedAt { get; set; }
 

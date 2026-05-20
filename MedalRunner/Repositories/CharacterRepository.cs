@@ -17,7 +17,7 @@ namespace MedalRunner.Repositories
         public async Task AddAsync(Character character, int userId)
         {
             string sql = @"
-                INSERT INTO characters (name, race, characterClass, specialization, createdAt)
+                INSERT INTO characters (name, race, class_id, spec_id, create_time)
                 OUTPUT INSERTED.id
                 VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             int newCharId = 0;
@@ -85,7 +85,7 @@ namespace MedalRunner.Repositories
         public async Task<IEnumerable<Character>> GetCharactersByUserId (int userId)
         {
             string sqlQuery = "SELECT character_id FROM user_characters WHERE user_id = @id";
-            List<int> charId = new List<int>();
+            List<string> charId = new List<string>();
             
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -98,11 +98,23 @@ namespace MedalRunner.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            charId.Add(Convert.ToInt32(reader["character_id"]));
+                            charId.Add($"'{reader["character_id"]}',");
                         }
                     }
                 }
-                string sqlQueryCharacter = $"SELECT * from character WHERE id IN {string.Join(", ", charId)}";
+
+                if (charId.Count == 0) throw new ArgumentException("No characters found");
+
+                if (charId.Count == 1) charId[0] = charId[0].Replace(",", "");
+
+                if (charId.Count > 1)
+                {
+                    int length = charId.Count;
+
+                    charId[length - 1] = charId[length - 1].Replace(",", "");
+                }
+
+                string sqlQueryCharacter = $"SELECT * from characters WHERE id IN ({string.Join(", ", charId)})";
                 List<Character> charList = new List<Character>();
                 using (SqlCommand cmd = new SqlCommand(sqlQueryCharacter, con))
                 {
@@ -117,7 +129,7 @@ namespace MedalRunner.Repositories
                                 Specialization = Convert.ToInt32(reader["spec_id"]),
                                 Name = Convert.ToString(reader["name"]),
                                 Race = Convert.ToString(reader["race"]),
-                                CreatedAt = Convert.ToDateTime(reader["created_at"])
+                                CreatedAt = Convert.ToDateTime(reader["create_time"])
                             });
                         }
                     }

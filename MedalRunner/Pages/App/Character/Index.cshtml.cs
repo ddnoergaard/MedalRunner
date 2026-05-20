@@ -4,6 +4,7 @@ using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
+using System.Diagnostics;
 
 namespace MedalRunner.Pages.App.Character
 {
@@ -25,7 +26,14 @@ namespace MedalRunner.Pages.App.Character
         public async Task OnGet()
         {
             currentUser = await _userService.GetUserByEmail(User.FindFirstValue(ClaimTypes.Email));
-            Characters = (await _characterService.GetCharactersByUserId(currentUser.Id)).ToList();
+            try
+            {
+                Characters = (await _characterService.GetCharactersByUserId(currentUser.Id)).ToList();
+            } catch (ArgumentException ex)
+            {
+                ViewData["character-error-msg"] = $"{ex.Message}";
+            }
+            
             foreach (Models.Character c in Characters)
             {
                 c.ClassName = await _classService.GetClassNameOnId(c.ClassId);

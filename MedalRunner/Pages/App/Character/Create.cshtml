@@ -4,90 +4,90 @@
 }
 <form method="post">
 	<div class="form-group">
-		<label asp-for="@Model.character.Name" class="control-label"></label>
-		<input asp-for="@Model.character.Name" class="form-control" />
-		<span asp-validation-for="@Model.character.Name" class="text-danger"></span>
+		<label asp-for="character.Name" class="control-label" style="color:black"></label>
+		<input asp-for="character.Name" class="form-control" style="color:black" />
+		<span asp-validation-for="character.Name" class="text-danger" style="color:black"></span>
 	</div>
 	<div class="form-group">
-		<label asp-for="@Model.character.Race" class="controll-label"></label>
-		<select name="Race" id="@Model.character.Race">
-			<option value="null">Please select a Race</option>
-			<option value="Human">Human</option>
-			<option value="Dwarf">Dwarf</option>
-			<option value="Gnome">Gnome</option>
-			<option value="Night Elf">Night Elf</option>
-			<option value="Drenei">Drenei</option>
-			<option value="Worgen">Worgen</option>
-			<option value="Pandaren">Pandaren</option>
-			<option value="Orc">Orc</option>
-			<option value="Troll">Troll</option>
-			<option value="Tauren">Tauren</option>
-			<option value="Undead">Undead</option>
-			<option value="Blood Elf">Blood Elf</option>
-			<option value="Goblin">Goblin</option>
+		<label asp-for="character.Race" class="controll-label" style="color:black"></label>
+		<select name="character.Race" id="character.Race" style="color:black">
+			<option style="color:black" value="null">Please select a Race</option>
+			<option style="color:black" value="Human">Human</option>
+			<option style="color:black" value="Dwarf">Dwarf</option>
+			<option style="color:black" value="Gnome">Gnome</option>
+			<option style="color:black" value="Night Elf">Night Elf</option>
+			<option style="color:black" value="Drenei">Drenei</option>
+			<option style="color:black" value="Worgen">Worgen</option>
+			<option style="color:black" value="Pandaren">Pandaren</option>
+			<option style="color:black" value="Orc">Orc</option>
+			<option style="color:black" value="Troll">Troll</option>
+			<option style="color:black" value="Tauren">Tauren</option>
+			<option style="color:black" value="Undead">Undead</option>
+			<option style="color:black" value="Blood Elf">Blood Elf</option>
+			<option style="color:black" value="Goblin">Goblin</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<label asp-for="@Model.character.CharacterClass" class="controll-label"></label>
-		<select name="Character Class" id="@Model.character.CharacterClass">
-			<option value="null">Please select a Class</option>
-			<option value="1">Death Knight</option>
-			<option value="2">Druid</option>
-			<option value="3">Hunter</option>
-			<option value="4">Mage</option>
-			<option value="5">Monk</option>
-			<option value="6">Paladin</option>
-			<option value="7">Priest</option>
-			<option value="8">Rouge</option>
-			<option value="9">Shaman</option>
-			<option value="10">Warlock</option>
-			<option value="11">Warrior</option>
+		<label style="color:black" asp-for="character.CharacterClass" class="controll-label"></label>
+		<select style="color:black" name="Character.CharacterClass" id="character.CharacterClass">
+			<option style="color:black" value="null">Please select a Class</option>
+			<option style="color:black" value="1">Death Knight</option>
+			<option style="color:black" value="2">Druid</option>
+			<option style="color:black" value="3">Hunter</option>
+			<option style="color:black" value="4">Mage</option>
+			<option style="color:black" value="5">Monk</option>
+			<option style="color:black" value="6">Paladin</option>
+			<option style="color:black" value="7">Priest</option>
+			<option style="color:black" value="8">Rouge</option>
+			<option style="color:black" value="9">Shaman</option>
+			<option style="color:black" value="10">Warlock</option>
+			<option style="color:black" value="11">Warrior</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<label asp-for="@Model.character.Specialization" class="control-label"></label>
-		<select name="Class spec" id="@Model.character.Specialization">
-			<option value="null">Please select a Specialization</option>
-			<option value="1">Blood</option>
-			<option value="2">Frost</option>
-			<option value="3">Unholy</option>
-			<option value="4">Balance</option>
-			<option value="5">Feral</option>
-			<option value="6">Guardian</option>
-			<option value="7">Restoration-Druid</option>
-			<option value="8">Beast Mastery</option>
-			<option value="9">Marksmanship</option>
-			<option value="10">Survival</option>
-			<option value="11">Arcane</option>
-			<option value="12">Fire</option>
-			<option value="13">Frost</option>
-			<option value="14">Brewmaster</option>
-			<option value="15">Mistweaver</option>
-			<option value="16">Windwalker</option>
-			<option value="17">Holy-Paladin</option>
-			<option value="18">Protection-Paladin</option>
-			<option value="19">Retrebution</option>
-			<option value="20">Discipline</option>
-			<option value="21">Holy-Priest</option>
-			<option value="22">Shadow</option>
-			<option value="23">Assasination</option>
-			<option value="24">Outlaw</option>
-			<option value="25">Subtlety</option>
-			<option value="26">Elemental</option>
-			<option value="27">Enhancement</option>
-			<option value="28">Restoration-Shaman</option>
-			<option value="29">Affliction</option>
-			<option value="30">Demonology</option>
-			<option value="31">Destruction</option>
-			<option value="32">Arms</option>
-			<option value="33">Fury</option>
-			<option value="34">Protection-Warrior</option>
+		<label style="color:black" asp-for="character.Specialization" class="control-label"></label>
+		<select style="color:black" name="character.Specialization" id="character.Specialization">
+			<option style="color:black" value="null">Please select a Specialization</option>
+			<option style="color:black" value="1">Blood</option>
+			<option style="color:black" value="2">Frost</option>
+			<option style="color:black" value="3">Unholy</option>
+			<option style="color:black" value="4">Balance</option>
+			<option style="color:black" value="5">Feral</option>
+			<option style="color:black" value="6">Guardian</option>
+			<option style="color:black" value="7">Restoration-Druid</option>
+			<option style="color:black" value="8">Beast Mastery</option>
+			<option style="color:black" value="9">Marksmanship</option>
+			<option style="color:black" value="10">Survival</option>
+			<option style="color:black" value="11">Arcane</option>
+			<option style="color:black" value="12">Fire</option>
+			<option style="color:black" value="13">Frost</option>
+			<option style="color:black" value="14">Brewmaster</option>
+			<option style="color:black" value="15">Mistweaver</option>
+			<option style="color:black" value="16">Windwalker</option>
+			<option style="color:black" value="17">Holy-Paladin</option>
+			<option style="color:black" value="18">Protection-Paladin</option>
+			<option style="color:black" value="19">Retrebution</option>
+			<option style="color:black" value="20">Discipline</option>
+			<option style="color:black" value="21">Holy-Priest</option>
+			<option style="color:black" value="22">Shadow</option>
+			<option style="color:black" value="23">Assasination</option>
+			<option style="color:black" value="24">Outlaw</option>
+			<option style="color:black" value="25">Subtlety</option>
+			<option style="color:black" value="26">Elemental</option>
+			<option style="color:black" value="27">Enhancement</option>
+			<option style="color:black" value="28">Restoration-Shaman</option>
+			<option style="color:black" value="29">Affliction</option>
+			<option style="color:black" value="30">Demonology</option>
+			<option style="color:black" value="31">Destruction</option>
+			<option style="color:black" value="32">Arms</option>
+			<option style="color:black" value="33">Fury</option>
+			<option style="color:black" value="34">Protection-Warrior</option>
 		</select>
 	</div>
 
 	<p>
 		<div class="form-group">
-			<input type="submit" value="Create" class="btn btn-primary" />
+			<input style="color:black"  type="submit" value="Create" class="btn btn-primary" />
 		</div>
 	</p>
 </form>

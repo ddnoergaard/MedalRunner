@@ -46,21 +46,21 @@
                 <div class="char-card">
                     <div class="char-card-one">
                         <p>@c.Name</p>
-                        <p>Paladin</p>
+                        <p>@c.ClassName</p>
                     </div>
                     <div class="char-card-two">
                         <p>Level 90</p>
-                        <a asp-page="/Character/Details" asp-route-id="@c.Id">Log in</a>
+                        <a asp-page="/App/Character/Details" asp-route-id="@c.Id">Log in</a>
                     </div>
                 </div>
             }
         } else
         {
-            <p>No characters found.</p>
+            <p style="place-self:center;">No characters found.</p>
         }
 
         <div class="char-create">
-            <a asp-page="/Character/Create">+</a>
+            <a asp-page="/App/Character/Create">+</a>
         </div>
     </div>
 </div>

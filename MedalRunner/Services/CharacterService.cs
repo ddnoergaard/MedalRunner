@@ -138,6 +138,9 @@ namespace MedalRunner.Services
             } catch (SqlException)
             {
                 throw;
+            } catch (ArgumentException)
+            {
+                throw;
             }
         }
     }
