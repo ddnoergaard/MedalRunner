@@ -98,21 +98,21 @@ namespace MedalRunner.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            charId.Add($"'{reader["character_id"]}',");
+                            charId.Add($"'{reader["character_id"]}'");
                         }
                     }
                 }
 
                 if (charId.Count == 0) throw new ArgumentException("No characters found");
 
-                if (charId.Count == 1) charId[0] = charId[0].Replace(",", "");
+                //if (charId.Count == 1) charId[0] = charId[0].Replace(",", "");
 
-                if (charId.Count > 1)
-                {
-                    int length = charId.Count;
+                //if (charId.Count > 1)
+                //{
+                //    int length = charId.Count;
 
-                    charId[length - 1] = charId[length - 1].Replace(",", "");
-                }
+                //    charId[length - 1] = charId[length - 1].Replace(",", "");
+                //}
 
                 string sqlQueryCharacter = $"SELECT * from characters WHERE id IN ({string.Join(", ", charId)})";
                 List<Character> charList = new List<Character>();
