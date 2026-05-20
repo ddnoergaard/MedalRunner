@@ -60,12 +60,11 @@ namespace MedalRunner.Models
         [Required(ErrorMessage = "Material is required.")]
         public string Material { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Source is required.")]
-        public string Source { get; set; } = string.Empty;
-
+        // Source was removed — it had no database column and was never read anywhere.
+        // Drop information is loaded by GetAllItemsWithSourceAsync() via a JOIN on boss_drops.
         public string? DropBoss { get; set; }
         public string? DropDungeon { get; set; }
-        public int? BossId { get; set; }
+        public int? BossId { get; set; } // Set on POST to rewrite the boss_drops row on save
 
         [Required(ErrorMessage = "Armor is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Armor must be 0 or greater.")]

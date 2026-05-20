@@ -111,11 +111,13 @@ namespace MedalRunner.Repositories
                 "name = @name, " +
                 "zone = @zone, " +
                 "description = @description, " +
+                "image_url = @imageUrl, " +
+                "dungeon_map_url = @dungeonMapUrl, " +
                 "platinum = @platinum, " +
                 "gold = @gold, " +
                 "silver = @silver, " +
                 "bronze = @bronze, " +
-                "mop_amount = @mopAmount " +
+                "mob_amount = @mobAmount " +
                 "WHERE id = @id";
 
             string deleteJunctionQuery = "DELETE FROM dungeon_bosses WHERE dungeon_id = @dungeonId";
@@ -131,11 +133,13 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@name", dungeon.Name);
                     cmd.Parameters.AddWithValue("@zone", dungeon.Zone);
                     cmd.Parameters.AddWithValue("@description", dungeon.Description);
+                    cmd.Parameters.AddWithValue("@imageUrl", dungeon.ImageUrl ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@dungeonMapUrl", dungeon.DungeonMapUrl ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@platinum", dungeon.Platinum);
                     cmd.Parameters.AddWithValue("@gold", dungeon.Gold);
                     cmd.Parameters.AddWithValue("@silver", dungeon.Silver);
                     cmd.Parameters.AddWithValue("@bronze", dungeon.Bronze);
-                    cmd.Parameters.AddWithValue("@mopAmount", dungeon.MobAmount);
+                    cmd.Parameters.AddWithValue("@mobAmount", dungeon.MobAmount);
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();
