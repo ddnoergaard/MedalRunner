@@ -4,45 +4,66 @@ namespace MedalRunner.Models
 {
     public class Item
     {
+        public enum GearSlot
+        {
+            Tabard = 0,
+            Head = 1,
+            Neck = 2,
+            Shoulders = 3,
+            Back = 4,
+            Chest = 5,
+            Wrists = 6,
+            Hands = 7,
+            Belt = 8,
+            Legs = 9,
+            Feet = 10,
+            Ring1 = 11,
+            Ring2 = 12,
+            Trinket1 = 13,
+            Trinket2 = 14,
+            MainHand = 15,
+            OffHand = 16
+        }
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; } = string.Empty;
 
-        public enum GearSlot
-        {
-            Tabard    = 0,
-            Head      = 1,
-            Neck      = 2,
-            Shoulders = 3,
-            Back      = 4,
-            Chest     = 5,
-            Wrists    = 6,
-            Hands     = 7,
-            Belt      = 8,
-            Legs      = 9,
-            Feet      = 10,
-            Ring1     = 11,
-            Ring2     = 12,
-            Trinket1  = 13,
-            Trinket2  = 14,
-            MainHand  = 15,
-            OffHand   = 16
-        }
-
         [Required(ErrorMessage = "Slot is required.")]
         public int Slot { get; set; }
 
-        public string SlotName => ((GearSlot)Slot) switch
+        // Returns a display-friendly name for the slot.
+        // Ring1/Ring2 both show as "Ring", Trinket1/Trinket2 as "Trinket", etc.
+        // Everything else just uses the enum name directly.
+        public string SlotName
         {
-            GearSlot.Ring1    => "Ring",
-            GearSlot.Ring2    => "Ring",
-            GearSlot.Trinket1 => "Trinket",
-            GearSlot.Trinket2 => "Trinket",
-            GearSlot.MainHand => "Main-Hand",
-            GearSlot.OffHand  => "Off-Hand",
-            var s             => s.ToString()
-        };
+            get
+            {
+                GearSlot gearSlot = (GearSlot)Slot;
+
+                if (gearSlot == GearSlot.Ring1 || gearSlot == GearSlot.Ring2)
+                {
+                    return "Ring";
+                }
+                else if (gearSlot == GearSlot.Trinket1 || gearSlot == GearSlot.Trinket2)
+                {
+                    return "Trinket";
+                }
+                else if (gearSlot == GearSlot.MainHand)
+                {
+                    return "Main-Hand";
+                }
+                else if (gearSlot == GearSlot.OffHand)
+                {
+                    return "Off-Hand";
+                }
+                else
+                {
+                    return gearSlot.ToString();
+                }
+            }
+        }
 
         [Required(ErrorMessage = "Image URL is required.")]
         public string ImageUrl { get; set; } = string.Empty;
