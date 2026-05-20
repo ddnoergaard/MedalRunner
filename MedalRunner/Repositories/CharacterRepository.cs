@@ -219,7 +219,7 @@ namespace MedalRunner.Repositories
                 //Find better way to do this
                 Race = rdr.IsDBNull(rdr.GetOrdinal("race")) ? null : rdr.GetString(rdr.GetOrdinal("race")),
                 Specialization = rdr.GetInt32(rdr.GetOrdinal("spec_id")),
-                CreatedAt = rdr.GetDateTime(rdr.GetOrdinal("created_time"))
+                CreatedAt = rdr.GetDateTime(rdr.GetOrdinal("create_time"))
             };
         }
 
