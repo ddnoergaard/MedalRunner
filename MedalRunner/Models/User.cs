@@ -1,11 +1,21 @@
-﻿namespace MedalRunner.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MedalRunner.Models
 {
     public class User
     {
         public int Id { get; set; }
+        
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Must insert a first name with at least 2 characters"), MinLength(2)]
         public string FirstName { get; set; }
+        
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Must insert a last name with at least 2 characters"), MinLength(2)]
         public string LastName { get; set; }
+
+        [Required(AllowEmptyStrings = false,ErrorMessage = "Passsword must be inserted with at least 3 characters"), MinLength(3)]
         public string Password { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email must not be empty")]
         public string Email { get; set; }
         public int SubscriptionId { get; set; }
         public DateTime CreatedAt { get; set; }
