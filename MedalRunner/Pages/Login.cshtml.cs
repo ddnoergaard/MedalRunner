@@ -58,7 +58,14 @@ namespace MedalRunner.Pages
                 if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
                 {
                     await _cookieService.SingInAsync(user);
-                    return RedirectToPage("/App/Index");
+                    if (user.RoleId == 2)
+                    {
+                        return RedirectToPage("/App/Index");
+                    }
+                    if (user.RoleId == 1)
+                    {
+                        return RedirectToPage("/Admin/Index");
+                    }
                 }
             }
             catch (ArgumentException ex)

@@ -13,6 +13,37 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public async Task CreateAsync(Scoreboard scoreboard)
+        {
+            string sqlQuery = "INSERT INTO scoreboards(dungeon_id, name, score, created_at, is_active, run_date, user_id) " +
+                "VALUES (@dungeon_id, @name, @score, @createdAt, @isActive, @runDate, @userId)";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@dungeon_id", scoreboard.DungeonId);
+                    cmd.Parameters.AddWithValue("@name", scoreboard.Name);
+                    cmd.Parameters.AddWithValue("@score", scoreboard.Score);
+                    cmd.Parameters.AddWithValue("@createdAt", scoreboard.CreatedAt);
+                    cmd.Parameters.AddWithValue("@isActive", scoreboard.IsActive);
+                    cmd.Parameters.AddWithValue("@runDate", scoreboard.RunDate);
+                    cmd.Parameters.AddWithValue("@userId", scoreboard.UserId);
+
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync();
+                    } catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
+            }
+
+        }
+
         public async Task<List<Scoreboard>> GetAllScores()
         {
             List<Scoreboard> data = new List<Scoreboard>();
@@ -200,5 +231,42 @@ namespace MedalRunner.Repositories
                 }
             }
         }
+
+        public async Task<IEnumerable<Scoreboard>> GetScoreboardRecordsByUserId(int userId)
+        {
+            string sqlQuery = "SELECT * FROM scoreboards WHERE user_id = @id";
+            List<Scoreboard> scoreboardList = new List<Scoreboard>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", userId);
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            scoreboardList.Add(new Scoreboard
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                DungeonId = Convert.ToInt32(reader["dungeon_id"]),
+                                Name = Convert.ToString(reader["name"]),
+                                Score = Convert.ToString(reader["score"]),
+                                CreatedAt = Convert.ToDateTime(reader["created_at"]),
+                                IsActive = Convert.ToBoolean(reader["is_active"]),
+                                RunDate = Convert.ToDateTime(reader["run_date"]),
+                                UserId = Convert.ToInt32(reader["user_id"])
+                            });
+                        }
+                    }
+                }
+                if (scoreboardList.Count == 0) throw new ArgumentException("No records found");
+                return scoreboardList;
+            }
+        }
+
     }
 }

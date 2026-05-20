@@ -1,0 +1,121 @@
+﻿@page
+@model MedalRunner.Pages.App.ScoreboardModel
+@{
+}
+
+<style>
+    main {
+        display:flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    h2 {
+        text-align: center;
+    }
+
+    .scoreboard-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10vw;
+    }
+
+    .right {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right>form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .right>form>select, .right>form>div>input, .right>form>button {
+        color: black;
+    }
+
+    button {
+        width: 50%;
+        place-self: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px 14px;
+        text-align: left;
+        border: 1px solid #555;
+        font-size: 14px;
+    }
+
+    th {
+        border: none !important;
+    }
+
+</style>
+<h2>Your scoreboard records</h2>
+<div class="scoreboard-container">
+    
+    <div class="left">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dungeon</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Models.Scoreboard scoreboard in Model.Scoreboards)
+                {
+                    <tr>
+                        <td>@scoreboard.Dungeon.Name</td>
+                        <td>@scoreboard.Name</td>
+                        <td>@scoreboard.Score</td>
+                        <td>@scoreboard.RunDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p>@ViewData["scoreboard-error-msg"]</p>
+    </div>
+    <div class="right">
+        <h2>Create new scoreboard entry</h2>
+        <form method="post" asp-page-handler="CreateScoreboard">
+            <select name="NewScoreboard.DungeonId">
+                <option value="">Select a dungeon</option>
+                <option value="2">Temple of the Jade Serpent</option>
+                <option value="3">Stormstout Brewery</option>
+                <option value="4">Shado-Pan Monastery</option>
+                <option value="5">Siege of Niuzao Temple</option>
+                <option value="6">Gate of the Setting Sun</option>
+                <option value="7">Mogu'shan Palace</option>
+                <option value="8">Scholomance</option>
+                <option value="9">Scarlet Halls</option>
+                <option value="10">Scarlet Monastery</option>
+            </select>
+            <select name="NewScoreboard.Name">
+                <option value="">Select a character</option>
+                @foreach (Models.Character character in Model.Characters)
+                {
+                    <option value="@character.Name">@character.Name</option>
+                }
+            </select>
+            <div>
+                <label>Run time - Format MM:SS</label>
+                <input asp-for="NewScoreboard.Score" placeholder="23:33" type="text"></input>
+            </div>
+            <div>
+                <label>Run Date</label>
+                <input asp-for="NewScoreboard.Score" placeholder="23:33" type="date"></input>
+            </div>
+            <button type="submit">Create</button>
+            <p>@ViewData["create-success-msg"] @ViewData["create-error-msg"]</p>
+        </form>
+    </div>
+</div>

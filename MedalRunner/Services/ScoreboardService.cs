@@ -1,6 +1,7 @@
 ﻿using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Services
 {
@@ -13,9 +14,26 @@ namespace MedalRunner.Services
             _scoreboardRepository = scoreboardRepository;
         }
 
+        public async Task CreateAsync(Scoreboard scoreboard)
+        {
+            try
+            {
+                await _scoreboardRepository.CreateAsync(scoreboard);
+            } catch(SqlException)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<Scoreboard>> GetAllScores()
         {
-            return await _scoreboardRepository.GetAllScores();
+            try
+            {
+                return await _scoreboardRepository.GetAllScores();
+            } catch (SqlException)
+            {
+                throw;
+            }
         }
 
         public async Task<Scoreboard> GetScoreById(int id)
@@ -52,6 +70,17 @@ namespace MedalRunner.Services
         {
             List<Scoreboard> scores = await _scoreboardRepository.GetAllScores();
             return scores.Where(s => s.Name.Contains(str, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task<IEnumerable<Scoreboard>> GetScoreboardRecordsByUserId(int userId)
+        {
+            try
+            {
+                return await _scoreboardRepository.GetScoreboardRecordsByUserId(userId);
+            } catch (ArgumentException)
+            {
+                throw;
+            }
         }
 
 
