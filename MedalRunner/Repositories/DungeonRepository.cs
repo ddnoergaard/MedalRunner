@@ -195,7 +195,7 @@ namespace MedalRunner.Repositories
                     
                     if (count <= 0) 
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException("No dungeon found with that id");
                     }
                 }
             }
