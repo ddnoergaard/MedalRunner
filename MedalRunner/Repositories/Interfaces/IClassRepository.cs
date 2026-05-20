@@ -2,5 +2,6 @@
 {
     public interface IClassRepository
     {
+        Task<string> GetClassNameOnId(int id);
     }
 }

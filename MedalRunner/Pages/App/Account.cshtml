@@ -56,7 +56,9 @@
             <p class="secondary-text">Your data will be retained for up to 2 years, during which you can recover your account through our Account Recovery process. After this period, all data will be permanently deleted and cannot be restored</p>
         </div>
         <div class="del-acc-right">
-            <button>Delete account</button>
+            <form method="post" asp-page-handler="Delete">
+                <button type="submit">Delete account</button>
+            </form>
         </div>
 
     </div>

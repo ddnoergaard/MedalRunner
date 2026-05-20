@@ -21,9 +21,17 @@ namespace MedalRunner.Models
         public DateTime CreatedAt { get; set; }
         public int RoleId { get; set; }
 
+        public User(string firstname, string lastname, string email, string password)
+        {
+            FirstName = firstname;
+            LastName = lastname;
+            Email = email;
+            Password = password;
+        }
+
         public User()
         {
-            
+
         }
     }
 }

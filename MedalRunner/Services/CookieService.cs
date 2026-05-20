@@ -20,6 +20,7 @@ namespace MedalRunner.Services
             string userRole = user.RoleId == 1 ? "Admin" : "Player";
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.FirstName + user.LastName),
                 new Claim(ClaimTypes.Role, userRole)
             };

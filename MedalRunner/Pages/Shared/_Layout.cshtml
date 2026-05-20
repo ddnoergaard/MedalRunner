@@ -40,8 +40,16 @@
                         </li>
                     </ul>
                     <div class="nav-btn-container">
-                        <a class="login-btn" asp-page="/Login" asp-area="">Login</a>
-                        <a class="register-btn" asp-page="/Register" asp-area="">Register</a>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a class="login-btn" asp-page="/Login" asp-area="">Login</a>
+                            <a class="register-btn" asp-page="/Register" asp-area="">Register</a>
+                        } else
+                        {
+                            <a class="login-btn" asp-page="/App/Index" asp-area="">User Dashboard</a>
+                            <a class="login-btn" asp-page="/App/Logout" asp-area="">Logout</a>
+                        }
+
                     </div>
                 </div>
             </div>

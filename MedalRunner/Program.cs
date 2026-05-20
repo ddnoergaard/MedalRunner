@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/App", "PlayerOnly");
-    options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
+options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
 });
 
 builder.Services.AddAuthorization(options =>
@@ -21,9 +22,9 @@ builder.Services.AddAuthorization(options =>
 
 //Cookie auth -> Hvor brugere bliver sendt til hvis de ikke har adgang.
 /*
-    Hvis en bruger ikke er logget ind, og prøver at tilgå en auth page, så bliver de redirectet til /Login
-    Hvis en bruger er logget ind, og prøver at tilgå Admin siderne, så bliver de redirected to /Error
- */
+    Hvis en bruger ikke er logget ind, og pr
+//    Hvis en bruger er logget ind, og prøver at tilgå Admin siderne, så bliver de redirected to /Error
+// */
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -60,12 +61,16 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<CookieService>();
 
 var app = builder.Build();
+Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

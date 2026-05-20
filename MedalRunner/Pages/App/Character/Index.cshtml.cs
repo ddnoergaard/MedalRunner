@@ -3,22 +3,42 @@ using MedalRunner.Models;
 using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
+using System.Diagnostics;
 
 namespace MedalRunner.Pages.App.Character
 {
     public class IndexModel : PageModel
     {
         private readonly ICharacterService _characterService;
-        public List<Models.Character> _characters { get; set; } = new List<Models.Character>();
+        private readonly IUserService _userService;
+        private readonly IClassService _classService;
+        public List<Models.Character> Characters { get; set; } = new List<Models.Character>();
+        private User currentUser;
 
-        public IndexModel(ICharacterService characterService)
+        public IndexModel(ICharacterService characterService, IUserService userService, IClassService classService)
         {
             _characterService = characterService;
+            _userService = userService;
+            _classService = classService;
         }
 
-        public async Task OnGetAsynch()
+        public async Task OnGet()
         {
-            _characters = (await _characterService.GetAll()).ToList();
+            currentUser = await _userService.GetUserByEmail(User.FindFirstValue(ClaimTypes.Email));
+            try
+            {
+                Characters = (await _characterService.GetCharactersByUserId(currentUser.Id)).ToList();
+            } catch (ArgumentException ex)
+            {
+                ViewData["character-error-msg"] = $"{ex.Message}";
+            }
+            
+            foreach (Models.Character c in Characters)
+            {
+                c.ClassName = await _classService.GetClassNameOnId(c.ClassId);
+            }
+            
         }
     }
 }

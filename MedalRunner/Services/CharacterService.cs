@@ -1,6 +1,7 @@
 using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
 using MedalRunner.Services.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace MedalRunner.Services
 {
@@ -37,11 +38,11 @@ namespace MedalRunner.Services
             }
         }
 
-        public async Task Create(Character character)
+        public async Task Create(Character character, int userId)
         {
             try
             {
-                await _characterRepository.AddAsync(character);
+                await _characterRepository.AddAsync(character, userId);
             }
             catch(Exception ex)
             {
@@ -72,7 +73,13 @@ namespace MedalRunner.Services
                 throw;
             }
         }
-    
+
+        // Delegates to repository to fetch all items equipped by a character
+        //public async Task<List<Item>> GetCharacterItemsAsync(int characterId)
+        //{
+        //    return await _characterRepository.GetItemsByCharacterIdAsync(characterId);
+        //}
+
         public async Task<List<Dungeon>> DungeonReadyCheck(List<Dungeon> allDungeons, Character specificCharacter)
         {
             int? slotCheckAmount = 0;
@@ -127,6 +134,20 @@ namespace MedalRunner.Services
                 slotAmount += item.SocketAmount;
             }
             return slotAmount;
+        }
+
+        public async Task<IEnumerable<Character>> GetCharactersByUserId(int userId)
+        {
+            try
+            {
+                return await _characterRepository.GetCharactersByUserId(userId);
+            } catch (SqlException)
+            {
+                throw;
+            } catch (ArgumentException)
+            {
+                throw;
+            }
         }
     }
 }
