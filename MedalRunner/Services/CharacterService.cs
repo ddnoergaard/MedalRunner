@@ -73,7 +73,13 @@ namespace MedalRunner.Services
                 throw;
             }
         }
-    
+
+        // Delegates to repository to fetch all items equipped by a character
+        public async Task<List<Item>> GetCharacterItemsAsync(int characterId)
+        {
+            return await _characterRepository.GetItemsByCharacterIdAsync(characterId);
+        }
+
         public async Task<List<Dungeon>> DungeonReadyCheck(List<Dungeon> allDungeons, Character specificCharacter)
         {
             int? slotCheckAmount = 0;
