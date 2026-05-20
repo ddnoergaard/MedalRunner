@@ -7,6 +7,12 @@ namespace MedalRunner.Repositories
     public class UserRepository : IUserRepository
     {
         private string _connectionString;
+
+        public UserRepository(string conString)
+        {
+            _connectionString = conString;
+        }
+
         public UserRepository(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");

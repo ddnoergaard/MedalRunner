@@ -9,8 +9,8 @@ namespace MedalRunner_UnitTest
     [TestClass]
     public sealed class TestDungeonRepo
     {
-        DungeonRepository _dungeonRepo = new DungeonRepository("Data Source= mssql4.unoeuro.com, 1433 ;Initial Catalog=danieldn_dk_db_medal_runner;Persist Security Info=True;User ID=danieldn_dk;Password=n4fA9F3tEpc6dGehyzDb;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
 
+        DungeonRepository _dungeonRepo;
         Dungeon testDungeon;
 
         [TestInitialize]
@@ -31,7 +31,7 @@ namespace MedalRunner_UnitTest
                 MobAmount = 12
 
             };
-
+            _dungeonRepo = new DungeonRepository("Data Source= mssql4.unoeuro.com, 1433 ;Initial Catalog=danieldn_dk_db_medal_runner;Persist Security Info=True;User ID=danieldn_dk;Password=n4fA9F3tEpc6dGehyzDb;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
             await _dungeonRepo.AddDungeonAsync(testDungeon);
 
         }
