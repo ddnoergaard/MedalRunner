@@ -8,10 +8,12 @@ namespace MedalRunner.Pages.App.Character
     public class DetailsModel : PageModel
     {
         private readonly ICharacterService _characterService;
+        private readonly IItemService _itemService;
 
-        public DetailsModel(ICharacterService characterService)
+        public DetailsModel(ICharacterService characterService, IItemService itemService)
         {
             _characterService = characterService;
+            _itemService = itemService;
         }
 
         public MedalRunner.Models.Character Character { get; set; }
@@ -28,13 +30,11 @@ namespace MedalRunner.Pages.App.Character
                 return NotFound();
             }
 
-            // Load all items equipped by this character and map them by slot
-            //var items = await _characterService.GetCharacterItemsAsync(id);
-
-            //foreach (var item in items)
-            //{
-            //    EquippedSlots[item.Slot] = item;
-            //}
+            var items = await _itemService.GetItemsByCharacterIdAsync(id);
+            foreach (var item in items)
+            {
+                EquippedSlots[item.Slot] = item;
+            }
 
             return Page();
         }

@@ -421,5 +421,36 @@ WHERE db.dungeon_id = @dungeonId";
             }
         }
 
+        public async Task<List<Item>> GetItemsByCharacterIdAsync(int characterId)
+        {
+            var items = new List<Item>();
+
+            string sqlQuery = @"
+                SELECT i.*
+                FROM character_gear cg
+                INNER JOIN items i ON i.id = cg.item_id
+                WHERE cg.character_id = @characterId";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@characterId", characterId);
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            items.Add(ItemMapper(reader));
+                        }
+                    }
+                }
+            }
+
+            return items;
+        }
+
     }
 }
