@@ -8,7 +8,6 @@
         <label asp-for="Character.Id" class="control-labele"></label>
         <input asp-for="Character.Id" class="form-control" readonly="@true" />
     </div> *@
-    <input type="hidden">@Model.Character.Id</input>
     <div class=" form-group">
         <label asp-for="Character.Name" class="control-lable"></label>
         <input style="color:black" asp-for="Character.Name" class="form-control" />
@@ -99,7 +98,7 @@
 
     <p>
         <div class="form-group">
-            <button style="color:black" type="submit" asp-route-id="@Model.Character.Id" value="Update" class="btn btn-danger" />
+            <button style="color:black" type="submit" asp-route-id="@Model.Character.Id" value="Update" class="btn btn-danger">Save</button>
         </div>
     </p>
 </form>
