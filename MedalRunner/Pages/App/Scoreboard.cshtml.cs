@@ -37,6 +37,7 @@ namespace MedalRunner.Pages.App
             try
             {
                 Scoreboards = (await _scoreboardService.GetScoreboardRecordsByUserId(currentUser.Id)).ToList();
+                Scoreboards = Scoreboards.Where(s => s.IsActive).ToList();
             } catch (ArgumentException)
             {
                 ViewData["scoreboard-error-msg"] = "No records found";
