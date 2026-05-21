@@ -2,7 +2,7 @@
 @model MedalRunner.Pages.App.Character.DetailsModel
 @using MedalRunner.Models
 @{
-    int charId;
+    int charId = 0;
     if (Model.Character != null)
     {
         charId = Model.Character.Id;
@@ -164,27 +164,29 @@
     </div>
     <div class="bottom-container">
         <div class="bis-select-container">
-            <form class="bis-select" asp-page-handler="Bis" method="post"><button type="submit">BIS</button></form>
-            <form class="bis-select" asp-page-handler="RegularBis" method="post"><button type="submit">REGULAR BIS</button></form>
-            <form class="bis-select" asp-page-handler="DGBis" method="post"><button type="submit">DAD GAMER BIS</button></form>
+            <form class="bis-select" asp-page-handler="Bis" method="post"><input type="hidden" name="id" value="@Model.Character.Id" /><button type="submit">BIS</button></form>
+            <form class="bis-select" asp-page-handler="Bis" method="post"><input type="hidden" name="id" value="@Model.Character.Id" /><button type="submit">REGULAR BIS</button></form>
+            <form class="bis-select" asp-page-handler="Bis" method="post"><input type="hidden" name="id" value="@Model.Character.Id" /><button type="submit">DAD GAMER BIS</button></form>
         </div>
         <div class="tabel-container">
             <table>
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Name</th>
-                        <th>Drop by</th>
-                        <th>Dungeon</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Shoulders</td>
-                        <td>Axel</td>
-                        <td>The school</td>
-                    </tr>
+                    @foreach (Item i in Model.DisplayList)
+                    {
+                        <tr>
+                            <td><img src="@i.ImageUrl"></img></td>
+                            <td>@i.Name</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
+            <p style="place-self:center;">@ViewData["display-list-empty-msg"]</p>
         </div>
     </div>
 </div>

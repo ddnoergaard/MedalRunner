@@ -93,5 +93,34 @@ namespace MedalRunner.Services
             }
         }
 
+        public async Task<IEnumerable<Item>> GetRandomItemsForEachSlot()
+        {
+            List<Item> allItems = (await _itemRepository.GetAllItemAsync()).ToList();
+
+            List<Item> returnList = new List<Item>();
+
+            List<int> slotInts = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+
+            Random rand = new Random();
+
+            int count = 0;
+
+            List<Item> searchList = new List<Item>();
+
+            while (true)
+            {
+                if (count == 11 || count == 13) count++;
+                count++;
+                
+                searchList = allItems.Where(i => i.Slot == count).ToList();
+                int randomNumber = rand.Next(1, searchList.Count);
+                returnList.Add(searchList[randomNumber - 1]);
+                if (count == 16) break;
+                
+
+            }
+            return returnList;
+        }
+
     }
 }

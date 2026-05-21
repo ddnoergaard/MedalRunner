@@ -211,6 +211,12 @@ namespace MedalRunner.Repositories
             return reader.IsDBNull(ordinal) ? "" : reader.GetString(ordinal);
         }
 
+        private double GetNullableDouble(SqlDataReader reader, string column)
+        {
+            int ordinal = reader.GetOrdinal(column);
+            return reader.IsDBNull(ordinal) ? 0 : Convert.ToDouble(reader.GetDecimal(ordinal));
+        }
+
 
         // This method retrieves all items along with their source information (boss and dungeon) using LEFT JOINs to ensure all items are included even if they don't have a source.
         public async Task<List<Item>> GetAllItemsWithSourceAsync()
@@ -332,7 +338,7 @@ WHERE db.dungeon_id = @dungeonId";
                 Parry = GetNullableInt(reader, "parry"), //reader.GetInt32(reader.GetOrdinal("parry")),
                 Hit = GetNullableInt(reader, "hit"), //reader.GetInt32(reader.GetOrdinal("hit")),
                 Expertise = GetNullableInt(reader, "expertise"), //reader.GetInt32(reader.GetOrdinal("expertise")),
-                Speed = Convert.ToDouble(reader["speed"]), //reader.GetDouble(reader.GetOrdinal("speed")),
+                Speed = GetNullableDouble(reader, "speed"), //Convert.ToDouble(reader["speed"]), //reader.GetDouble(reader.GetOrdinal("speed")),
                 SocketAmount = GetNullableInt(reader, "socket_amount"), //reader.GetInt32(reader.GetOrdinal("socket_amount")),
                 SocketBonusStat = GetNullableString(reader, "socket_bonus_stat"), //reader.GetString(reader.GetOrdinal("socket_bonus_stat")),
                 SocketBonusAmount = GetNullableInt(reader, "socket_bonus_amount"), //reader.GetInt32(reader.GetOrdinal("socket_bonus_amount")),
@@ -451,6 +457,5 @@ WHERE db.dungeon_id = @dungeonId";
             if (items.Count == 0) throw new ArgumentException("No items found");
             return items;
         }
-
     }
 }

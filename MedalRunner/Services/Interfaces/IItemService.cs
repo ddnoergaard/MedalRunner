@@ -13,5 +13,6 @@ namespace MedalRunner.Services.Interfaces
         Task<IEnumerable<Item>> GetItemsByDungeonIdAsync(int id);
         Task<string> GetItemSlotNameAsync(int id);
         Task<List<Item>> GetItemsByCharacterIdAsync(int characterId);
+        Task<IEnumerable<Item>> GetRandomItemsForEachSlot();
     }
 }
