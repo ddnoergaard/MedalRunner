@@ -15,6 +15,7 @@
             <th>Run Date</th>
             <th>Created At</th>
             <th>Is Active</th>
+            <th>Modify</th>
         </tr>
     </thead>
     <tbody>
@@ -30,7 +31,7 @@
                 <td>@score.IsActive</td>
 
                 <td>
-                    <a class="btn btn-primary" asp-page="/Admin/ScoreBoard/Edit" asp-route-id="@score.Id">Edit</a>
+                    <a class="btn btn-primary" asp-page="/Admin/ScoreBoard/Update" asp-route-id="@score.Id">Edit</a>
                 </td>
             </tr>
         }

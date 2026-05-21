@@ -448,7 +448,7 @@ WHERE db.dungeon_id = @dungeonId";
                     }
                 }
             }
-
+            if (items.Count == 0) throw new ArgumentException("No items found");
             return items;
         }
 

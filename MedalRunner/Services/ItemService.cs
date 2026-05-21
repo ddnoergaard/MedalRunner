@@ -84,7 +84,13 @@ namespace MedalRunner.Services
 
         public async Task<List<Item>> GetItemsByCharacterIdAsync(int characterId)
         {
-            return await _itemRepository.GetItemsByCharacterIdAsync(characterId);
+            try
+            {
+                return await _itemRepository.GetItemsByCharacterIdAsync(characterId);
+            } catch (ArgumentException)
+            {
+                throw;
+            }
         }
 
     }

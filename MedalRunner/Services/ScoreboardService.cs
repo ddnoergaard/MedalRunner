@@ -53,7 +53,13 @@ namespace MedalRunner.Services
 
         public async Task Update(Scoreboard score)
         {
-            _scoreboardRepository.UpdateScore(score);
+            try
+            {
+                await _scoreboardRepository.UpdateScore(score);
+            } catch (SqlException)
+            {
+                throw;
+            }
         }
 
         public async Task SetInactive(int id)

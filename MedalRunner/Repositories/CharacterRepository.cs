@@ -103,7 +103,7 @@ namespace MedalRunner.Repositories
         public async Task<IEnumerable<Character>> GetCharactersByUserId (int userId)
         {
             string sqlQuery = "SELECT character_id FROM user_characters WHERE user_id = @id";
-            List<int> charIds = new List<int>();
+            List<string> charIds = new List<string>();
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -115,7 +115,7 @@ namespace MedalRunner.Repositories
                     {
                         while (await reader.ReadAsync())
                         {
-                            charId.Add($"'{reader["character_id"]}'");
+                            charIds.Add($"'{reader["character_id"]}'");
                         }
                     }
                 }
@@ -131,7 +131,7 @@ namespace MedalRunner.Repositories
                 //    charId[length - 1] = charId[length - 1].Replace(",", "");
                 //}
 
-                string sqlQueryCharacter = $"SELECT * from characters WHERE id IN ({string.Join(", ", charId)})";
+                string sqlQueryCharacter = $"SELECT * from characters WHERE id IN ({string.Join(", ", charIds)})";
                 List<Character> charList = new List<Character>();
                 using (SqlCommand cmd = new SqlCommand(sqlQueryCharacter, con))
                 {

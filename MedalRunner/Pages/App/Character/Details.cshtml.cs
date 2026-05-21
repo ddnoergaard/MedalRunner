@@ -9,6 +9,10 @@ namespace MedalRunner.Pages.App.Character
     {
         private readonly ICharacterService _characterService;
         private readonly IItemService _itemService;
+        public int CalcStamina { get; set; }
+        public int CalcIntellect { get; set; }
+        public int CalcAgility { get; set; }
+        public int CalcSpirit { get; set; }
 
         public DetailsModel(ICharacterService characterService, IItemService itemService)
         {
@@ -29,8 +33,14 @@ namespace MedalRunner.Pages.App.Character
             {
                 return NotFound();
             }
-
-            var items = await _itemService.GetItemsByCharacterIdAsync(id);
+            var items = new List<ItemModel>();
+            try
+            {
+                items = await _itemService.GetItemsByCharacterIdAsync(id);
+            }catch (ArgumentException ex)
+            {
+                ViewData["items-not-found-msg"] = $"{ex.Message}";
+            }
             foreach (var item in items)
             {
                 EquippedSlots[item.Slot] = item;

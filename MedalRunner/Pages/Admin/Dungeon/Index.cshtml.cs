@@ -32,7 +32,6 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
                 try
                 {
                     dungeon.Bosses = await _dungeonService.GetBossesAsync(dungeon.Id);
-
                 }
                 catch (IndexOutOfRangeException ex)
                 {

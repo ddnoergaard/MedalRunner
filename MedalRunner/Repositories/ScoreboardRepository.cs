@@ -1,6 +1,9 @@
 ﻿using MedalRunner.Models;
 using MedalRunner.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic;
+using System.Xml.Linq;
 
 namespace MedalRunner.Repositories
 {
@@ -61,14 +64,25 @@ namespace MedalRunner.Repositories
                 {
                     while (await reader.ReadAsync())
                     {
-                        Scoreboard score = new Scoreboard();
-                        score.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                        score.Name = reader.GetString(reader.GetOrdinal("player_name"));
-                        score.Score = reader.GetInt32(reader.GetOrdinal("score")).ToString();
-                        score.RunDate = reader.GetDateTime(reader.GetOrdinal("run_date"));
-                        score.CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
-                        score.IsActive = reader.GetBoolean(reader.GetOrdinal("is_active"));
-                        data.Add(score);
+                        data.Add(new Scoreboard
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            DungeonId = Convert.ToInt32(reader["dungeon_id"]),
+                            Name = Convert.ToString(reader["name"]),
+                            Score = Convert.ToString(reader["score"]),
+                            CreatedAt = Convert.ToDateTime(reader["created_at"]),
+                            IsActive = Convert.ToBoolean(reader["is_active"]),
+                            RunDate = Convert.ToDateTime(reader["run_date"]),
+                            UserId = Convert.ToInt32(reader["user_id"])
+                        });
+                        //Scoreboard score = new Scoreboard();
+                        //score.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                        //score.Name = reader.GetString(reader.GetOrdinal("name"));
+                        //score.Score = reader.GetString(reader.GetOrdinal("score"));
+                        //score.RunDate = reader.GetDateTime(reader.GetOrdinal("run_date"));
+                        //score.CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                        //score.IsActive = reader.GetBoolean(reader.GetOrdinal("is_active"));
+                        //data.Add(score);
                     }
                 }
                 catch (SqlException ex)
@@ -97,12 +111,16 @@ namespace MedalRunner.Repositories
                     {
                         if (await reader.ReadAsync())
                         {
-                            score.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                            score.Name = reader.GetString(reader.GetOrdinal("player_name"));
-                            score.Score = reader.GetInt32(reader.GetOrdinal("score")).ToString();
-                            score.RunDate = reader.GetDateTime(reader.GetOrdinal("run_date"));
-                            score.CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
-                            score.IsActive = reader.GetBoolean(reader.GetOrdinal("is_active"));
+                            score.Id = Convert.ToInt32(reader["id"]);
+                            score.DungeonId = Convert.ToInt32(reader["dungeon_id"]);
+                            score.Name = Convert.ToString(reader["name"]);
+                            score.Score = Convert.ToString(reader["score"]);
+                            score.CreatedAt = Convert.ToDateTime(reader["created_at"]);
+                            score.IsActive = Convert.ToBoolean(reader["is_active"]);
+                            score.RunDate = Convert.ToDateTime(reader["run_date"]);
+                            score.UserId = Convert.ToInt32(reader["user_id"]);
+                            
+                           
                         }
                     }
                     catch (SqlException ex)
@@ -155,7 +173,7 @@ namespace MedalRunner.Repositories
         public async Task UpdateScore(Scoreboard score)
         {
             string sqlQuery = "UPDATE scoreboards " +
-                "SET dungeon = @dungeon, score = @score, run_date = @runDate, created_at = @CreatedAt, is_active = @isActive " +
+                "SET name = @name, dungeon_id = @dungeon, score = @score, run_date = @runDate, is_active = @isActive " +
                 "WHERE id = @id";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -164,11 +182,12 @@ namespace MedalRunner.Repositories
 
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
                 {
-                    cmd.Parameters.AddWithValue("@dungeon", score.Dungeon);
+                    cmd.Parameters.AddWithValue("@id", score.Id);
+                    cmd.Parameters.AddWithValue("@name", score.Name);
+                    cmd.Parameters.AddWithValue("@dungeon", score.DungeonId);
                     cmd.Parameters.AddWithValue("@score", score.Score);
                     cmd.Parameters.AddWithValue("@runDate", score.RunDate);
-                    cmd.Parameters.AddWithValue("@CreatedAt", score.CreatedAt);
-
+                    cmd.Parameters.AddWithValue("@isActive", score.IsActive);
                     try
                     {
                         await cmd.ExecuteNonQueryAsync();
