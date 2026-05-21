@@ -41,12 +41,12 @@
             <div class="top-left-top">
                 <p class="char-name">@Model.Character?.Name</p>
                 <div class="top-l-t-one">
-                    <p>@(Model.Character?.Gear?.Count > 0 ? Model.Character.Gear.Sum(i => i.ItemLevel) / Model.Character.Gear.Count : 0) ilvl</p>
+                    <p>Ilvl: @Model.CalcILevel</p>
                     <p>@Model.Character?.Race</p>
                 </div>
                 <div class="top-l-t-two">
                     <p>@Model.Character?.CharacterClass</p>
-                    <p>Spec @Model.Character?.Specialization</p>
+                    <p>Spec @Model.specName</p>
                 </div>
             </div>
             <div class="top-left-bottom">
@@ -54,19 +54,19 @@
                 <div class="top-l-b-stat-container">
                     <div class="stat-container">
                         <p class="top-l-stat">Stamina</p>
-                        <p>XXXX</p>
+                        <p>@Model.CalcStamina</p>
                     </div>
                     <div class="stat-container">
                         <p class="top-l-stat">Strength</p>
-                        <p>XXXX</p>
+                        <p>@Model.CalcStrength</p>
                     </div>
                     <div class="stat-container">
                         <p class="top-l-stat">Intellect</p>
-                        <p>XXXX</p>
+                        <p>@Model.CalcIntellect</p>
                     </div>
                     <div class="stat-container">
                         <p class="top-l-stat">Agility</p>
-                        <p>XXXX</p>
+                        <p>@Model.CalcAgility</p>
                     </div>
                 </div>
 

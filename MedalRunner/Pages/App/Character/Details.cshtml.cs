@@ -1,6 +1,7 @@
 using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using ItemModel = MedalRunner.Models.Item;
 
 namespace MedalRunner.Pages.App.Character
@@ -13,6 +14,9 @@ namespace MedalRunner.Pages.App.Character
         public int CalcIntellect { get; set; }
         public int CalcAgility { get; set; }
         public int CalcSpirit { get; set; }
+        public int CalcStrength { get; set; }
+        public int CalcILevel { get; set; }
+        public string specName { get; set; }
 
         public DetailsModel(ICharacterService characterService, IItemService itemService)
         {
@@ -44,6 +48,22 @@ namespace MedalRunner.Pages.App.Character
             foreach (var item in items)
             {
                 EquippedSlots[item.Slot] = item;
+                CalcStamina += item.Stamina > 0 ? item.Stamina.Value : 0;
+                CalcAgility += item.Agility > 0 ? item.Agility.Value : 0;
+                CalcIntellect += item.Intellect > 0 ? item.Intellect.Value : 0;
+                CalcSpirit += item.Spirit > 0 ? item.Spirit.Value : 0;
+                CalcStrength += item.Strength > 0 ? item.Strength.Value : 0;
+                CalcILevel += item.ItemLevel > 0 ? item.ItemLevel : 0;
+            }
+
+            CalcILevel = CalcILevel / items.Count;
+
+            try
+            {
+                specName = await _characterService.GetSpecNameById(Character.Id);
+            } catch (SqlException)
+            {
+                ViewData["spec-error-msg"] = "No spec found";
             }
 
             return Page();

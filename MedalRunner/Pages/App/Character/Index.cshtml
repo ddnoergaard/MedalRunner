@@ -53,6 +53,10 @@
                         <p>Level 90</p>
                         <a asp-page="/App/Character/Details" asp-route-id="@c.Id">Log in</a>
                     </div>
+                    <div class="char-card-two">
+                        <a asp-page="/App/Character/Edit" asp-route-id="@c.Id">Edit</a>
+                        <a asp-page="/App/Character/Delete" asp-route-id="@c.Id">Delete</a>
+                    </div>
                 </div>
             }
         } else

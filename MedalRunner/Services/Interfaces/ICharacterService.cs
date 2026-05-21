@@ -11,5 +11,6 @@ namespace MedalRunner.Services.Interfaces
         Task Delete(int id);
         Task<IEnumerable<Character>> GetCharactersByUserId(int userId);
         Task EquipItem(int characterId, int oldItemId, int newItemId);
+        Task<string> GetSpecNameById(int id);
     }
 }

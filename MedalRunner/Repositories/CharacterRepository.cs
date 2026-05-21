@@ -193,9 +193,13 @@ namespace MedalRunner.Repositories
 
             await using var rdr = await cmd.ExecuteReaderAsync(CommandBehavior.SingleRow);
             if (await rdr.ReadAsync())
+            {
                 return MapReaderToCharacter(rdr);
-
-            return null;
+            }
+            else 
+            {
+                throw new ArgumentException("No Character with ID");
+            }
         }
 
         public async Task UpdateAsync(Character character)
@@ -263,6 +267,27 @@ namespace MedalRunner.Repositories
                 cmd.Parameters.Add(new SqlParameter("@oldItemId", SqlDbType.Int) { Value = oldItemId });
                 cmd.Parameters.Add(new SqlParameter("@newItemId", SqlDbType.Int) { Value = newItemId });
                 await cmd.ExecuteNonQueryAsync();
+            }
+        }
+
+        public async Task<string> GetSpecNameById(int id)
+        {
+            string sqlQuery = "SELECT name FROM specs WHERE id = @id";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    try
+                    {
+                        return Convert.ToString(await cmd.ExecuteScalarAsync());
+                    } catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
             }
         }
     }

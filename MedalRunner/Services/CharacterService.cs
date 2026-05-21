@@ -22,7 +22,7 @@ namespace MedalRunner.Services
             {
                 return await _characterRepository.GetAllAsync();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }
@@ -34,7 +34,7 @@ namespace MedalRunner.Services
             {
                 return await _characterRepository.GetByIdAsync(id);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }
@@ -46,7 +46,7 @@ namespace MedalRunner.Services
             {
                 await _characterRepository.AddAsync(character, userId);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }
@@ -58,7 +58,7 @@ namespace MedalRunner.Services
             {
                 await _characterRepository.UpdateAsync(character);
             }
-            catch(Exception ex)
+            catch(SqlException)
             {
                 throw;
             }
@@ -70,7 +70,7 @@ namespace MedalRunner.Services
             {
                 await _characterRepository.DeleteAsync(id);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }
@@ -128,6 +128,17 @@ namespace MedalRunner.Services
         public async Task EquipItem(int characterId, int oldItemId, int newItemId)
         {
             await _characterRepository.EquipItemAsync(characterId, oldItemId, newItemId);
+        }
+
+        public async Task<string> GetSpecNameById(int id)
+        {
+            try
+            {
+                return await _characterRepository.GetSpecNameById(id);
+            } catch (SqlException)
+            {
+                throw;
+            }
         }
     }
 }
