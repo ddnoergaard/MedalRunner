@@ -1,8 +1,5 @@
 @page "/character/{id:int}"
 @model MedalRunner.Pages.App.Character.DetailsModel
-@{
-    int charId = Model.Character?.Id ?? 0;
-}
 
 @section Styles {
     <link rel="stylesheet" href="~/css/app/specificCharacter.css" />
@@ -49,7 +46,7 @@
             <div class="three-slots">
                 @* Head (slot 1) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="1"
                    asp-route-itemId="@Model.GetSlotItemId(1)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(1)" alt="Head" />
@@ -57,7 +54,7 @@
                 <p>@Model.Character?.Name</p>
                 @* Neck (slot 2) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="2"
                    asp-route-itemId="@Model.GetSlotItemId(2)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(2)" alt="Neck" />
@@ -66,14 +63,14 @@
             <div class="two-slots">
                 @* Shoulders (slot 3) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="3"
                    asp-route-itemId="@Model.GetSlotItemId(3)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(3)" alt="Shoulders" />
                 </a>
                 @* Back (slot 4) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="4"
                    asp-route-itemId="@Model.GetSlotItemId(4)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(4)" alt="Back" />
@@ -82,14 +79,14 @@
             <div class="two-slots">
                 @* Chest (slot 5) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="5"
                    asp-route-itemId="@Model.GetSlotItemId(5)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(5)" alt="Chest" />
                 </a>
                 @* Wrists (slot 6) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="6"
                    asp-route-itemId="@Model.GetSlotItemId(6)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(6)" alt="Wrists" />
@@ -98,14 +95,14 @@
             <div class="two-slots">
                 @* Hands (slot 7) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="7"
                    asp-route-itemId="@Model.GetSlotItemId(7)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(7)" alt="Hands" />
                 </a>
                 @* Belt (slot 8) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="8"
                    asp-route-itemId="@Model.GetSlotItemId(8)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(8)" alt="Belt" />
@@ -114,14 +111,14 @@
             <div class="two-slots">
                 @* Legs (slot 9) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="9"
                    asp-route-itemId="@Model.GetSlotItemId(9)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(9)" alt="Legs" />
                 </a>
                 @* Feet (slot 10) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="10"
                    asp-route-itemId="@Model.GetSlotItemId(10)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(10)" alt="Feet" />
@@ -130,14 +127,14 @@
             <div class="two-slots">
                 @* Ring (slot 11) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="11"
                    asp-route-itemId="@Model.GetSlotItemId(11)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(11)" alt="Ring" />
                 </a>
                 @* Trinket (slot 13) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="13"
                    asp-route-itemId="@Model.GetSlotItemId(13)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(13)" alt="Trinket" />
@@ -146,21 +143,21 @@
             <div class="four-slots">
                 @* Tabard (slot 0) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="0"
                    asp-route-itemId="@Model.GetSlotItemId(0)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(0)" alt="Tabard" />
                 </a>
                 @* MainHand (slot 15) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="15"
                    asp-route-itemId="@Model.GetSlotItemId(15)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(15)" alt="Main Hand" />
                 </a>
                 @* OffHand (slot 16) *@
                 <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@charId"
+                   asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="16"
                    asp-route-itemId="@Model.GetSlotItemId(16)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(16)" alt="Off Hand" />
