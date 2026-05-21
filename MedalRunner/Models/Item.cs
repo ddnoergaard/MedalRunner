@@ -4,27 +4,6 @@ namespace MedalRunner.Models
 {
     public class Item
     {
-        public enum GearSlot
-        {
-            Tabard = 0,
-            Head = 1,
-            Neck = 2,
-            Shoulders = 3,
-            Back = 4,
-            Chest = 5,
-            Wrists = 6,
-            Hands = 7,
-            Belt = 8,
-            Legs = 9,
-            Feet = 10,
-            Ring1 = 11,
-            Ring2 = 12,
-            Trinket1 = 13,
-            Trinket2 = 14,
-            MainHand = 15,
-            OffHand = 16
-        }
-
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
@@ -33,64 +12,30 @@ namespace MedalRunner.Models
         [Required(ErrorMessage = "Slot is required.")]
         public int Slot { get; set; }
 
-        // Returns a display-friendly name for the slot.
-        // Ring1/Ring2 both show as "Ring", Trinket1/Trinket2 as "Trinket", etc.
-        // Everything else just uses the enum name directly.
         public string SlotName
         {
             get
             {
-                GearSlot gearSlot = (GearSlot)Slot;
-
-                if (gearSlot == GearSlot.Ring1 || gearSlot == GearSlot.Ring2)
+                switch (Slot)
                 {
-                    return "Ring";
-                }
-                else if (gearSlot == GearSlot.Trinket1 || gearSlot == GearSlot.Trinket2)
-                {
-                    return "Trinket";
-                }
-                else if (gearSlot == GearSlot.MainHand)
-                {
-                    return "Main-Hand";
-                }
-                else if (gearSlot == GearSlot.OffHand)
-                {
-                    return "Off-Hand";
-                }
-                else
-                {
-                    return gearSlot.ToString();
+                    case 0: return "Tabard";
+                    case 1: return "Head";
+                    case 2: return "Neck";
+                    case 3: return "Shoulders";
+                    case 4: return "Back";
+                    case 5: return "Chest";
+                    case 6: return "Wrists";
+                    case 7: return "Hands";
+                    case 8: return "Belt";
+                    case 9: return "Legs";
+                    case 10: return "Feet";
+                    case 11: return "Ring";
+                    case 13: return "Trinket";
+                    case 15: return "Main-Hand";
+                    case 16: return "Off-Hand";
+                    default: return "Unknown";
                 }
             }
-        }
-
-        // Returns a placeholder image URL based on the slot type.
-        // Used when no item is equipped in that slot.
-        public static string PlaceholderImage(int slot)
-        {
-            string baseUrl = "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/";
-            GearSlot gearSlot = (GearSlot)slot;
-
-            if (gearSlot == GearSlot.Head)      return baseUrl + "head.png";
-            if (gearSlot == GearSlot.Neck)      return baseUrl + "neck.png";
-            if (gearSlot == GearSlot.Shoulders) return baseUrl + "shoulders.png";
-            if (gearSlot == GearSlot.Back)      return baseUrl + "shirt.png";
-            if (gearSlot == GearSlot.Chest)     return baseUrl + "chest.png";
-            if (gearSlot == GearSlot.Wrists)    return baseUrl + "wrists.png";
-            if (gearSlot == GearSlot.Hands)     return baseUrl + "hands.png";
-            if (gearSlot == GearSlot.Belt)      return baseUrl + "belt.png";
-            if (gearSlot == GearSlot.Legs)      return baseUrl + "legs.png";
-            if (gearSlot == GearSlot.Feet)      return baseUrl + "feet.png";
-            if (gearSlot == GearSlot.Ring1)     return baseUrl + "ring.png";
-            if (gearSlot == GearSlot.Ring2)     return baseUrl + "ring.png";
-            if (gearSlot == GearSlot.Trinket1)  return baseUrl + "trinket.png";
-            if (gearSlot == GearSlot.Trinket2)  return baseUrl + "trinket.png";
-            if (gearSlot == GearSlot.Tabard)    return baseUrl + "tabard.png";
-            if (gearSlot == GearSlot.MainHand)  return baseUrl + "1h-sword.png";
-            if (gearSlot == GearSlot.OffHand)   return baseUrl + "offhand.png";
-
-            return baseUrl + "head.png";
         }
 
         [Required(ErrorMessage = "Image URL is required.")]

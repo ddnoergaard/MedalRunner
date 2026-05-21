@@ -1,7 +1,6 @@
 using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ItemModel = MedalRunner.Models.Item;
 
 namespace MedalRunner.Pages.App.Character
 {
@@ -13,7 +12,7 @@ namespace MedalRunner.Pages.App.Character
         public MedalRunner.Models.Character Character { get; set; }
 
         // All items currently equipped by this character.
-        public List<ItemModel> EquippedItems { get; set; } = new();
+        public List<MedalRunner.Models.Item> EquippedItems { get; set; } = new();
 
         public DetailsModel(ICharacterService characterService, IItemService itemService)
         {
@@ -30,7 +29,7 @@ namespace MedalRunner.Pages.App.Character
                 return NotFound();
             }
 
-            List<ItemModel> items = new List<ItemModel>();
+            List<MedalRunner.Models.Item> items = new List<MedalRunner.Models.Item>();
             try
             {
                 items = await _itemService.GetItemsByCharacterIdAsync(id);
@@ -49,9 +48,9 @@ namespace MedalRunner.Pages.App.Character
         }
 
         // Returns the item ID for a given slot, or 0 if nothing is equipped there.
-        public int GetSlotItemId(ItemModel.GearSlot slot)
+        public int GetSlotItemId(int slot)
         {
-            var item = EquippedItems.FirstOrDefault(i => i.Slot == (int)slot);
+            var item = EquippedItems.FirstOrDefault(i => i.Slot == slot);
             if (item != null)
             {
                 return item.Id;
@@ -59,16 +58,15 @@ namespace MedalRunner.Pages.App.Character
             return 0;
         }
 
-        // Returns the image URL for a given slot.
-        // If an item is equipped there, use its image. Otherwise use the slot placeholder.
-        public string GetSlotImageUrl(ItemModel.GearSlot slot)
+        // Returns the image URL for a given slot, or empty string if nothing is equipped there.
+        public string GetSlotImageUrl(int slot)
         {
-            var item = EquippedItems.FirstOrDefault(i => i.Slot == (int)slot);
+            var item = EquippedItems.FirstOrDefault(i => i.Slot == slot);
             if (item != null)
             {
                 return item.ImageUrl;
             }
-            return ItemModel.PlaceholderImage((int)slot);
+            return string.Empty;
         }
 
         // Returns the average item level across all equipped items, or 0 if none are equipped.
