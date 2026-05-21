@@ -65,6 +65,34 @@ namespace MedalRunner.Models
             }
         }
 
+        // Returns a placeholder image URL based on the slot type.
+        // Used when no item is equipped in that slot.
+        public static string PlaceholderImage(int slot)
+        {
+            string baseUrl = "https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/";
+            GearSlot gearSlot = (GearSlot)slot;
+
+            if (gearSlot == GearSlot.Head)      return baseUrl + "head.png";
+            if (gearSlot == GearSlot.Neck)      return baseUrl + "neck.png";
+            if (gearSlot == GearSlot.Shoulders) return baseUrl + "shoulders.png";
+            if (gearSlot == GearSlot.Back)      return baseUrl + "shirt.png";
+            if (gearSlot == GearSlot.Chest)     return baseUrl + "chest.png";
+            if (gearSlot == GearSlot.Wrists)    return baseUrl + "wrists.png";
+            if (gearSlot == GearSlot.Hands)     return baseUrl + "hands.png";
+            if (gearSlot == GearSlot.Belt)      return baseUrl + "belt.png";
+            if (gearSlot == GearSlot.Legs)      return baseUrl + "legs.png";
+            if (gearSlot == GearSlot.Feet)      return baseUrl + "feet.png";
+            if (gearSlot == GearSlot.Ring1)     return baseUrl + "ring.png";
+            if (gearSlot == GearSlot.Ring2)     return baseUrl + "ring.png";
+            if (gearSlot == GearSlot.Trinket1)  return baseUrl + "trinket.png";
+            if (gearSlot == GearSlot.Trinket2)  return baseUrl + "trinket.png";
+            if (gearSlot == GearSlot.Tabard)    return baseUrl + "tabard.png";
+            if (gearSlot == GearSlot.MainHand)  return baseUrl + "1h-sword.png";
+            if (gearSlot == GearSlot.OffHand)   return baseUrl + "offhand.png";
+
+            return baseUrl + "head.png";
+        }
+
         [Required(ErrorMessage = "Image URL is required.")]
         public string ImageUrl { get; set; } = string.Empty;
 

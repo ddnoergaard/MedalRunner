@@ -13,6 +13,7 @@ namespace MedalRunner.Pages.App.Character
         public MedalRunner.Models.Item? CompareItem { get; set; }
         public List<MedalRunner.Models.Item> SlotItems { get; set; } = new();
         public int CurrentSlot { get; set; }
+        public string CurrentSlotName { get; set; } = string.Empty;
         public int RouteCharacterId { get; set; }
 
         [BindProperty]
@@ -27,6 +28,7 @@ namespace MedalRunner.Pages.App.Character
         private async Task LoadPageData(int characterId, int slot, int itemId)
         {
             CurrentSlot = slot;
+            CurrentSlotName = ((MedalRunner.Models.Item.GearSlot)slot).ToString();
             RouteCharacterId = characterId;
 
             if (itemId != 0)

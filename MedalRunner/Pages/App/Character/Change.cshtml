@@ -1,4 +1,4 @@
-﻿@page "{characterId:int}/{slot:int}/{itemId:int}"
+@page "{characterId:int}/{slot:int}/{itemId:int}"
 @model MedalRunner.Pages.App.Character.ChangeModel
 @using MedalRunner.Models
 
@@ -8,11 +8,10 @@
 
 <div class="change-page">
 
-    <h2 class="change-title">Compare &mdash; @((Item.GearSlot)Model.CurrentSlot)</h2>
+    <h2 class="change-title">Compare - @Model.CurrentSlotName</h2>
 
     <div class="compare-container">
 
-        @* Left: currently equipped item *@
         @if (Model.EquippedItem == null)
         {
             <div class="compare-card equipped empty">
@@ -88,7 +87,7 @@
                 <div class="card-footer">
                     @if (!string.IsNullOrEmpty(Model.EquippedItem.DropBoss))
                     {
-                        <p class="item-source">@Model.EquippedItem.DropBoss &middot; @Model.EquippedItem.DropDungeon</p>
+                        <p class="item-source">@Model.EquippedItem.DropBoss, @Model.EquippedItem.DropDungeon</p>
                     }
                 </div>
             </div>
@@ -170,7 +169,7 @@
                 <div class="card-footer">
                     @if (!string.IsNullOrEmpty(Model.CompareItem.DropBoss))
                     {
-                        <p class="item-source">@Model.CompareItem.DropBoss &middot; @Model.CompareItem.DropDungeon</p>
+                        <p class="item-source">@Model.CompareItem.DropBoss , @Model.CompareItem.DropDungeon</p>
                     }
                 </div>
             </div>
@@ -199,7 +198,7 @@
                                 <button type="submit" name="SelectedItemId" value="@item.Id" class="item-list-btn">
                                     <img src="@item.ImageUrl" alt="@item.Name" class="item-thumb" />
                                     <span class="item-list-name">@item.Name</span>
-                                    <span class="item-list-meta">ilvl @item.ItemLevel &middot; @item.Rarity</span>
+                                    <span class="item-list-meta">ilvl @item.ItemLevel , @item.Rarity</span>
                                 </button>
                             </li>
                         }
@@ -209,7 +208,7 @@
                                 <button type="submit" name="SelectedItemId" value="@item.Id" class="item-list-btn">
                                     <img src="@item.ImageUrl" alt="@item.Name" class="item-thumb" />
                                     <span class="item-list-name">@item.Name</span>
-                                    <span class="item-list-meta">ilvl @item.ItemLevel &middot; @item.Rarity</span>
+                                    <span class="item-list-meta">ilvl @item.ItemLevel , @item.Rarity</span>
                                 </button>
                             </li>
                         }
