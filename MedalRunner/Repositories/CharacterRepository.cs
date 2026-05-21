@@ -22,22 +22,26 @@ namespace MedalRunner.Repositories
                 VALUES (@Name, @Race, @CharacterClass, @Specialization, @CreatedAt);";
             int newCharId = 0;
 
-            await using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-            await using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 200) { Value = character.Name });
-            cmd.Parameters.Add(new SqlParameter("@Race", SqlDbType.NVarChar, 100) { Value = character.Race });
-            cmd.Parameters.Add(new SqlParameter("@CharacterClass", SqlDbType.NVarChar, 100) { Value = character.CharacterClass });
-            cmd.Parameters.Add(new SqlParameter("@Specialization", SqlDbType.Int) { Value = character.Specialization });
-            cmd.Parameters.Add(new SqlParameter("@CreatedAt", SqlDbType.Date) { Value = character.CreatedAt });
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                await conn.OpenAsync();
 
-            try
-            {
-                newCharId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-            }
-            catch (SqlException ex)
-            {
-                throw;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", character.Name);
+                    cmd.Parameters.AddWithValue("@Race", character.Race);
+                    cmd.Parameters.AddWithValue("@CharacterClass", character.CharacterClass);
+                    cmd.Parameters.AddWithValue("@Specialization", character.Specialization);
+                    cmd.Parameters.AddWithValue("@CreatedAt", character.CreatedAt);
+                    try
+                    {
+                        newCharId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
             }
 
             string sqlQueryJunction = "INSERT INTO user_characters(user_id, character_id) VALUES (@userId, @characterId)";
@@ -53,32 +57,35 @@ namespace MedalRunner.Repositories
                     try
                     {
                         await cmdJunction.ExecuteNonQueryAsync();
-                    } catch (SqlException)
+                    }
+                    catch (SqlException)
                     {
                         throw;
                     }
                 }
             }
-
-
         }
 
         public async Task DeleteAsync(int id)
         {
             string sql = "DELETE FROM characters WHERE id = @Id";
 
-            await using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-            await using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int) { Value = id });
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                await conn.OpenAsync();
 
-            try
-            {
-                await cmd.ExecuteNonQueryAsync();
-            }
-            catch (SqlException ex)
-            {
-                throw;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
             }
         }
 
@@ -129,85 +136,101 @@ namespace MedalRunner.Repositories
 
         public async Task<IEnumerable<Character>> GetAllAsync()
         {
-            var List = new List<Character>();
-            string sql = @"SELECT id, name, race, class_id, spec_id, create_time FROM characters ORDER BY name";
+            var list = new List<Character>();
+            string sql = "SELECT id, name, race, class_id, spec_id, create_time FROM characters ORDER BY name";
 
-            await using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-            await using var cmd = new SqlCommand(sql, conn);
-
-
-            try
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                await using var rdr = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
-                while (await rdr.ReadAsync())
+                await conn.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
-                    List.Add(MapReaderToCharacter(rdr));
-                }
+                    using (SqlDataReader rdr = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection))
+                    {
+                        try
+                        {
+                            while (await rdr.ReadAsync())
+                            {
+                                list.Add(MapReaderToCharacter(rdr));
+                            }
 
-                return List;
-            }
-            catch (SqlException ex)
-            {
-                throw;
+                            return list;
+                        }
+                        catch (SqlException)
+                        {
+                            throw;
+                        }
+                    }
+                }
             }
         }
 
         public async Task<Character> GetByIdAsync(int id)
         {
-            string sql = @"SELECT id, name, race, class_id, spec_id, create_time FROM Characters WHERE id = @Id";
+            string sql = "SELECT id, name, race, class_id, spec_id, create_time FROM Characters WHERE id = @Id";
 
-            await using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-            await using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int) { Value = id });
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                await conn.OpenAsync();
 
-            await using var rdr = await cmd.ExecuteReaderAsync(CommandBehavior.SingleRow);
-            if (await rdr.ReadAsync())
-                return MapReaderToCharacter(rdr);
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int) { Value = id });
+
+                    using (SqlDataReader rdr = await cmd.ExecuteReaderAsync(CommandBehavior.SingleRow))
+                    {
+                        if (await rdr.ReadAsync())
+                        {
+                            return MapReaderToCharacter(rdr);
+                        }
+                    }
+                }
+            }
 
             return null;
         }
 
         public async Task UpdateAsync(Character character)
         {
-            string sql = @"
-                UPDATE characters
-                SET name = @Name,
-                    race = @Race,
-                    class_id = @CharacterClass,
-                    spec_id = @Specialization
+            string sql = @"UPDATE characters SET 
+                name = @Name, 
+                race = @Race,
+                class_id = @CharacterClass,
+                spec_id = @Specialization 
                 WHERE id = @Id";
 
-            await using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-            await using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 200) { Value = character.Name });
-            cmd.Parameters.Add(new SqlParameter("@Race", SqlDbType.NVarChar, 100) { Value = character.Race });
-            cmd.Parameters.Add(new SqlParameter("@CharacterClass", SqlDbType.NVarChar, 100) { Value = character.CharacterClass });
-            cmd.Parameters.Add(new SqlParameter("@Specialization", SqlDbType.Int) { Value = character.Specialization });
-            cmd.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int) { Value = character.Id });
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                await conn.OpenAsync();
 
-            try
-            {
-                await cmd.ExecuteNonQueryAsync();
-            }
-            catch (SqlException ex)
-            {
-                throw;
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", character.Name);
+                    cmd.Parameters.AddWithValue("@Race", character.Race);
+                    cmd.Parameters.AddWithValue("@CharacterClass", character.CharacterClass);
+                    cmd.Parameters.AddWithValue("@Specialization", character.Specialization);
+                    cmd.Parameters.AddWithValue("@Id", character.Id);
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
             }
         }
 
-        private static Character MapReaderToCharacter(SqlDataReader rdr)
+        private static Character MapReaderToCharacter(SqlDataReader reader)
         {
             return new Character
             {
-                Id = rdr.GetInt32(rdr.GetOrdinal("id")),
-                Name = rdr.GetString(rdr.GetOrdinal("name")),
-                //Find better way to do this
-                Race = rdr.IsDBNull(rdr.GetOrdinal("race")) ? null : rdr.GetString(rdr.GetOrdinal("race")),
-                Specialization = rdr.GetInt32(rdr.GetOrdinal("spec_id")),
-                CreatedAt = rdr.GetDateTime(rdr.GetOrdinal("created_time"))
+                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                Name = reader.GetString(reader.GetOrdinal("name")),
+                Race = reader.GetString(reader.GetOrdinal("race")),
+                Specialization = reader.GetInt32(reader.GetOrdinal("spec_id")),
+                CreatedAt = reader.GetDateTime(reader.GetOrdinal("created_time"))
             };
         }
     }
