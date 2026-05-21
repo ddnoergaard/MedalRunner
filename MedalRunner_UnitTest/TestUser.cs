@@ -1,7 +1,11 @@
 ﻿using MedalRunner.Models;
 using MedalRunner.Repositories;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,11 +50,22 @@ namespace MedalRunner_UnitTest
         }
 
         [TestMethod]
-        //[ExpectedException(typeof())]
-        public void TestUserRestrictionName()
+        public void TestUserRestrictionName(string )
         {
+            
+
             //Act on object
-            user.FirstName = "a";
+            Assert.IsTrue(ValidateModel(user).Any(
+            v => !v.MemberNames.Contains("Email") &&
+                 !v.ErrorMessage.Contains("Email must not be empty")));
+        }
+
+        private IList<ValidationResult> ValidateModel(object model)
+        {
+            var validationResults = new List<ValidationResult>();
+            var ctx = new ValidationContext(model, null, null);
+            Validator.TryValidateObject(model, ctx, validationResults, true);
+            return validationResults;
         }
     }
 }
