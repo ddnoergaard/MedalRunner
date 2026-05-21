@@ -26,14 +26,30 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
-            if (Dungeon == null)
+            try
             {
-                return RedirectToPage("/NotFound");
+                Dungeon = await _dungeonService.GetDungeonByIdAsync(id);
+
+                if (Dungeon == null)
+                {
+                    return RedirectToPage("/NotFound");
+                }
             }
-            // Pre-fill boss name inputs with the dungeon's current bosses.
-            var bosses = await _dungeonService.GetBossesAsync(id);
-            BossNames = bosses.Select(b => b.Name).ToList();
+            catch (ArgumentException ex ) 
+            {
+                ViewData["dungeonGetId-error-msg"] = $"{ex.Message}";
+            }
+
+            try
+            {
+                var bosses = await _dungeonService.GetBossesAsync(id);
+                BossNames = bosses.Select(b => b.Name).ToList(); // CHANGED: pre-fills the boss name inputs with current values
+
+            }
+            catch(IndexOutOfRangeException ex)
+            {
+                ViewData["getBossesId-error-msg"] = $"{ex.Message}";
+            }
             return Page();
         }
 
@@ -73,8 +89,17 @@ namespace MedalRunner.Pages.Admin_pages.Dungeon
             }
 
             Dungeon.Bosses = foundBosses;
-            await _dungeonService.UpdateDungeon(Dungeon);
-            return RedirectToPage("/Admin/Dungeon/Index");
+
+            try
+            {
+                await _dungeonService.UpdateDungeon(Dungeon);
+
+            }
+            catch (Exception ex)
+            {
+                ViewData["updateDungeon-error-msg"] = $"{ex.Message}";
+            }
+            return RedirectToPage("/Admin/Dungeon/Index"); // CHANGED: was "AllDungeons" which doesn't exist
         }
     }
 }

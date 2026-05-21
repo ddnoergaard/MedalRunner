@@ -5,6 +5,9 @@
 
 <h1>Delete Confirmation</h1>
 
+<p>@ViewData["dungeonGet-error-msg"]</p>
+<p>@ViewData["dungeonDelete-error-msg"]</p>
+
 <div class="alert alert-danger">
 
     <h5>Are you sure you want to delete Dungeon - @Model.Dungeon.Name</h5>
@@ -14,3 +17,4 @@
         <a class="btn btn-primary" asp-page="/Admin/Dungeon/Index">No</a>
     </form>
 </div>
+

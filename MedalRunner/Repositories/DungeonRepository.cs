@@ -153,15 +153,14 @@ namespace MedalRunner.Repositories
                 using (SqlCommand cmd = new SqlCommand(deleteJunctionQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
-                    try
-                    {
-                        await cmd.ExecuteNonQueryAsync();
+                    
+                    int count = await cmd.ExecuteNonQueryAsync();
 
-                    }
-                    catch (SqlException)
+                    if (count <= 0)
                     {
-                        throw;
+                        throw new ArgumentException("No dungeon found with that id");
                     }
+                    
                 }
 
                 if (dungeon.Bosses != null)
@@ -172,13 +171,12 @@ namespace MedalRunner.Repositories
                         {
                             cmd.Parameters.AddWithValue("@dungeonId", dungeon.Id);
                             cmd.Parameters.AddWithValue("@bossId", boss.Id);
-                            try
+                           
+                            int count = await cmd.ExecuteNonQueryAsync();
+                            
+                            if (count <= 0)
                             {
-                                await cmd.ExecuteNonQueryAsync();
-                            }
-                            catch (SqlException)
-                            {
-                                throw;
+                                throw new ArgumentException("No dungeon or boss found with that id");
                             }
                         }
                     }
@@ -201,7 +199,7 @@ namespace MedalRunner.Repositories
                     
                     if (count <= 0) 
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException("No dungeon found with that id");
                     }
                 }
             }

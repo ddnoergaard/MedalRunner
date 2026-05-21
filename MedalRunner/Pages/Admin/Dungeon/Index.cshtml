@@ -26,6 +26,7 @@
     <tbody>
         @foreach (var dungeon in Model.Dungeons)
         {
+            <p>@ViewData["getDungeons-error-msg"]</p>
             <tr>
                 <td>@dungeon.Id</td>
                 <td><img src="@dungeon.ImageUrl" alt="@dungeon.Name" style="height:2.5rem;width:auto;border-radius:3px;" /></td>
@@ -40,6 +41,7 @@
                     <td>
                         @foreach (var boss in dungeon.Bosses)
                         {
+                            <p>@ViewData["getBosses-error-msg"]</p>
                             <span>@boss.Name</span><br />
                         }
                     </td>

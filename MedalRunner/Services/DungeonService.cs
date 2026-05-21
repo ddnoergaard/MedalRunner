@@ -37,6 +37,10 @@ public class DungeonService : IDungeonService
         {
             throw;
         }
+        catch(ArgumentException)
+        {
+            throw;
+        }
     }
 
     public async Task DeleteDungeon(int id)
@@ -46,6 +50,10 @@ public class DungeonService : IDungeonService
             await _dungeonRepository.DeleteDungeonAsync(id);
         }
         catch (SqlException)
+        {
+            throw;
+        }
+        catch (ArgumentException)
         {
             throw;
         }
@@ -80,7 +88,7 @@ public class DungeonService : IDungeonService
         try
         {
             return await _dungeonRepository.GetDungeonByIdAsync(id);
-        } catch (SqlException)
+        } catch (ArgumentException)
         {
             throw;
         }

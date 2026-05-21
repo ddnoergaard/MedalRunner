@@ -49,8 +49,15 @@ namespace MedalRunner.Pages.Admin_pages
             }
 
             Dungeon.Bosses = foundBosses;
-            
-            await _dungeonService.AddDungeon(Dungeon);
+            try
+            {
+                await _dungeonService.AddDungeon(Dungeon);
+
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                ViewData["dungeon-error-msg"] = $"{ex.Message}";
+            }
             return RedirectToPage("AllDungeons");
         }
     }
