@@ -17,8 +17,8 @@
 }
 
 .card-double-container {
-    display: grid;
-    grid-template-rows: 1fr auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-border-column {
@@ -30,6 +30,7 @@
 .card-text-column {
     display: flex;
     flex-direction: column;
+    padding-left: 1vw;
 }
 .card-text-column > p {
     text-align: start;
@@ -39,9 +40,14 @@
     text-align: center;
 }
 
-.align-a{
-    align-self: flex-end;
-    text-align: right;
+.align-a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: end;
+    align-items: end;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
 }
 .align-a > a{
     margin-right: 1.2rem;

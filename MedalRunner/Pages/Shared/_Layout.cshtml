@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -44,12 +45,17 @@
                         {
                             <a class="login-btn" asp-page="/Login" asp-area="">Login</a>
                             <a class="register-btn" asp-page="/Register" asp-area="">Register</a>
-                        } else
+                        }
+                        @if (User.Identity.IsAuthenticated && User.FindFirstValue(ClaimTypes.Role) == "Player")
                         {
                             <a class="login-btn" asp-page="/App/Index" asp-area="">User Dashboard</a>
                             <a class="login-btn" asp-page="/App/Logout" asp-area="">Logout</a>
                         }
-
+                        @if (User.Identity.IsAuthenticated && User.FindFirstValue(ClaimTypes.Role) == "Admin")
+                        {
+                            <a class="login-btn" asp-page="/Admin/Index" asp-area="">Admin Dashboard</a>
+                            <a class="login-btn" asp-page="/Admin/Logout" asp-area="">Logout</a>
+                        }
                     </div>
                 </div>
             </div>

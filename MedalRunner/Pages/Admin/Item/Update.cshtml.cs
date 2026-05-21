@@ -7,13 +7,16 @@ namespace MedalRunner.Pages.Admin.Item
     public class UpdateModel : PageModel
     {
         private readonly IItemService _itemService;
-        private readonly IBossService _bossService; // CHANGED: injected to look up boss by name on save
+        // IBossService added — needed to resolve the typed boss name to a BossId on save.
+        private readonly IBossService _bossService;
 
         [BindProperty]
         public Models.Item Item { get; set; }
 
+        // BossName replaces the old Source field. Pre-filled from DropBoss on GET,
+        // resolved to a BossId on POST so UpdateItem can rewrite the boss_drops row.
         [BindProperty]
-        public string? BossName { get; set; } // CHANGED: replaces free-text Source; pre-filled from existing drop boss
+        public string? BossName { get; set; }
 
         public UpdateModel(IItemService itemService, IBossService bossService)
         {
@@ -21,7 +24,8 @@ namespace MedalRunner.Pages.Admin.Item
             _bossService = bossService;
         }
 
-        // CHANGED: was blocking .Result call - now async; uses GetAllItemsWithSourceAsync to also get DropBoss for pre-fill
+        // GetAllItemsWithSourceAsync used instead of GetById — it runs the JOIN that populates
+        // DropBoss and DropDungeon, which are needed to pre-fill the boss field.
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var items = await _itemService.GetAllItemsWithSourceAsync();
@@ -30,11 +34,10 @@ namespace MedalRunner.Pages.Admin.Item
             {
                 return RedirectToPage("/NotFound");
             }
-            BossName = Item.DropBoss; // CHANGED: pre-fills the boss name field with the current drop source
+            BossName = Item.DropBoss;
             return Page();
         }
 
-        // CHANGED: was synchronous with no boss handling - now async, resolves boss name to BossId before saving
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -42,7 +45,9 @@ namespace MedalRunner.Pages.Admin.Item
                 return Page();
             }
 
-            // CHANGED: looks up the boss by name and sets BossId so UpdateItem can rewrite boss_drops
+            // If a boss name was entered, look it up in the DB and set BossId.
+            // UpdateItem will then delete the old boss_drops row and insert the new one.
+            // If the name is not found, show an error instead of saving.
             if (!string.IsNullOrWhiteSpace(BossName))
             {
                 try

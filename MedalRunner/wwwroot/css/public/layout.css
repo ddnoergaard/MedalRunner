@@ -69,16 +69,15 @@ nav {
     display: flex;
     align-self: center;
     gap: 1rem;
+    border-left: 1px solid white;
+    padding-left: 1rem;
 }
 
 .login-btn, .register-btn {
     text-decoration: none;
 }
 
-.login-btn {
-    border-left: 1px solid white;
-    padding-left: 1rem;
-}
+
 
 /* FOOTER */
 footer {

@@ -63,24 +63,26 @@
 
     <div class="form-group">
         <label class="control-label">Boss 1</label>
-        <input name="BossNames[0]" class="form-control" />
+        <input name="BossNames[0]" value="@(Model.BossNames.Count > 0 ? Model.BossNames[0] : "")" class="form-control" placeholder="Enter boss name or leave blank" />
     </div>
     <div class="form-group">
         <label class="control-label">Boss 2</label>
-        <input name="BossNames[1]" class="form-control" />
+        <input name="BossNames[1]" value="@(Model.BossNames.Count > 1 ? Model.BossNames[1] : "")" class="form-control" placeholder="Enter boss name or leave blank" />
     </div>
     <div class="form-group">
         <label class="control-label">Boss 3</label>
-        <input name="BossNames[2]" class="form-control" />
+        <input name="BossNames[2]" value="@(Model.BossNames.Count > 2 ? Model.BossNames[2] : "")" class="form-control" placeholder="Enter boss name or leave blank" />
     </div>
     <div class="form-group">
         <label class="control-label">Boss 4</label>
-        <input name="BossNames[3]" class="form-control" />
+        <input name="BossNames[3]" value="@(Model.BossNames.Count > 3 ? Model.BossNames[3] : "")" class="form-control" placeholder="Enter boss name or leave blank" />
     </div>
     <div class="form-group">
         <label class="control-label">Boss 5</label>
-        <input name="BossNames[4]" class="form-control" />
+        <input name="BossNames[4]" value="@(Model.BossNames.Count > 4 ? Model.BossNames[4] : "")" class="form-control" placeholder="Enter boss name or leave blank" />
     </div>
+    <span asp-validation-for="BossNames" class="text-danger"></span>
 
     <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="/Admin/Dungeon/Index" class="btn btn-secondary">Cancel</a>
 </form>
