@@ -10,6 +10,7 @@ namespace MedalRunner.Services.Interfaces
         Task Update(Character character);
         Task Delete(int id);
         Task<IEnumerable<Character>> GetCharactersByUserId(int userId);
-        Task EquipItem(int characterId, int oldItemId, int newItemId);
+        Task EquipItem(int characterId, int slot, int newItemId);
+        Task<Item?> GetEquippedItem(int characterId, Item.GearSlot slot);
     }
 }

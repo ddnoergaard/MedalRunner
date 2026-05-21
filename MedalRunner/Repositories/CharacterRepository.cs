@@ -63,20 +63,22 @@ namespace MedalRunner.Repositories
             await EquipDefaultGearAsync(newCharId);
         }
 
-        // Default starter item IDs, one per available slot (lowest id per slot in the DB)
-        private static readonly int[] DefaultItemIds = { 132, 1, 2, 3, 5, 78, 81, 80, 4, 77, 159, 6, 110 };
+        // Default starter item IDs mapped to their gear slot (index = slot number).
+        // Slot 0 = Tabard, 1 = Head, ..., 11 = Ring1, 12 = Ring2, 13 = Trinket1, 14 = Trinket2, 15 = MainHand, 16 = OffHand.
+        private static readonly int[] DefaultItemIds = { 132, 1, 2, 3, 5, 78, 81, 80, 4, 77, 77, 159, 159, 6, 110, 192, 192 };
 
         private async Task EquipDefaultGearAsync(int characterId)
         {
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
 
-            foreach (int itemId in DefaultItemIds)
+            for (int slot = 0; slot < DefaultItemIds.Length; slot++)
             {
-                string sql = "INSERT INTO character_gear (character_id, item_id) VALUES (@characterId, @itemId)";
+                string sql = "INSERT INTO character_gear (character_id, item_id, slot) VALUES (@characterId, @itemId, @slot)";
                 await using var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
-                cmd.Parameters.Add(new SqlParameter("@itemId", SqlDbType.Int) { Value = itemId });
+                cmd.Parameters.Add(new SqlParameter("@itemId", SqlDbType.Int) { Value = DefaultItemIds[slot] });
+                cmd.Parameters.Add(new SqlParameter("@slot", SqlDbType.Int) { Value = slot });
                 await cmd.ExecuteNonQueryAsync();
             }
         }
@@ -240,28 +242,49 @@ namespace MedalRunner.Repositories
             };
         }
 
-        public async Task EquipItemAsync(int characterId, int oldItemId, int newItemId)
+        public async Task<int> GetItemBySlotAsync(int characterId, int slot)
+        {
+            string sql = "SELECT item_id FROM character_gear WHERE character_id = @characterId AND slot = @slot";
+
+            await using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+            await using var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
+            cmd.Parameters.Add(new SqlParameter("@slot", SqlDbType.Int) { Value = slot });
+
+            object? result = await cmd.ExecuteScalarAsync();
+            return result != null ? (int)result : 0;
+        }
+
+        public async Task EquipItemAsync(int characterId, int slot, int newItemId)
         {
             await using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
 
-            if (oldItemId == 0)
+            string checkSql = "SELECT COUNT(*) FROM character_gear WHERE character_id = @characterId AND slot = @slot";
+            await using var checkCmd = new SqlCommand(checkSql, conn);
+            checkCmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
+            checkCmd.Parameters.Add(new SqlParameter("@slot", SqlDbType.Int) { Value = slot });
+            int count = (int)await checkCmd.ExecuteScalarAsync();
+
+            if (count == 0)
             {
-                // Slot was empty — insert a new row
-                string sql = "INSERT INTO character_gear (character_id, item_id) VALUES (@characterId, @newItemId)";
+                // Slot was empty 
+                string sql = "INSERT INTO character_gear (character_id, item_id, slot) VALUES (@characterId, @newItemId, @slot)";
                 await using var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
                 cmd.Parameters.Add(new SqlParameter("@newItemId", SqlDbType.Int) { Value = newItemId });
+                cmd.Parameters.Add(new SqlParameter("@slot", SqlDbType.Int) { Value = slot });
                 await cmd.ExecuteNonQueryAsync();
             }
             else
             {
                 // Slot had an item — swap it
-                string sql = "UPDATE character_gear SET item_id = @newItemId WHERE character_id = @characterId AND item_id = @oldItemId";
+                string sql = "UPDATE character_gear SET item_id = @newItemId WHERE character_id = @characterId AND slot = @slot";
                 await using var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
-                cmd.Parameters.Add(new SqlParameter("@oldItemId", SqlDbType.Int) { Value = oldItemId });
                 cmd.Parameters.Add(new SqlParameter("@newItemId", SqlDbType.Int) { Value = newItemId });
+                cmd.Parameters.Add(new SqlParameter("@slot", SqlDbType.Int) { Value = slot });
                 await cmd.ExecuteNonQueryAsync();
             }
         }

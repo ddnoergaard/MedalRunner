@@ -38,9 +38,20 @@ namespace MedalRunner.Pages.App.Character
 
             var allItems = await _itemService.GetAllItem();
 
+            // Ring1 and Ring2 share the same item pool, same for Trinket1 and Trinket2.
+            int lookupSlot = slot;
+            if (slot == (int)MedalRunner.Models.Item.GearSlot.Ring2)
+            {
+                lookupSlot = (int)MedalRunner.Models.Item.GearSlot.Ring1;
+            }
+            if (slot == (int)MedalRunner.Models.Item.GearSlot.Trinket2)
+            {
+                lookupSlot = (int)MedalRunner.Models.Item.GearSlot.Trinket1;
+            }
+
             foreach (var item in allItems)
             {
-                if (item.Slot == slot && item.Id != itemId)
+                if (item.Slot == lookupSlot && item.Id != itemId)
                 {
                     SlotItems.Add(item);
                 }
@@ -74,9 +85,9 @@ namespace MedalRunner.Pages.App.Character
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAcceptAsync(int characterId, int itemId, int newItemId)
+        public async Task<IActionResult> OnPostAcceptAsync(int characterId, int slot, int newItemId)
         {
-            await _characterService.EquipItem(characterId, itemId, newItemId);
+            await _characterService.EquipItem(characterId, slot, newItemId);
             return RedirectToPage("/App/Character/Details", new { id = characterId });
         }
 

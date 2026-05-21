@@ -125,9 +125,22 @@ namespace MedalRunner.Services
             }
         }
 
-        public async Task EquipItem(int characterId, int oldItemId, int newItemId)
+        public async Task EquipItem(int characterId, int slot, int newItemId)
         {
-            await _characterRepository.EquipItemAsync(characterId, oldItemId, newItemId);
+            await _characterRepository.EquipItemAsync(characterId, slot, newItemId);
+        }
+
+        // Returns the item equipped in the given slot for a character.
+        public async Task<Item?> GetEquippedItem(int characterId, Item.GearSlot slot)
+        {
+            int itemId = await _characterRepository.GetItemBySlotAsync(characterId, (int)slot);
+
+            if (itemId == 0)
+            {
+                return null;
+            }
+
+            return await _itemService.GetByItemId(itemId);
         }
     }
 }

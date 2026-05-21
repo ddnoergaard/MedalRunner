@@ -1,9 +1,6 @@
 @page "/character/{id:int}"
 @model MedalRunner.Pages.App.Character.DetailsModel
 @using MedalRunner.Models
-@{
-    int charId = Model.Character?.Id ?? 0;
-}
 
 @section Styles {
     <link rel="stylesheet" href="~/css/app/specificCharacter.css" />
@@ -13,14 +10,14 @@
     <div class="top-container">
         <div class="top-left">
             <div class="top-left-top">
-                <p class="char-name">@Model.Character?.Name</p>
+                <p class="char-name">@Model.Character.Name</p>
                 <div class="top-l-t-one">
                     <p>@Model.GetAverageItemLevel() ilvl</p>
-                    <p>@Model.Character?.Race</p>
+                    <p>@Model.Character.Race</p>
                 </div>
                 <div class="top-l-t-two">
-                    <p>@Model.Character?.CharacterClass</p>
-                    <p>Spec @Model.Character?.Specialization</p>
+                    <p>@Model.Character.CharacterClass</p>
+                    <p>Spec @Model.Character.Specialization</p>
                 </div>
             </div>
             <div class="top-left-bottom">
@@ -49,87 +46,138 @@
         <div class="top-right">
             <div class="three-slots">
                 @* Head (slot 1) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Head)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Head)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Head)" alt="Head" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Head)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Head]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Head]" alt="Head" />
                 </a>
-                <p>@Model.Character?.Name</p>
+                <p>@Model.Character.Name</p>
                 @* Neck (slot 2) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Neck)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Neck)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Neck)" alt="Neck" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Neck)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Neck]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Neck]" alt="Neck" />
                 </a>
             </div>
             <div class="two-slots">
                 @* Shoulders (slot 3) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Shoulders)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Shoulders)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Shoulders)" alt="Shoulders" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Shoulders)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Shoulders]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Shoulders]" alt="Shoulders" />
                 </a>
                 @* Back (slot 4) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Back)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Back)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Back)" alt="Back" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Back)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Back]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Back]" alt="Back" />
                 </a>
             </div>
             <div class="two-slots">
                 @* Chest (slot 5) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Chest)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Chest)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Chest)" alt="Chest" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Chest)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Chest]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Chest]" alt="Chest" />
                 </a>
                 @* Wrists (slot 6) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Wrists)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Wrists)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Wrists)" alt="Wrists" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Wrists)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Wrists]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Wrists]" alt="Wrists" />
                 </a>
             </div>
             <div class="two-slots">
                 @* Hands (slot 7) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Hands)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Hands)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Hands)" alt="Hands" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Hands)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Hands]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Hands]" alt="Hands" />
                 </a>
                 @* Belt (slot 8) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Belt)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Belt)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Belt)" alt="Belt" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Belt)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Belt]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Belt]" alt="Belt" />
                 </a>
             </div>
             <div class="two-slots">
                 @* Legs (slot 9) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Legs)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Legs)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Legs)" alt="Legs" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Legs)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Legs]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Legs]" alt="Legs" />
                 </a>
                 @* Feet (slot 10) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Feet)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Feet)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Feet)" alt="Feet" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Feet)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Feet]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Feet]" alt="Feet" />
                 </a>
             </div>
             <div class="two-slots">
                 @* Ring1 (slot 11) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Ring1)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Ring1)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Ring1)" alt="Ring 1" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Ring1)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Ring1]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Ring1]" alt="Ring 1" />
                 </a>
                 @* Ring2 (slot 12) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Ring2)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Ring2)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Ring2)" alt="Ring 2" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Ring2)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Ring2]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Ring2]" alt="Ring 2" />
                 </a>
             </div>
             <div class="two-slots">
                 @* Trinket1 (slot 13) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Trinket1)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Trinket1)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Trinket1)" alt="Trinket 1" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Trinket1)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Trinket1]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Trinket1]" alt="Trinket 1" />
                 </a>
                 @* Trinket2 (slot 14) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Trinket2)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Trinket2)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Trinket2)" alt="Trinket 2" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Trinket2)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Trinket2]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Trinket2]" alt="Trinket 2" />
                 </a>
             </div>
             <div class="four-slots">
                 @* Tabard (slot 0) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.Tabard)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.Tabard)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.Tabard)" alt="Tabard" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.Tabard)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.Tabard]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.Tabard]" alt="Tabard" />
                 </a>
                 @* MainHand (slot 15) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.MainHand)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.MainHand)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.MainHand)" alt="Main Hand" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.MainHand)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.MainHand]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.MainHand]" alt="Main Hand" />
                 </a>
                 @* OffHand (slot 16) *@
-                <a asp-page="/App/Character/Change" asp-route-characterId="@charId" asp-route-slot="@(Item.GearSlot.OffHand)" asp-route-itemId="@Model.GetSlotItemId(Item.GearSlot.OffHand)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(Item.GearSlot.OffHand)" alt="Off Hand" />
+                <a asp-page="/App/Character/Change"
+                   asp-route-characterId="@Model.Character.Id"
+                   asp-route-slot="@(Item.GearSlot.OffHand)"
+                   asp-route-itemId="@Model.SlotItemIds[Item.GearSlot.OffHand]">
+                    <img class="item-slot" src="@Model.SlotImages[Item.GearSlot.OffHand]" alt="Off Hand" />
                 </a>
                 @* Placeholder for 4th slot in row *@
                 <a><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
