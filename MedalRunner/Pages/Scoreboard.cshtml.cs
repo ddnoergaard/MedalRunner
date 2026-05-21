@@ -31,6 +31,7 @@ namespace MedalRunner.Pages
             try
             {
                 ScoreboardList = (await _scoreboardService.GetAllScores()).ToList();
+                ScoreboardList = ScoreboardList.Where(s => s.IsActive).ToList();
             } catch (SqlException)
             {
                 ViewData["scoreboard-error-msg"] = "Something went wrong";
