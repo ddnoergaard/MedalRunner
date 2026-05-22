@@ -50,16 +50,72 @@ namespace MedalRunner_UnitTest
         }
 
         [TestMethod]
-        public void TestUserRestrictionName(string )
+        public void TestUserRestrictionEmail()
         {
-            
+            //Arrange 
+            user.Email = "";
 
-            //Act on object
+            //Asssert to check if Email restriction is correct 
             Assert.IsTrue(ValidateModel(user).Any(
-            v => !v.MemberNames.Contains("Email") &&
-                 !v.ErrorMessage.Contains("Email must not be empty")));
+            v =>   
+                    v.ErrorMessage.Contains("Email must not be empty")));
         }
 
+        [TestMethod]
+        public void TestUserFirstNameEmptyRestriction()
+        {
+            //Arrange
+            user.FirstName = "";
+
+            //Assert to check for FirstName restrictions
+            Assert.IsTrue(ValidateModel(user).Any(
+                v => v.ErrorMessage.Contains("Must insert a first name")));
+        }
+
+        [TestMethod]
+        public void TestUserLastNameEmptyRestriction()
+        {
+            //Arrange
+            user.LastName = "";
+
+            //Assert to check for LastName restrictions
+            Assert.IsTrue(ValidateModel(user).Any(
+                v => v.ErrorMessage.Contains("Must insert a last name")));
+        }
+
+        [TestMethod]
+        public void TestUserFirstNameRestriction()
+        {
+            //Arrange
+            user.LastName = "i";
+
+            //Assert to check for LastName restrictions
+            Assert.IsTrue(ValidateModel(user).Any(
+                v => v.ErrorMessage.Contains("The minimum character count is 2")));
+        }
+
+        [TestMethod]
+        public void TestUserLastNameRestriction()
+        {
+            //Arrange
+            user.LastName = "a";
+
+            //Assert to check for LastName restrictions
+            Assert.IsTrue(ValidateModel(user).Any(
+                v => v.ErrorMessage.Contains("The minimum character count is 2")));
+        }
+
+        [TestMethod]
+        public void TestUserPasswordRestriction()
+        {
+            //Arrange
+            user.Password = "ab";
+
+            //Assert to check for LastName restrictions
+            Assert.IsTrue(ValidateModel(user).Any(
+                v => v.ErrorMessage.Contains("Password must have at least 3 characters")));
+        }
+        //Method pulled from stackOverFlow to validate data annotations
         private IList<ValidationResult> ValidateModel(object model)
         {
             var validationResults = new List<ValidationResult>();
