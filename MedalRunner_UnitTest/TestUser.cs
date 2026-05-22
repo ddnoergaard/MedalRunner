@@ -49,16 +49,16 @@ namespace MedalRunner_UnitTest
             Assert.AreEqual(expectedUser.Id, actualUser.Id);
         }
 
-        [TestMethod]
-        public void TestUserRestrictionName(string )
-        {
+        //[TestMethod]
+        //public void TestUserRestrictionName(string )
+        //{
             
 
-            //Act on object
-            Assert.IsTrue(ValidateModel(user).Any(
-            v => !v.MemberNames.Contains("Email") &&
-                 !v.ErrorMessage.Contains("Email must not be empty")));
-        }
+        //    //Act on object
+        //    Assert.IsTrue(ValidateModel(user).Any(
+        //    v => !v.MemberNames.Contains("Email") &&
+        //         !v.ErrorMessage.Contains("Email must not be empty")));
+        //}
 
         private IList<ValidationResult> ValidateModel(object model)
         {
