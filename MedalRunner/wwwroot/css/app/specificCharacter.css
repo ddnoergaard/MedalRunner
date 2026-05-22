@@ -87,10 +87,10 @@
     width: 75%;
 }
 
-.three-slots {
+.one-slot {
     display: flex;
-    justify-content: space-evenly;
-    width: 68%;
+    justify-content: center;
+    width: 75%;
 }
 
 .two-slots > a, .four-slots > a {

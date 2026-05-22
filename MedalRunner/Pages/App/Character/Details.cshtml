@@ -43,21 +43,13 @@
             </div>
         </div>
         <div class="top-right">
-            <div class="three-slots">
+            <div class="one-slot">
                 @* Head (slot 1) *@
                 <a asp-page="/App/Character/Change"
                    asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="1"
                    asp-route-itemId="@Model.GetSlotItemId(1)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(1)" alt="Head" />
-                </a>
-                <p>@Model.Character?.Name</p>
-                @* Neck (slot 2) *@
-                <a asp-page="/App/Character/Change"
-                   asp-route-characterId="@Model.Character.Id"
-                   asp-route-slot="2"
-                   asp-route-itemId="@Model.GetSlotItemId(2)">
-                    <img class="item-slot" src="@Model.GetSlotImageUrl(2)" alt="Neck" />
                 </a>
             </div>
             <div class="two-slots">
