@@ -457,5 +457,27 @@ WHERE db.dungeon_id = @dungeonId";
             if (items.Count == 0) throw new ArgumentException("No items found");
             return items;
         }
+
+        public async Task<int> GetItemCount()
+        {
+            string sqlQuery = "SELECT COUNT(*) FROM items";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
     }
 }

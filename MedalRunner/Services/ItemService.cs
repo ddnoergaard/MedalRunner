@@ -122,5 +122,16 @@ namespace MedalRunner.Services
             return returnList;
         }
 
+        public async Task<int> GetItemCount()
+        {
+            try
+            {
+                return await _itemRepository.GetItemCount();
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
+
     }
 }

@@ -140,5 +140,16 @@ namespace MedalRunner.Services
                 throw;
             }
         }
+
+        public async Task<int> GetCharacterCount()
+        {
+            try
+            {
+                return await  _characterRepository.GetCharacterCount();
+            }catch(SqlException)
+            {
+                throw;
+            }
+        }
     }
 }

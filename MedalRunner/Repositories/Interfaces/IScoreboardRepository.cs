@@ -12,5 +12,7 @@ namespace MedalRunner.Repositories.Interfaces
         Task SetInactive(int id);
         Task SetActive(int id);
         Task<IEnumerable<Scoreboard>> GetScoreboardRecordsByUserId(int userId);
+        Task<int> GetScoreboardCount();
+        Task<IEnumerable<Scoreboard>> GetFiveLatestScoreboards();
     }
 }

@@ -12,5 +12,6 @@ namespace MedalRunner.Services.Interfaces
         Task<IEnumerable<Character>> GetCharactersByUserId(int userId);
         Task EquipItem(int characterId, int oldItemId, int newItemId);
         Task<string> GetSpecNameById(int id);
+        Task<int> GetCharacterCount();
     }
 }

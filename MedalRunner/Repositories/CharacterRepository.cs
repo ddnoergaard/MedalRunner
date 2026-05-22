@@ -314,6 +314,28 @@ namespace MedalRunner.Repositories
                 }
             }
         }
+
+        public async Task<int> GetCharacterCount()
+        {
+            string sqlQuery = "SELECT COUNT(*) FROM characters";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
     }
 }
 
