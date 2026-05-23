@@ -87,7 +87,7 @@ namespace MedalRunner_UnitTest
         public void TestUserFirstNameRestriction()
         {
             //Arrange
-            user.LastName = "i";
+            user.FirstName = "i";
 
             //Assert to check for LastName restrictions
             Assert.IsTrue(ValidateModel(user).Any(
