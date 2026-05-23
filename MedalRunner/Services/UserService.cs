@@ -49,5 +49,27 @@ namespace MedalRunner.Services
                 throw;
             }
         }
+
+        public async Task<int> GetUserCount()
+        {
+            try
+            {
+                return await _userRepository.GetUserCount();
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<User>> GetFiveLatestUsers()
+        {
+            try
+            {
+                return await _userRepository.GetFiveLatestUsers();
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
     }
 }

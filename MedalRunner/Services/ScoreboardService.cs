@@ -89,6 +89,27 @@ namespace MedalRunner.Services
             }
         }
 
+        public async Task<int> GetScoreboardCount()
+        {
+            try
+            {
+                return await _scoreboardRepository.GetScoreboardCount();
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Scoreboard>> GetFiveLatestScoreboards()
+        {
+            try
+            {
+                return await _scoreboardRepository.GetFiveLatestScoreboards();
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
 
     }
 }

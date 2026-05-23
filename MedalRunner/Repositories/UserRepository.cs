@@ -91,6 +91,7 @@ namespace MedalRunner.Repositories
         public async Task DeleteUserById(int id)
         {
             string sqlQuery = "DELETE FROM users WHERE id = @userId";
+            int count = 0;
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -100,11 +101,67 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@userId", id);
                     try
                     {
-                        await cmd.ExecuteNonQueryAsync();
+                        count = await cmd.ExecuteNonQueryAsync();
                     }
                     catch (SqlException)
                     {
                         throw;
+                    }
+                    if (count == 0) throw new ArgumentException("User couldn't be deleted");
+                }
+            }
+        }
+
+        public async Task<int> GetUserCount()
+        {
+            string sqlQuery = "SELECT COUNT(*) FROM users";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    } catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public async Task<IEnumerable<User>> GetFiveLatestUsers()
+        {
+            string sqlQuery = "SELECT TOP(5) * FROM users ORDER BY created_at DESC";
+            List<User> returnList = new List<User>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            returnList.Add(new User
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                Email = Convert.ToString(reader["email"]),
+                                Password = Convert.ToString(reader["password"]),
+                                RoleId = Convert.ToInt32(reader["role_id"]),
+                                FirstName = Convert.ToString(reader["first_name"]),
+                                LastName = Convert.ToString(reader["last_name"]),
+                                SubscriptionId = Convert.ToInt32(reader["subscription_id"]),
+                                CreatedAt = Convert.ToDateTime(reader["created_at"])
+                            });
+                        }
+                        if (returnList.Count == 0) throw new IndexOutOfRangeException("No users found");
+                        return returnList;
                     }
                 }
             }

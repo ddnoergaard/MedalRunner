@@ -13,6 +13,8 @@ namespace MedalRunner.Services.Interfaces
         Task SetActive(int id);
         Task<IEnumerable<Scoreboard>> NameSearch(string str);
         Task<IEnumerable<Scoreboard>> GetScoreboardRecordsByUserId(int userId);
+        Task<int> GetScoreboardCount();
+        Task<IEnumerable<Scoreboard>> GetFiveLatestScoreboards();
 
     }
 }

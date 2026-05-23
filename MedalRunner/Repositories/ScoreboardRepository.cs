@@ -287,5 +287,61 @@ namespace MedalRunner.Repositories
             }
         }
 
+        public async Task<int> GetScoreboardCount()
+        {
+            string sqlQuery = "SELECT COUNT(*) FROM scoreboards";
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    try
+                    {
+                        return Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    }
+                    catch (SqlException)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public async Task<IEnumerable<Scoreboard>> GetFiveLatestScoreboards()
+        {
+            string sqlQuery = "SELECT TOP(5) * FROM scoreboards WHERE is_active = 1 ORDER BY created_at DESC ";
+            List<Scoreboard> returnList = new List<Scoreboard>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                await con.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                {
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            returnList.Add(new Scoreboard
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                DungeonId = Convert.ToInt32(reader["dungeon_id"]),
+                                Name = Convert.ToString(reader["name"]),
+                                Score = Convert.ToString(reader["score"]),
+                                CreatedAt = Convert.ToDateTime(reader["created_at"]),
+                                IsActive = Convert.ToBoolean(reader["is_active"]),
+                                RunDate = Convert.ToDateTime(reader["run_date"]),
+                                UserId = Convert.ToInt32(reader["user_id"])
+                            });
+                        }
+                        if (returnList.Count == 0) throw new IndexOutOfRangeException("No scoreboards found");
+                        return returnList;
+                    }
+                }
+            }
+        } 
+
     }
 }

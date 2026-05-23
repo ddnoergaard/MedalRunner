@@ -1,4 +1,80 @@
 ﻿@page
+@using MedalRunner.Models;
 @model MedalRunner.Pages.Admin_pages.IndexModel
 @{
 }
+
+@section Styles {
+    <link href="/css/admin/dashboard.css" rel="stylesheet" />
+}
+
+<div class="admin-container">
+    <div class="top-text">
+        <h1>Hello, @Model.currentUser.FirstName</h1>
+        <p>@Model.DateOnly</p>
+    </div>
+    <div class="top">
+        <div class="admin-card">
+            <p class="big-number">@Model.userCount</p>
+            <p class="legend">User count</p>
+        </div>
+        <div class="admin-card">
+            <p class="big-number">@Model.characterCount</p>
+            <p class="legend">Character count</p>
+        </div>
+        <div class="admin-card">
+            <p class="big-number">@Model.itemCount</p>
+            <p class="legend">Items count</p>
+        </div>
+        <div class="admin-card">
+            <p class="big-number">@Model.scoreboardCount</p>
+            <p class="legend">Scoreboard records</p>
+        </div>
+    </div>
+    <div class="mid">
+        <div>
+            <h2>Recent runs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Character name</th>
+                        <th>Dungeon Name</th>
+                        <th>Run date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Models.Scoreboard scoreBoard in Model.Scoreboards)
+                    {
+                        <tr>
+                            <th>@scoreBoard.Name</th>
+                            <th>@scoreBoard.Dungeon.Name</th>
+                            <th>@scoreBoard.RunDate</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>New users</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Create date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Models.User loopUser in Model.Users)
+                    {
+                        <tr>
+                            <th>@($"{loopUser.FirstName} {loopUser.LastName}")</th>
+                            <th>@loopUser.Email</th>
+                            <th>@loopUser.CreatedAt</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

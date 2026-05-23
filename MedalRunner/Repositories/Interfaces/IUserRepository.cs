@@ -9,5 +9,7 @@ namespace MedalRunner.Repositories.Interfaces
         Task<User> GetUserByEmail(string Email);
 
         Task DeleteUserById(int id);
+        Task<int> GetUserCount();
+        Task<IEnumerable<User>> GetFiveLatestUsers();
     }
 }
