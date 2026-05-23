@@ -10,6 +10,9 @@ namespace MedalRunner.Services
         private readonly ICharacterRepository _characterRepository;
         private readonly IItemService _itemService;
 
+        // Slots: Tabard(0), Head(1), Neck(2), Shoulders(3), Back(4), Chest(5), Wrists(6), Hands(7), Belt(8), Legs(9), Feet(10), Ring(11), Trinket(13)
+        private static readonly int[] DefaultItemIds = { 132, 1, 2, 3, 5, 78, 81, 80, 4, 77, 159, 6, 110 };
+
         public CharacterService(ICharacterRepository characterRepository, IItemService itemService)
         {
             _characterRepository = characterRepository;
@@ -40,15 +43,6 @@ namespace MedalRunner.Services
             }
         }
 
-        // These are the starter item IDs equipped to every new character on creation.
-        // One item per slot — the lowest available item ID for each slot in the database.
-        // Slots: Tabard(0), Head(1), Neck(2), Shoulders(3), Back(4), Chest(5),
-        //        Wrists(6), Hands(7), Belt(8), Legs(9), Feet(10), Ring(11), Trinket(13)
-        private static readonly int[] DefaultItemIds = { 132, 1, 2, 3, 5, 78, 81, 80, 4, 77, 159, 6, 110 };
-
-        // Creates the character, then equips it with starter gear.
-        // Deciding which items a new character starts with is a business rule,
-        // so it belongs here in the service layer rather than in the repository.
         public async Task Create(Character character, int userId)
         {
             try
