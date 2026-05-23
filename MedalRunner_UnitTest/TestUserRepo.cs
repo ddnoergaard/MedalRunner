@@ -57,6 +57,6 @@ public class TestUserRepo
     [ExpectedException(typeof(ArgumentException))]
     public async Task GetUserByEmail_ThrowArgumentException_WhenUserDoesNotExist()
     {
-        await _repo.GetUserByEmail(_testEmail);
+        await _repo.GetUserByEmail("email@throwargument.com");
     }
 }

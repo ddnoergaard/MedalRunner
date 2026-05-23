@@ -91,6 +91,7 @@ namespace MedalRunner.Repositories
         public async Task DeleteUserById(int id)
         {
             string sqlQuery = "DELETE FROM users WHERE id = @userId";
+            int count = 0;
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -100,12 +101,13 @@ namespace MedalRunner.Repositories
                     cmd.Parameters.AddWithValue("@userId", id);
                     try
                     {
-                        await cmd.ExecuteNonQueryAsync();
+                        count = await cmd.ExecuteNonQueryAsync();
                     }
                     catch (SqlException)
                     {
                         throw;
                     }
+                    if (count == 0) throw new ArgumentException("User couldn't be deleted");
                 }
             }
         }
