@@ -59,4 +59,40 @@ public class TestUserRepo
     {
         await _repo.GetUserByEmail("email@throwargument.com");
     }
+
+    [TestMethod]
+    public async Task DeleteUser_ThrowsAgrumentException_WhenUserDoesNotExist()
+    {
+        await _repo.AddUser(_testUser);
+        User tempUser = await _repo.GetUserByEmail(_testUser.Email);
+        await _repo.DeleteUserById(tempUser.Id);
+
+        await Assert.ThrowsExceptionAsync<ArgumentException>(
+            () => _repo.GetUserByEmail(_testUser.Email)
+            );
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public async Task DeleteUserById_ShouldThrowArgumentException_WhenUserDoesNotExist()
+    {
+        await _repo.DeleteUserById(-1);
+    }
+
+    [TestMethod]
+    public async Task GetUserCount_ShouldIncrease_WhenUserIsAdded()
+    {
+        int preCount = 0;
+        int postCount = 0;
+
+        preCount = await _repo.GetUserCount();
+
+        await _repo.AddUser(_testUser);
+
+        postCount = await _repo.GetUserCount();
+
+        Assert.AreEqual(preCount + 1, postCount);
+    }
+
+
 }

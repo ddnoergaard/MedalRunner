@@ -129,6 +129,11 @@ namespace MedalRunner.Pages.App.Character
 
             if (DisplayList.Count == 0) ViewData["display-list-empty-msg"] = "Select list to get started";
 
+            foreach (var item in items)
+            {
+                EquippedItems.Add(item);
+            }
+
             return Page();
 
         }
