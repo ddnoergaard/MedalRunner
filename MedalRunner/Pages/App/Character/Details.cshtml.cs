@@ -18,9 +18,9 @@ namespace MedalRunner.Pages.App.Character
         public int CalcStrength { get; set; }
         public int CalcILevel { get; set; }
         public string specName { get; set; }
-        public List<Models.Item> DisplayList { get; set; }
-
-
+        public List<Models.Item> DisplayList { get; set; } = new();
+        public List<Models.Item> EquippedItems { get; set; } = new List<Models.Item>();
+        public List<MedalRunner.Models.Item> items = new List<MedalRunner.Models.Item>();
 
         public DetailsModel(ICharacterService characterService, IItemService itemService, IDungeonService dungeonService)
         {
@@ -45,7 +45,7 @@ namespace MedalRunner.Pages.App.Character
                 return NotFound();
             }
 
-            List<MedalRunner.Models.Item> items = new List<MedalRunner.Models.Item>();
+            
             try
             {
                 items = await _itemService.GetItemsByCharacterIdAsync(id);
@@ -74,6 +74,11 @@ namespace MedalRunner.Pages.App.Character
             } catch (SqlException)
             {
                 ViewData["spec-error-msg"] = "No spec found";
+            }
+
+            foreach (var item in items)
+            {
+                EquippedItems.Add(item);
             }
 
             if (DisplayList.Count == 0) ViewData["display-list-empty-msg"] = "Select list to get started";
@@ -128,5 +133,25 @@ namespace MedalRunner.Pages.App.Character
 
         }
 
+        public int GetSlotItemId(int slot)
+        {
+            var item = EquippedItems.FirstOrDefault(i => i.Slot == slot);
+            if (item != null)
+            {
+                return item.Id;
+            }
+            return 0;
+        }
+
+        // Returns the image URL for a given slot, or empty string if nothing is equipped there.
+        public string GetSlotImageUrl(int slot)
+        {
+            var item = EquippedItems.FirstOrDefault(i => i.Slot == slot);
+            if (item != null)
+            {
+                return item.ImageUrl;
+            }
+            return string.Empty;
+        }
     }
 }

@@ -133,13 +133,14 @@
                 </a>
             </div>
             <div class="four-slots">
-                @* Tabard (slot 0) *@
+                @* Tabard (slot 0) 
                 <a asp-page="/App/Character/Change"
                    asp-route-characterId="@Model.Character.Id"
                    asp-route-slot="0"
                    asp-route-itemId="@Model.GetSlotItemId(0)">
                     <img class="item-slot" src="@Model.GetSlotImageUrl(0)" alt="Tabard" />
                 </a>
+                *@
                 @* MainHand (slot 15) *@
                 <a asp-page="/App/Character/Change"
                    asp-route-characterId="@Model.Character.Id"
@@ -155,7 +156,7 @@
                     <img class="item-slot" src="@Model.GetSlotImageUrl(16)" alt="Off Hand" />
                 </a>
                 @* Placeholder for 4th slot in row *@
-                <a><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>
+                <!--<a><img class="item-slot" src="https://cdn.jsdelivr.net/gh/ddnoergaard/mop-assets@main/items/feet.png" alt=""></a>-->
             </div>
         </div>
     </div>
@@ -174,7 +175,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Item i in Model.DisplayList)
+                    @foreach (Models.Item i in Model.DisplayList)
                     {
                         <tr>
                             <td><img src="@i.ImageUrl"></img></td>

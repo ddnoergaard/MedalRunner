@@ -15,7 +15,7 @@ namespace MedalRunner.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task AddAsync(Character character, int userId)
+        public async Task<int> AddAsync(Character character, int userId)
         {
             string sql = @"
                 INSERT INTO characters (name, race, class_id, spec_id, create_time)
