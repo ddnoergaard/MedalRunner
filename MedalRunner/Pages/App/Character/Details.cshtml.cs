@@ -44,14 +44,17 @@ namespace MedalRunner.Pages.App.Character
             {
                 return NotFound();
             }
-            var items = new List<ItemModel>();
+
+            List<MedalRunner.Models.Item> items = new List<MedalRunner.Models.Item>();
             try
             {
                 items = await _itemService.GetItemsByCharacterIdAsync(id);
-            }catch (ArgumentException ex)
+            }
+            catch (ArgumentException ex)
             {
                 ViewData["items-not-found-msg"] = $"{ex.Message}";
             }
+
             foreach (var item in items)
             {
                 EquippedSlots[item.Slot] = item;

@@ -4,27 +4,6 @@ namespace MedalRunner.Models
 {
     public class Item
     {
-        public enum GearSlot
-        {
-            Tabard = 0,
-            Head = 1,
-            Neck = 2,
-            Shoulders = 3,
-            Back = 4,
-            Chest = 5,
-            Wrists = 6,
-            Hands = 7,
-            Belt = 8,
-            Legs = 9,
-            Feet = 10,
-            Ring1 = 11,
-            Ring2 = 12,
-            Trinket1 = 13,
-            Trinket2 = 14,
-            MainHand = 15,
-            OffHand = 16
-        }
-
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
@@ -33,34 +12,28 @@ namespace MedalRunner.Models
         [Required(ErrorMessage = "Slot is required.")]
         public int Slot { get; set; }
 
-        // Returns a display-friendly name for the slot.
-        // Ring1/Ring2 both show as "Ring", Trinket1/Trinket2 as "Trinket", etc.
-        // Everything else just uses the enum name directly.
         public string SlotName
         {
             get
             {
-                GearSlot gearSlot = (GearSlot)Slot;
-
-                if (gearSlot == GearSlot.Ring1 || gearSlot == GearSlot.Ring2)
+                switch (Slot)
                 {
-                    return "Ring";
-                }
-                else if (gearSlot == GearSlot.Trinket1 || gearSlot == GearSlot.Trinket2)
-                {
-                    return "Trinket";
-                }
-                else if (gearSlot == GearSlot.MainHand)
-                {
-                    return "Main-Hand";
-                }
-                else if (gearSlot == GearSlot.OffHand)
-                {
-                    return "Off-Hand";
-                }
-                else
-                {
-                    return gearSlot.ToString();
+                    case 0: return "Tabard";
+                    case 1: return "Head";
+                    case 2: return "Neck";
+                    case 3: return "Shoulders";
+                    case 4: return "Back";
+                    case 5: return "Chest";
+                    case 6: return "Wrists";
+                    case 7: return "Hands";
+                    case 8: return "Belt";
+                    case 9: return "Legs";
+                    case 10: return "Feet";
+                    case 11: return "Ring";
+                    case 13: return "Trinket";
+                    case 15: return "Main-Hand";
+                    case 16: return "Off-Hand";
+                    default: return "Unknown";
                 }
             }
         }

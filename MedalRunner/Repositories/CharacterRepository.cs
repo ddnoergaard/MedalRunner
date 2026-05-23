@@ -66,25 +66,7 @@ namespace MedalRunner.Repositories
                 }
             }
 
-            await EquipDefaultGearAsync(newCharId);
-        }
-
-        // Default starter item IDs, one per available slot (lowest id per slot in the DB)
-        private static readonly int[] DefaultItemIds = { 132, 1, 2, 3, 5, 78, 81, 80, 4, 77, 159, 6, 110 };
-
-        private async Task EquipDefaultGearAsync(int characterId)
-        {
-            await using var conn = new SqlConnection(_connectionString);
-            await conn.OpenAsync();
-
-            foreach (int itemId in DefaultItemIds)
-            {
-                string sql = "INSERT INTO character_gear (character_id, item_id) VALUES (@characterId, @itemId)";
-                await using var cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.Add(new SqlParameter("@characterId", SqlDbType.Int) { Value = characterId });
-                cmd.Parameters.Add(new SqlParameter("@itemId", SqlDbType.Int) { Value = itemId });
-                await cmd.ExecuteNonQueryAsync();
-            }
+            return newCharId;
         }
 
         public async Task DeleteAsync(int id)
