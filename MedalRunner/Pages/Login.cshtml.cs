@@ -66,6 +66,9 @@ namespace MedalRunner.Pages
                     {
                         return RedirectToPage("/Admin/Index");
                     }
+                } else
+                {
+                    ViewData["login-error-msg"] = "Invalid email or password";
                 }
             }
             catch (ArgumentException ex)

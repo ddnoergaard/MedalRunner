@@ -12,6 +12,7 @@
         <p class="dark-text">Welcome back. Pick up where you left off and keep chasing your next medal.</p>
     </div>
     <div class="login-right">
+        <p style="color:red;">@ViewData["login-error-msg"]</p>
         <form method="post">
             <div class="input-container">
                 <label class="dark-text" for="">Email</label>
@@ -23,7 +24,6 @@
             </div>
             <button class="form-btn" type="submit">Login</button>
         </form>
-        <p>@ViewData["login-error-msg"]</p>
         <a class="register-text" asp-page="/Register">... Or Register</a>
     </div>
 </div>

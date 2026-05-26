@@ -3,6 +3,7 @@ using MedalRunner.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 
 namespace MedalRunner.Pages
@@ -40,12 +41,56 @@ namespace MedalRunner.Pages
         {
         }
 
+        private bool ContainsEmoji(params string[] inputs)
+        {
+            foreach (var input in inputs)
+            {
+                if (string.IsNullOrEmpty(input)) continue;
+
+                for (int i = 0; i < input.Length; i++)
+                {
+                    int codePoint = char.IsHighSurrogate(input[i]) && i + 1 < input.Length && char.IsLowSurrogate(input[i + 1])
+                        ? char.ConvertToUtf32(input[i], input[i + 1])
+                        : input[i];
+
+                    if (IsEmojiCodePoint(codePoint))
+                        return true;
+
+                    if (char.IsHighSurrogate(input[i]))
+                        i++;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsEmojiCodePoint(int cp)
+        {
+            return
+                (cp >= 0x1F600 && cp <= 0x1F64F) ||
+                (cp >= 0x1F300 && cp <= 0x1F5FF) ||
+                (cp >= 0x1F680 && cp <= 0x1F6FF) ||
+                (cp >= 0x1F900 && cp <= 0x1F9FF) ||
+                (cp >= 0x2600 && cp <= 0x26FF) ||
+                (cp >= 0x2700 && cp <= 0x27BF) ||
+                (cp >= 0xFE00 && cp <= 0xFE0F) ||
+                (cp >= 0x1FA00 && cp <= 0x1FA6F) ||
+                (cp >= 0x1FA70 && cp <= 0x1FAFF) ||
+                cp == 0x200D;
+        }
+
         public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            if (ContainsEmoji(UserName, UserLastName, UserEmail, Password, ComparePassword))
+            {
+                ViewData["emoji-error"] = "Can't use emojis. Try again.";
+                return Page();
+            }
+
             if (CompareAttribute.Equals(Password, ComparePassword))
             {
                 user.CreatedAt = DateTime.UtcNow;
@@ -55,10 +100,22 @@ namespace MedalRunner.Pages
                 user.FirstName = UserName;
                 user.LastName = UserLastName;
                 user.Password = passwordHasher.HashPassword(null, Password);
-                await _userService.Create(user);
-                return RedirectToPage("./Login");
+                try
+                {
+                    await _userService.Create(user);
+                    return RedirectToPage("./Login");
+                } catch (Exception ex)
+                {
+                    ViewData["error-msg"] = $"{ex.Message}";
+                    return Page();
+                }
+                
             }
-            else return Page();
+            else
+            {
+                ViewData["error-msg"] = "Can not register. Try again";
+                return Page();
+            }
         }
     }
 }

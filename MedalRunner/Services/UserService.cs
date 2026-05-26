@@ -20,8 +20,12 @@ namespace MedalRunner.Services
             {
                 await _userRepository.AddUser(user);
             }
-            catch (SqlException)
+            catch (SqlException ex) 
             {
+                if (ex.Number == 2627)
+                {
+                    throw new Exception("User with that email already exists");
+                }
                 throw;
             }
         }
