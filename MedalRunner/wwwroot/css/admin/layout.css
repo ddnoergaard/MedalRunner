@@ -17,6 +17,7 @@ body {
     padding: 0;
     background-color: var(--color-bg-elevated);
     place-items: center;
+    overflow-x: hidden;
 }
 
 header {

@@ -1,5 +1,9 @@
 ﻿@import url("/css/colors.css");
 
+body {
+    overflow-x: hidden;
+}
+
 .container {
     width: 100vw;
     display: flex;

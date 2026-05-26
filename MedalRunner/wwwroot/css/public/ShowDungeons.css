@@ -1,4 +1,8 @@
-﻿main {
+﻿body {
+    overflow-x: hidden;
+}
+
+main {
     place-items: center;
     display: flex;
     flex-direction: column;
