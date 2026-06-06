@@ -39,7 +39,7 @@ namespace MedalRunner.Repositories
 
                     try
                     {
-                        await cmd.ExecuteNonQueryAsync();
+                         await cmd.ExecuteNonQueryAsync();
                     } catch (SqlException)
                     {
                         throw;
