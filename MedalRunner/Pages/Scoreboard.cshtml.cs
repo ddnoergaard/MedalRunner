@@ -48,10 +48,16 @@ namespace MedalRunner.Pages
         {
             List<Scoreboard> scoreboards = (await _scoreboardService.GetAllScores()).ToList();
 
+            if (DungeonSearch == "null") DungeonSearch = null;
+
             if (string.IsNullOrEmpty(NameSearch) && string.IsNullOrEmpty(DungeonSearch))
             {
                 DisplayScoreboardList.Clear();
                 ScoreboardList = (await _scoreboardService.GetAllScores()).ToList();
+                foreach (Scoreboard scoreboard in ScoreboardList)
+                {
+                    scoreboard.Dungeon = await _dungeonService.GetDungeonByIdAsync(scoreboard.DungeonId);
+                }
                 return Page();
             }
 
@@ -70,6 +76,10 @@ namespace MedalRunner.Pages
             //    }
             //}
             DisplayScoreboardList = scoreboards;
+            foreach (Scoreboard scoreboard in DisplayScoreboardList)
+            {
+                scoreboard.Dungeon = await _dungeonService.GetDungeonByIdAsync(scoreboard.DungeonId);
+            }
             return Page();
         }
     }

@@ -14,9 +14,9 @@
         <p>Use the filters below to narrow down results by player, dungeon, difficulty, or time period.</p>
     </div>
     <div class="section-two">
-        <form method="get" asp-page-handler="filter">
+        <form method="post" asp-page-handler="filter">
             <div>
-                <select name="DungeonName">
+                <select name="DungeonSearch">
                     <option value="null">Choose a dungeon</option>
                     <option value="2">Temple of the Jade Serpent</option>
                     <option value="3">Stormstout Brewery</option>
@@ -28,7 +28,7 @@
                     <option value="9">Scarlet Halls</option>
                     <option value="10">Scarlet Monastery</option>
                 </select>
-                <input type="text" placeholder="Character name">
+                <input type="text" placeholder="Character name" asp-for="NameSearch">
             </div>
             <button type="submit">Search</button>
         </form>
