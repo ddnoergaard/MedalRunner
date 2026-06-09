@@ -4,12 +4,12 @@
 }
 <form method="post">
 	<div class="form-group">
-		<label asp-for="character.Name" class="control-label" style="color:black"></label>
+		<label asp-for="character.Name" class="control-label" style="color:white"></label>
 		<input asp-for="character.Name" class="form-control" style="color:black" />
 		<span asp-validation-for="character.Name" class="text-danger" style="color:black"></span>
 	</div>
 	<div class="form-group">
-		<label asp-for="character.Race" class="controll-label" style="color:black"></label>
+		<label asp-for="character.Race" class="controll-label" style="color:white"></label>
 		<select name="character.Race" id="character.Race" style="color:black">
 			<option style="color:black" value="null">Please select a Race</option>
 			<option style="color:black" value="Human">Human</option>
@@ -28,7 +28,7 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<label style="color:black" asp-for="character.CharacterClass" class="controll-label"></label>
+		<label style="color:white" asp-for="character.CharacterClass" class="controll-label"></label>
 		<select style="color:black" name="Character.CharacterClass" id="character.CharacterClass">
 			<option style="color:black" value="null">Please select a Class</option>
 			<option style="color:black" value="1">Death Knight</option>
@@ -45,7 +45,7 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<label style="color:black" asp-for="character.Specialization" class="control-label"></label>
+		<label style="color:white" asp-for="character.Specialization" class="control-label"></label>
 		<select style="color:black" name="character.Specialization" id="character.Specialization">
 			<option style="color:black" value="null">Please select a Specialization</option>
 			<option style="color:black" value="1">Blood</option>
